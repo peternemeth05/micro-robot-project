@@ -1,0 +1,22 @@
+{
+  "folders": [
+    {
+      "name": "Root",
+      "path": "."
+    },
+    {
+      "name": "App (Flutter)",
+      "path": "app"
+    },
+    {
+      "name": "Robot (Zephyr)",
+      "path": "firmware/firmware"
+    }
+  ],
+  "settings": {
+    "files.exclude": {
+      "**/.git": true,
+      "**/.DS_Store": true
+    }
+  }
+}

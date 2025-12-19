@@ -1,0 +1,23 @@
+# --- FLUTTER IGNORES ---
+app/.dart_tool/
+app/.idea/
+app/.vscode/
+app/build/
+app/linux/
+app/windows/
+app/macos/
+app/.pub-cache/
+app/pubspec.lock
+
+# --- ZEPHYR/C IGNORES ---
+firmware/build/
+firmware/.west/
+firmware/venv/
+firmware/*.bin
+firmware/*.hex
+firmware/*.elf
+firmware/*.map
+
+# --- OS stuff ---
+.DS_Store
+Thumbs.db
