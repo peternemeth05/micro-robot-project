@@ -10,7 +10,7 @@
     },
     {
       "name": "Robot (Zephyr)",
-      "path": "firmware/firmware"
+      "path": "firmware"
     }
   ],
   "settings": {
