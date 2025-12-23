@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
             secondary: Colors.red,
           ),
 
-          navigationRailTheme: NavigationRailThemeData(
+          /*navigationRailTheme: NavigationRailThemeData(
             useIndicator: true,
             indicatorColor: Colors.red,
             indicatorShape: const CircleBorder(),
@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
               fontSize: 18,
               color: Colors.black,
             ),
-          ),
+          ),*/
         ),
 
         // -----------------------------------------------------
@@ -69,7 +69,7 @@ class MyApp extends StatelessWidget {
             secondary: Colors.red,
           ),
 
-          navigationRailTheme: NavigationRailThemeData(
+          /*navigationRailTheme: NavigationRailThemeData(
             useIndicator: true,
             indicatorColor: Colors.red,
             indicatorShape: RoundedRectangleBorder(
@@ -93,7 +93,7 @@ class MyApp extends StatelessWidget {
               fontSize: 18,
               color: Colors.white,
             ),
-          ),
+          ),*/
         ),
 
         themeMode: ThemeMode.system,
