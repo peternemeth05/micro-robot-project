@@ -9,11 +9,12 @@ class BleWeb implements BleInterface {
   static const String _serviceUuid = BleConstants.serviceUuid;
   static const String _commandUuid = BleConstants.commandUuid;
 
-
   BluetoothDevice? _connectedDevice;
   BluetoothCharacteristic? _commandChar;
   
-  // 1. WE TRACK STATE LOCALLY (This fixes the 'getter not found' errors)
+  // We need to keep track of the stream subscription so we can cancel it cleanly
+  StreamSubscription<bool>? _connectionSubscription;
+
   bool _isInternalConnected = false;
 
   final _connectionStateController = StreamController<bool>.broadcast();
@@ -22,19 +23,31 @@ class BleWeb implements BleInterface {
   Stream<bool> get connectionStateStream => _connectionStateController.stream;
 
   @override
-  // 2. The getter just reads our local variable. Simple and crash-proof.
   bool get isConnected => _isInternalConnected;
 
   @override
   Future<void> connect(String deviceId) async {
     try {
       final device = await FlutterWebBluetooth.instance.requestDevice(
-        RequestOptionsBuilder.acceptAllDevices(
-          optionalServices: [_serviceUuid], 
-        ),
-      );
+      RequestOptionsBuilder(
+        [
+          RequestFilterBuilder(services: [_serviceUuid]), 
+        ],
+        optionalServices: [_serviceUuid],
+      ),
+    );
 
       await device.connect();
+      
+      // 1. NEW: Listen to the device's connection stream immediately!
+      // If the browser reports a disconnect, we update our app state automatically.
+      _connectionSubscription = device.connected.listen((connected) {
+        if (!connected) {
+          print("⚠️ (Web) Browser reported Bluetooth disconnection!");
+          disconnect(); 
+        }
+      });
+
       
       final services = await device.discoverServices();
       
@@ -47,11 +60,10 @@ class BleWeb implements BleInterface {
       _commandChar = characteristics.firstWhere(
         (c) => c.uuid == _commandUuid,
         orElse: () => throw Exception("Characteristic not found"),
-      );
+      ); 
 
       _connectedDevice = device;
       
-      // 3. Update our local state to TRUE
       _isInternalConnected = true;
       _connectionStateController.add(true);
       print("✅ (Web) Connected!");
@@ -64,15 +76,21 @@ class BleWeb implements BleInterface {
 
   @override
   Future<void> disconnect() async {
-    // 4. Update our local state to FALSE
+    // 2. Prevent infinite loops (if already disconnected, stop)
+    if (!_isInternalConnected) return;
+
     _isInternalConnected = false;
     _connectionStateController.add(false);
+
+    // Cancel the listener so it doesn't fire again for this specific session
+    await _connectionSubscription?.cancel();
+    _connectionSubscription = null;
 
     if (_connectedDevice != null) {
       try {
         _connectedDevice!.disconnect();
       } catch (e) {
-        // Ignore errors during disconnect (it might already be disconnected)
+        // Ignore errors during disconnect
       }
       _connectedDevice = null;
       _commandChar = null;
@@ -83,7 +101,6 @@ class BleWeb implements BleInterface {
   Future<void> writeToCharacteristic(List<int> data) async {
     if (_commandChar == null) return;
     try {
-      // 5. Use writeValueWithoutResponse (Standard for commands)
       await _commandChar!.writeValueWithoutResponse(Uint8List.fromList(data)); 
     } catch (e) {
       print("Web Write Error: $e");

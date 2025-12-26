@@ -1,8 +1,6 @@
-// lib/pages/scan_screen.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:robot_app/services/ble_connection/ble_interface.dart';
-import '../services/ble_connection/ble_driver.dart';
 import '../constants.dart';
 
 class ScanScreen extends StatefulWidget {
@@ -31,7 +29,6 @@ class _ScanScreenState extends State<ScanScreen> {
     FlutterBluePlus.scanResults.listen((results) {
       if (mounted) {
         setState(() {
-          // No need to filter by name anymore!
           // The OS only gives us devices with the right Service UUID.
           _scanResults = results;
         });
@@ -41,7 +38,6 @@ class _ScanScreenState extends State<ScanScreen> {
     // START SCANNING WITH FILTER
     try {
       await FlutterBluePlus.startScan(
-        // This is the magic line:
         withServices: [Guid(BleConstants.serviceUuid)],
         timeout: const Duration(seconds: 10),
       );
@@ -72,17 +68,54 @@ class _ScanScreenState extends State<ScanScreen> {
                 return ListTile(
                   title: Text(name.isEmpty ? "Unknown Device" : name),
                   subtitle: Text(id),
+                  
                   trailing: ElevatedButton(
                     child: const Text("Connect"),
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.black, 
+                      backgroundColor: Colors.white, 
+                    ),
                     onPressed: () async {
-                      // Stop scanning before connecting
+                      // 1. Stop scanning before connecting
                       FlutterBluePlus.stopScan();
 
-                      // Call the connect method in our Driver
-                      await widget.bleDriver.connect(id);
+                      // 2. Show the "Pop Up" (Loading Dialog)
+                      showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (BuildContext context) {
+                          return const AlertDialog(
+                            content: Row(
+                              children: [
+                                CircularProgressIndicator(),
+                                SizedBox(width: 20),
+                                Text("Connecting..."),
+                              ],
+                            ),
+                          );
+                        },
+                      );
 
-                      // Go back to previous screen
-                      if (context.mounted) Navigator.pop(context);
+                      try {
+                        // 3. Call the connect method in our Driver
+                        await widget.bleDriver.connect(id);
+
+                        // 4. Close the Loading Dialog
+                        if (context.mounted) Navigator.pop(context);
+
+                        // 5. Back out to the Setup Screen
+                        if (context.mounted) Navigator.pop(context);
+                      } catch (e) {
+                        // If failed, close the dialog but stay on Scan Screen
+                        if (context.mounted) Navigator.pop(context);
+                        
+                        // Show error message
+                        if (context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text("Connection failed: $e")),
+                          );
+                        }
+                      }
                     },
                   ),
                 );

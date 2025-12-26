@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:robot_app/services/ble_connection/ble_driver.dart';
 import 'package:robot_app/services/ble_connection/ble_interface.dart';
+import 'widgets/ble_status_button.dart';
 
 import 'pages/landing.dart';
 import 'pages/setup.dart';
@@ -28,10 +29,9 @@ class _AppLayoutState extends State<AppLayout> {
     // We define 'pages' inside build() so we can access 'widget.bleDriver'
     final pages = [
       const LandingPage(),
-      // PASS THE DRIVER DOWN: Use widget.bleDriver here
       SetupWizardPage(bleDriver: widget.bleDriver),
-      RobotControlsPage(), // Assuming this page needs it too
-      SensorLogPage(),     // Assuming this page needs it too
+      RobotControlsPage(), 
+      SensorLogPage(),     
       const VideoLogPage(),
     ];
 
@@ -41,7 +41,13 @@ class _AppLayoutState extends State<AppLayout> {
         final isWide = constraints.maxWidth >= 600;
 
         return Scaffold(
-          appBar: AppBar(title: const Text('Robot Controller')),
+          appBar: AppBar(
+            title: const Text('Robot Controller'), 
+            actions: [
+              BleStatusButton(bleDriver: widget.bleDriver)
+            ],
+            ),
+            
           body: Row(
             children: [
               SafeArea(
