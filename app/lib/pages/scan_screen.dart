@@ -16,9 +16,29 @@ class _ScanScreenState extends State<ScanScreen> {
   List<ScanResult> _scanResults = [];
   bool _isScanning = false;
 
-  @override
+@override
   void initState() {
     super.initState();
+    // Don't just call _startScan(); call a new safe method
+    _waitForBluetoothAndScan();
+  }
+
+  Future<void> _waitForBluetoothAndScan() async {
+    // 1. Wait for the Bluetooth Adapter to turn ON
+    try {
+      // If it's not already on, wait for it (with a timeout so we don't hang forever)
+      if (FlutterBluePlus.adapterStateNow != BluetoothAdapterState.on) {
+        await FlutterBluePlus.adapterState
+            .firstWhere((state) => state == BluetoothAdapterState.on)
+            .timeout(const Duration(seconds: 5));
+      }
+    } catch (e) {
+      // If it takes too long or fails, just print error and return
+      print("Error waiting for Bluetooth: $e");
+      return;
+    }
+
+    // 2. Now that it is ON, we can safely scan
     _startScan();
   }
 

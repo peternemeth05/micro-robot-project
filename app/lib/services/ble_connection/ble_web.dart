@@ -56,11 +56,22 @@ class BleWeb implements BleInterface {
         orElse: () => throw Exception("Service not found"),
       );
 
+      print("------------------------------------------------");
+      print("✅ FOUND SERVICE");
+      print("   Expected: $_serviceUuid"); 
+      print("   Actual:   ${targetService.uuid}"); 
+      print("");
+
       final characteristics = await targetService.getCharacteristics();
       _commandChar = characteristics.firstWhere(
         (c) => c.uuid == _commandUuid,
         orElse: () => throw Exception("Characteristic not found"),
       ); 
+
+      print("✅ FOUND Write CHARACTERISTIC");
+      print("   Expected: $_commandUuid");
+      print("   Actual:   ${_commandChar!.uuid}");
+      print("------------------------------------------------");
 
       _connectedDevice = device;
       
