@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:robot_app/services/ble_connection/ble_interface.dart';
 import '../services/ble_connection/ble_driver.dart'; 
 import '../widgets/ble_connect_button.dart';         
 
 class SetupWizardPage extends StatelessWidget {
-  final BleDriver bleDriver;
+  final BleInterface bleDriver;
 
   const SetupWizardPage({super.key, required this.bleDriver});
 

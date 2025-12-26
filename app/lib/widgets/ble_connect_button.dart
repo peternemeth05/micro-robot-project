@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart'; // Needed for kIsWeb
+import 'package:robot_app/services/ble_connection/ble_interface.dart';
 import '../services/ble_connection/ble_driver.dart';
 import '../pages/scan_screen.dart'; 
 
 class BleConnectButton extends StatelessWidget {
-  final BleDriver bleDriver;
+  final BleInterface bleDriver;
   
   const BleConnectButton({super.key, required this.bleDriver});
 

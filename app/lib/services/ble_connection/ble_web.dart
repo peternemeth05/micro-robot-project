@@ -4,7 +4,7 @@ import 'package:flutter_web_bluetooth/flutter_web_bluetooth.dart';
 import 'ble_interface.dart';
 import '../../constants.dart';
 
-class BleDriver implements BleInterface {
+class BleWeb implements BleInterface {
   // CONFIGURATION (Must match your C Code)
   static const String _serviceUuid = BleConstants.serviceUuid;
   static const String _commandUuid = BleConstants.commandUuid;

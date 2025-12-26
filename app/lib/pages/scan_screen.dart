@@ -1,11 +1,12 @@
 // lib/pages/scan_screen.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
+import 'package:robot_app/services/ble_connection/ble_interface.dart';
 import '../services/ble_connection/ble_driver.dart';
 import '../constants.dart';
 
 class ScanScreen extends StatefulWidget {
-  final BleDriver bleDriver;
+  final BleInterface bleDriver;
   const ScanScreen({super.key, required this.bleDriver});
 
   @override

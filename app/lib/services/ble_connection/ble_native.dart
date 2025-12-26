@@ -3,7 +3,7 @@ import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'ble_interface.dart';
 import '../../constants.dart';
 
-class BleDriver implements BleInterface {
+class BleNative implements BleInterface {
   // CONFIGURATION (Must match your C Code)
   static const String _serviceUuid = BleConstants.serviceUuid;
   static const String _commandUuid = BleConstants.commandUuid;
