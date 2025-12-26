@@ -13,6 +13,9 @@ dependencies:
   provider: ^6.1.5
   fl_chart: ^1.1.1
   theme_mode_handler: ^3.0.0
+  flutter_blue_plus: ^1.30.0 
+  flutter_web_bluetooth: ^1.1.0
+  permission_handler: ^11.0.0 
 
 dev_dependencies:
   flutter_test:

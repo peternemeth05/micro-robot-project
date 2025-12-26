@@ -5,27 +5,35 @@ import 'pages/setup.dart';
 import 'pages/controls.dart';
 import 'pages/sensor.dart';
 import 'pages/video.dart';
+import 'services/ble_connection/ble_driver.dart';
 
 class AppLayout extends StatefulWidget {
+  
   const AppLayout({super.key});
+
+
 
   @override
   State<AppLayout> createState() => _AppLayoutState();
 }
 
 class _AppLayoutState extends State<AppLayout> {
+  final BleDriver _bleDriver = BleDriver();
   int selectedIndex = 0;
 
-  final pages = const [
+   
+
+  @override
+  Widget build(BuildContext context) {
+    
+    final pages =  [
     LandingPage(),
-    SetupWizardPage(),
+    SetupWizardPage(bleDriver: _bleDriver),
     RobotControlsPage(),
     SensorLogPage(),
     VideoLogPage(),
   ];
 
-  @override
-  Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
         final isWide = constraints.maxWidth >= 600;
