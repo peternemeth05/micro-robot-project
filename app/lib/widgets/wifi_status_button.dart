@@ -3,21 +3,21 @@ import 'package:provider/provider.dart';
 
 import '../app_state.dart';
 
-class BleStatusButton extends StatelessWidget {
-  const BleStatusButton({super.key});
+class WifiStatusButton extends StatelessWidget {
+  const WifiStatusButton({super.key});
 
   @override
   Widget build(BuildContext context) {
     // Reads state from AppState
-    final isConnected = context.watch<AppState>().bleConnected;
+    final isConnected = context.watch<AppState>().wifiConnected;
 
     return Padding(
       padding: const EdgeInsets.only(right: 16.0),
       child: Chip(
         avatar: Icon(
           isConnected
-              ? Icons.bluetooth_connected
-              : Icons.bluetooth_disabled,
+              ? Icons.wifi_sharp
+              : Icons.wifi_off,
           color: Colors.white,
           size: 18,
         ),

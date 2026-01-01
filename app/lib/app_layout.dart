@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:robot_app/services/ble_connection/ble_driver.dart';
+import 'package:provider/provider.dart';
+
 import 'package:robot_app/services/ble_connection/ble_interface.dart';
 import 'widgets/ble_status_button.dart';
+import 'widgets/wifi_status_button.dart';
 
 import 'pages/landing.dart';
 import 'pages/setup.dart';
 import 'pages/controls.dart';
 import 'pages/sensor.dart';
 import 'pages/video.dart';
-// Note: You no longer need to import ble_driver.dart or ble_switcher.dart here
-// because the specific implementation is already passed in.
 
 class AppLayout extends StatefulWidget {
-  // This is where the choice from the Switcher arrives
-  final BleInterface bleDriver; 
-  
-  const AppLayout({super.key, required this.bleDriver});
+  const AppLayout({super.key});
 
   @override
   State<AppLayout> createState() => _AppLayoutState();
@@ -26,35 +23,35 @@ class _AppLayoutState extends State<AppLayout> {
 
   @override
   Widget build(BuildContext context) {
-    // We define 'pages' inside build() so we can access 'widget.bleDriver'
+
     final pages = [
       const LandingPage(),
-      SetupWizardPage(bleDriver: widget.bleDriver),
-      RobotControlsPage(), 
-      SensorLogPage(),     
+      SetupWizardPage(),
+      RobotControlsPage(),
+      SensorLogPage(),
       const VideoLogPage(),
     ];
 
     return LayoutBuilder(
       builder: (context, constraints) {
-        // Simple responsive check: Wide screen = extended rail
         final isWide = constraints.maxWidth >= 600;
 
         return Scaffold(
           appBar: AppBar(
-            title: const Text('Robot Controller'), 
+            title: const Text('Robot Controller'),
             actions: [
-              BleStatusButton(bleDriver: widget.bleDriver)
+              BleStatusButton(),
+              WifiStatusButton(),
             ],
-            ),
-            
+          ),
           body: Row(
             children: [
               SafeArea(
                 child: NavigationRail(
                   extended: isWide,
                   selectedIndex: selectedIndex,
-                  onDestinationSelected: (i) => setState(() => selectedIndex = i),
+                  onDestinationSelected: (i) =>
+                      setState(() => selectedIndex = i),
                   destinations: const [
                     NavigationRailDestination(
                       icon: Icon(Icons.home),
@@ -65,11 +62,11 @@ class _AppLayoutState extends State<AppLayout> {
                       label: Text('Set-up Wizard'),
                     ),
                     NavigationRailDestination(
-                      icon: Icon(Icons.gamepad), // Changed icon to gamepad for controls
+                      icon: Icon(Icons.gamepad),
                       label: Text('Robot Controls'),
                     ),
                     NavigationRailDestination(
-                      icon: Icon(Icons.list_alt), // Changed icon to list for logs
+                      icon: Icon(Icons.list_alt),
                       label: Text('Sensor Log'),
                     ),
                     NavigationRailDestination(
@@ -80,7 +77,6 @@ class _AppLayoutState extends State<AppLayout> {
                 ),
               ),
               const VerticalDivider(width: 1),
-              // This displays the selected page from the list above
               Expanded(child: pages[selectedIndex]),
             ],
           ),
