@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_joystick/flutter_joystick.dart';
-import 'controls.dart';
+import 'JoystickState.dart';
 
 
 
@@ -28,9 +28,9 @@ class CustomJoystick extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Joystick(
-                    mode: JoystickMode.all,
+                    mode: JoystickMode.horizontalAndVertical,
                     listener: (details) {
-                                context.read<MyAppState1>().updateJoystick(details.x, details.y);
+                                context.read<JoystickState>().updateJoystick(details.x, details.y);
                               },       
                     base: Container(
                       width: 150,

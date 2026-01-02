@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'app_layout.dart';
 import 'package:provider/provider.dart';
-import 'package:robot_app/pages/controls_classes.dart/controls.dart';
+import 'package:robot_app/pages/controls_classes.dart/JoystickState.dart';
 
 void main() {
   runApp(
-    ChangeNotifierProvider(
-      create: (context) =>MyAppState1(),
+    ChangeNotifierProvider(//AI
+      create: (context) => JoystickState(),
       child: const MyApp(),
     ),
   );

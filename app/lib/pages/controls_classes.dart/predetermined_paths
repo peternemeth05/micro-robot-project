@@ -1,10 +1,25 @@
 import 'package:flutter/material.dart';
 import 'controls.dart';
+import 'dart:async';
 
 
 
-class PrederterminedPaths extends StatelessWidget {
+class PrederterminedPaths extends StatefulWidget {
   const PrederterminedPaths({super.key});
+
+  @override
+  State<PrederterminedPaths> createState() => _PrederterminedPathsState();
+}
+
+
+class _PrederterminedPathsState extends State<PrederterminedPaths> {
+
+  bool buttonsLocked = false;
+  int spiralTimer = 10;
+  int randomTimer = 4;
+  int gridTimer = 3;
+  int lineTimer = 2;
+
 
   @override
   Widget build(BuildContext context){
@@ -29,13 +44,33 @@ class PrederterminedPaths extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       TextButton(
-                        onPressed: () {
+                        onPressed: buttonsLocked ? null:() {
+                          setState((){
+                            buttonsLocked = true;
+                          });
+
+                          Timer(Duration(seconds: spiralTimer), (){
+                             setState((){
+                              buttonsLocked = false;
+                            });
+                          });
+                            
                           print('Spiral Inwards');
+
                         },
                         child: const Text('Spiral Inwards')
                       ),
                       TextButton(
-                        onPressed: (){
+                        onPressed: buttonsLocked ? null:() {
+                          setState((){
+                            buttonsLocked = true;
+                          });
+
+                          Timer(Duration(seconds: randomTimer), (){
+                             setState((){
+                              buttonsLocked = false;
+                            });
+                          });
                           print('Random Walk');
                         }, 
                         child: const Text('Random Walk')
@@ -46,14 +81,32 @@ class PrederterminedPaths extends StatelessWidget {
                 Expanded(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [ TextButton(
-                        onPressed: (){
+                    children: [ 
+                      TextButton(
+                        onPressed: buttonsLocked ? null:() {
+                          setState((){
+                            buttonsLocked = true;
+                          });
+                          Timer(Duration(seconds: gridTimer), (){
+                             setState((){
+                              buttonsLocked = false;
+                            });
+                          });
                           print('Grid Path');
                         }, 
                         child: const Text('Grid Path')
                       ),
                       TextButton(
-                        onPressed: (){
+                        onPressed: buttonsLocked ? null:() {
+                          setState((){
+                            buttonsLocked = true;
+                          });
+
+                          Timer(Duration(seconds: lineTimer), (){
+                             setState((){
+                              buttonsLocked = false;
+                            });
+                          });
                           print('Straight Line');
                         }, 
                         child: const Text('Straight Line')
