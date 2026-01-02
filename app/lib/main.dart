@@ -53,7 +53,6 @@ class MyApp extends StatelessWidget {
           tabBarTheme: TabBarThemeData(
             indicatorColor: Colors.red,
             labelStyle: TextStyle(color: Colors.white)
-            
           ),
           brightness: Brightness.dark,
           colorScheme: const ColorScheme.dark(

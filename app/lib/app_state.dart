@@ -18,6 +18,7 @@ class MyAppState extends ChangeNotifier {
   void updateJoystick(double newX, double newY) {
     x = newX;
     y = newY;
+    path = paths.manual;
     notifyListeners(); 
     debugPrint("X:  $newX Y:  $newY");
   }
