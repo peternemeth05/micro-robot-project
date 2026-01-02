@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import'custom_joystick.dart';
-import 'predetermined_paths';
+import 'predetermined_paths.dart';
 
 
 class RobotControlsPage extends StatelessWidget {
@@ -11,12 +11,9 @@ class RobotControlsPage extends StatelessWidget {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        backgroundColor: Colors.white,
         appBar: AppBar(
-            backgroundColor: Colors.white,
             elevation: 0,
             bottom: const TabBar(
-              labelColor:  Colors.black,
               tabs: [
                 Tab(text: "Predetermined Paths"),
                 Tab(text: "Virtual Joystick"),
