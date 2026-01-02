@@ -1,0 +1,37 @@
+-- west build: making build dir C:\Users\16bam\OneDrive\Documents\GitHub\micro-robot-project\backend\Robot_proj\build pristine
+-- west build: generating a build system
+Loading Zephyr default modules (Zephyr base).
+-- Application: C:/Users/16bam/OneDrive/Documents/GitHub/micro-robot-project/backend/Robot_proj
+-- CMake version: 4.2.0
+-- Found Python3: C:/Users/16bam/AppData/Local/Programs/Python/Python312/python.exe (found suitable version "3.12.10", minimum required is "3.10") found components: Interpreter
+-- Cache files will be written to: C:/Users/16bam/OneDrive/Documents/GitHub/micro-robot-project/backend/external/zephyr/.cache
+-- Zephyr version: 4.2.0 (C:/Users/16bam/OneDrive/Documents/GitHub/micro-robot-project/backend/external/zephyr)
+-- Found west (found suitable version "1.5.0", minimum required is "0.14.0")
+-- Board: esp32_devkitc, qualifiers: esp32/procpu
+-- ZEPHYR_TOOLCHAIN_VARIANT not set, trying to locate Zephyr SDK
+-- Found host-tools: zephyr 0.17.4 (C:/zephyr-sdk-0.17.4)
+-- Found toolchain: zephyr 0.17.4 (C:/zephyr-sdk-0.17.4)
+-- Found Dtc: C:/ProgramData/chocolatey/bin/dtc.exe (found suitable version "1.6.1", minimum required is "1.4.6")
+-- Found BOARD.dts: C:/Users/16bam/OneDrive/Documents/GitHub/micro-robot-project/backend/external/zephyr/boards/espressif/esp32_devkitc/esp32_devkitc_procpu.dts
+-- Generated zephyr.dts: C:/Users/16bam/OneDrive/Documents/GitHub/micro-robot-project/backend/Robot_proj/build/zephyr/zephyr.dts
+-- Generated pickled edt: C:/Users/16bam/OneDrive/Documents/GitHub/micro-robot-project/backend/Robot_proj/build/zephyr/edt.pickle
+-- Generated devicetree_generated.h: C:/Users/16bam/OneDrive/Documents/GitHub/micro-robot-project/backend/Robot_proj/build/zephyr/include/generated/zephyr/devicetree_generated.h
+
+C:/Users/16bam/OneDrive/Documents/GitHub/micro-robot-project/backend/Robot_proj/prj.conf:48: warning: attempt to assign the value 'y' to the undefined symbol SPIRAM
+
+error: Aborting due to Kconfig warnings
+Parsing C:/Users/16bam/OneDrive/Documents/GitHub/micro-robot-project/backend/external/zephyr/Kconfig
+Loaded configuration 'C:/Users/16bam/OneDrive/Documents/GitHub/micro-robot-project/backend/external/zephyr/boards/espressif/esp32_devkitc/esp32_devkitc_procpu_defconfig'
+Merged configuration 'C:/Users/16bam/OneDrive/Documents/GitHub/micro-robot-project/backend/Robot_proj/prj.conf'
+
+CMake Error at C:/Users/16bam/OneDrive/Documents/GitHub/micro-robot-project/backend/external/zephyr/cmake/modules/kconfig.cmake:389 (message):
+  command failed with return code: 1
+Call Stack (most recent call first):
+  C:/Users/16bam/OneDrive/Documents/GitHub/micro-robot-project/backend/external/zephyr/cmake/modules/zephyr_default.cmake:131 (include)
+  C:/Users/16bam/OneDrive/Documents/GitHub/micro-robot-project/backend/external/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)
+  C:/Users/16bam/OneDrive/Documents/GitHub/micro-robot-project/backend/external/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)
+  CMakeLists.txt:7 (find_package)
+
+
+-- Configuring incomplete, errors occurred!
+FATAL ERROR: command exited with status 1: 'C:\Program Files\CMake\bin\cmake.EXE' -DWEST_PYTHON=C:/Users/16bam/AppData/Local/Programs/Python/Python312/python.exe '-BC:\Users\16bam\OneDrive\Documents\GitHub\micro-robot-project\backend\Robot_proj\build' -GNinja -DBOARD=esp32_devkitc/esp32/procpu '-SC:\Users\16bam\OneDrive\Documents\GitHub\micro-robot-project\backend\Robot_proj'

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'pages/landing.dart';
 import 'pages/setup.dart';
 import 'pages/controls_classes.dart/controls.dart';
 import 'pages/sensor.dart';
 import 'pages/video.dart';
+import 'app_state.dart';
 
 class AppLayout extends StatefulWidget {
   const AppLayout({super.key});
@@ -14,7 +16,6 @@ class AppLayout extends StatefulWidget {
 }
 
 class _AppLayoutState extends State<AppLayout> {
-  int selectedIndex = 0;
 
   final pages = const [
     LandingPage(),
@@ -26,6 +27,8 @@ class _AppLayoutState extends State<AppLayout> {
 
   @override
   Widget build(BuildContext context) {
+    final appState = Provider.of<MyAppState>(context, listen: true);
+    int selectedIndex = appState.pageIndex;
     return LayoutBuilder(
       builder: (context, constraints) {
         final isWide = constraints.maxWidth >= 600;
@@ -39,7 +42,7 @@ class _AppLayoutState extends State<AppLayout> {
                   extended: isWide,
                   selectedIndex: selectedIndex,
                   onDestinationSelected: (i) =>
-                      setState(() => selectedIndex = i),
+                      appState.changeIndex(i),
                   destinations: const [
                     NavigationRailDestination(
                       icon: Icon(Icons.home),

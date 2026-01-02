@@ -10,4 +10,8 @@ find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})
 project(Robot_proj)
 
 # Add the source files to the application
-target_sources(app PRIVATE src/main.c)
+target_sources(app PRIVATE
+    src/main.c
+    src/bluetooth.c
+    #src/wifi_server.c
+)
