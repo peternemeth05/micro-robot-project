@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:robot_app/services/ble_connection/ble_interface.dart';
 import '../constants.dart';
+import '../services/robot_profiles.dart';
 
 class ScanScreen extends StatefulWidget {
   final BleInterface bleDriver;
-  const ScanScreen({super.key, required this.bleDriver});
+  final List<RobotProfile> targetRobots;
+
+
+  const ScanScreen({super.key, required this.bleDriver, required this.targetRobots});
 
   @override
   State<ScanScreen> createState() => _ScanScreenState();
@@ -19,38 +23,55 @@ class _ScanScreenState extends State<ScanScreen> {
 @override
   void initState() {
     super.initState();
-    // Don't just call _startScan(); call a new safe method
     _waitForBluetoothAndScan();
   }
 
   Future<void> _waitForBluetoothAndScan() async {
-    // 1. Wait for the Bluetooth Adapter to turn ON
+    // we need ot wait for the Bluetooth Adapter to turn 
     try {
-      // If it's not already on, wait for it (with a timeout so we don't hang forever)
+      
       if (FlutterBluePlus.adapterStateNow != BluetoothAdapterState.on) {
         await FlutterBluePlus.adapterState
             .firstWhere((state) => state == BluetoothAdapterState.on)
             .timeout(const Duration(seconds: 5));
       }
     } catch (e) {
-      // If it takes too long or fails, just print error and return
+      // if BT connect takes too long just print error and return
       print("Error waiting for Bluetooth: $e");
       return;
     }
 
-    // 2. Now that it is ON, we can safely scan
+    // Now that it is ON we can safely scan with no issue
     _startScan();
   }
 
   Future<void> _startScan() async {
     setState(() => _isScanning = true);
 
-    // Listen to scan results
+    // preparing filters
+    final Set<Guid> serviceUuids = widget.targetRobots
+      .map((r)=> Guid(r.serviceUuid))
+      .toSet();
+
+    // creating a set of names for easier lookup
+    final Set<String> targetNames = widget.targetRobots
+      .map((r)=> r.name)
+      .toSet();
+
+    
+    // now scanning for robotts
     FlutterBluePlus.scanResults.listen((results) {
       if (mounted) {
         setState(() {
-          // The OS only gives us devices with the right Service UUID.
-          _scanResults = results;
+          
+          // BUT we only keep the device if
+          // 1. it has a name
+          // 2. Its name matches one of the robots the user selected
+          _scanResults = results.where((r) {
+             final deviceName = r.device.platformName; // or r.advertisementData.localName
+             print(deviceName);
+             return deviceName.isNotEmpty && targetNames.contains(deviceName);
+          }).toList();
         });
       }
     });
@@ -58,7 +79,7 @@ class _ScanScreenState extends State<ScanScreen> {
     // START SCANNING WITH FILTER
     try {
       await FlutterBluePlus.startScan(
-        withServices: [Guid(BleConstants.serviceUuid)],
+        withServices: serviceUuids.toList(),
         timeout: const Duration(seconds: 10),
       );
     } catch (e) {
@@ -77,6 +98,13 @@ class _ScanScreenState extends State<ScanScreen> {
       body: Column(
         children: [
           if (_isScanning) const LinearProgressIndicator(),
+
+          if (!_isScanning && _scanResults.isEmpty)
+             const Padding(
+               padding: EdgeInsets.all(20.0),
+               child: Text("No matching robots found.\nMake sure they are turned on!"),
+             ),
+
           Expanded(
             child: ListView.builder(
               itemCount: _scanResults.length,
@@ -86,9 +114,10 @@ class _ScanScreenState extends State<ScanScreen> {
                 final id = result.device.remoteId.str;
 
                 return ListTile(
-                  title: Text(name.isEmpty ? "Unknown Device" : name),
-                  subtitle: Text(id),
+                  title: Text(name, style: const TextStyle(fontWeight: FontWeight.bold)),
+                  subtitle: Text("ID: $id"),
                   
+
                   trailing: ElevatedButton(
                     child: const Text("Connect"),
                     style: ElevatedButton.styleFrom(

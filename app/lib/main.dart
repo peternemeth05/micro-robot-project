@@ -1,16 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:robot_app/services/ble_connection/ble_interface.dart';
-import 'services/ble_connection/ble_driver.dart';
-import 'services/ble_connection/ble_switcher.dart';
+import 'package:provider/provider.dart';
+
 import 'app_layout.dart';
+import 'app_state.dart';
+
+import 'services/ble_connection/ble_interface.dart';
+import 'services/ble_connection/ble_switcher.dart';
+import 'services/ble_connection/ble_driver.dart';
 
 void main() {
-  runApp(MyApp());
+  final BleInterface bleDriver = getBleDriver();
+
+  runApp(
+    MultiProvider(
+      providers: [
+        // Provide BLE so AppState can read it during creation)
+        Provider<BleInterface>.value(value: bleDriver),
+
+        // Create AppState and bind to BLE exactly once
+        ChangeNotifierProvider<AppState>(
+          create: (context) {
+            final appState = AppState();
+            appState.bindBle(context.read<BleInterface>());
+            return appState;
+          },
+        ),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
-  final BleInterface bleDriver = getBleDriver();
-  MyApp({super.key});
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +55,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       themeMode: ThemeMode.system,
-      home: AppLayout(bleDriver: bleDriver),
+      home: const AppLayout(),
     );
   }
 }

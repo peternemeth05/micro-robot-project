@@ -1,70 +1,62 @@
 import 'package:flutter/material.dart';
-import 'package:robot_app/services/ble_connection/ble_interface.dart';
-import '../services/ble_connection/ble_driver.dart'; 
-import '../widgets/ble_connect_button.dart';         
+import 'setup_pages/bluetooth_page.dart';
+import 'setup_pages/input_page.dart';
+import 'setup_pages/wifi_page.dart';
 
-class SetupWizardPage extends StatelessWidget {
-  final BleInterface bleDriver;
+class SetupWizardPage extends StatefulWidget {
+  const SetupWizardPage({super.key});
 
-  const SetupWizardPage({super.key, required this.bleDriver});
+  @override
+  State<SetupWizardPage> createState() => _SetupWizardPageState();
+}
+
+class _SetupWizardPageState extends State<SetupWizardPage> {
+  int selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Setup Wizard")),
-      body: Padding(
-        padding: const EdgeInsets.all(24.0),
+      body: SafeArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center, // Center vertically
-          crossAxisAlignment: CrossAxisAlignment.center, // Center horizontally
           children: [
-            // 1. Header Text
-            
-            const SizedBox(height: 20),
-            const Text(
-              'Step 1: Connect Bluetooth',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                _buildTab('Bluetooth', 0),
+                _buildTab('WiFi', 1),
+                _buildTab('Input', 2),
+              ],
             ),
 
+            const Divider(height: 1),
 
-            const SizedBox(height: 40),
-
-            // 2. The Custom Connect Button
-            // This button handles the scanning logic automatically
-            BleConnectButton(bleDriver: bleDriver),
-
-            const SizedBox(height: 20),
-
-            // 3. The test button
-            // sends 'T' to robot
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.red,
-                foregroundColor: Colors.white
+            Expanded(
+              child: IndexedStack(
+                index: selectedIndex,
+                children: const [
+                  BluetoothPage(),
+                  WifiPage(),
+                  InputPage(),
+                ],
               ),
-              onPressed: () async {
-                print("Sending 'T' to Robot...");
-                try{  
-                  // converting 'T' to bytes [84] and sending
-                  await bleDriver.writeToCharacteristic('T'.codeUnits);
-                  print("✅ 'T' Sent!");
-
-                } catch (e) {
-                  print("❌ Failed to send: $e");
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text("Send failed: $e")),
-                  );
-                }
-                },
-                child: const Text("Test: Send 'T'"),
-              
-
             ),
-
-
-
-            
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTab(String text, int index) {
+    final isSelected = selectedIndex == index;
+
+    return GestureDetector(
+      onTap: () => setState(() => selectedIndex = index),
+      child: Text(
+        text,
+        style: TextStyle(
+          fontSize: 18,
+          fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+          color: isSelected ? Colors.blue : Colors.grey,
         ),
       ),
     );
