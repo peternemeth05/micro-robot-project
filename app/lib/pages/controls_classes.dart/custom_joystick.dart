@@ -16,7 +16,7 @@ class CustomJoystick extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Joystick(
-          mode: JoystickMode.horizontalAndVertical,
+          mode: JoystickMode.all,
           listener: (details) {
             appState.updateJoystick(details.x, details.y);
           },       
