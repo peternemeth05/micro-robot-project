@@ -4,9 +4,9 @@ import 'package:provider/provider.dart';
 import 'app_layout.dart';
 import 'app_state.dart';
 
-import 'package:robot_app/services/ble_connection/ble_interface.dart';
-import 'services/ble_connection/ble_driver.dart';
+import 'services/ble_connection/ble_interface.dart';
 import 'services/ble_connection/ble_switcher.dart';
+import 'services/ble_connection/ble_driver.dart';
 
 void main() {
   final BleInterface bleDriver = getBleDriver();
@@ -14,14 +14,16 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
-        // App-wide UI state
-        ChangeNotifierProvider<AppState>(
-          create: (_) => AppState(),
-        ),
+        // Provide BLE so AppState can read it during creation)
+        Provider<BleInterface>.value(value: bleDriver),
 
-        // App-wide BLE service
-        Provider<BleInterface>.value(
-          value: bleDriver,
+        // Create AppState and bind to BLE exactly once
+        ChangeNotifierProvider<AppState>(
+          create: (context) {
+            final appState = AppState();
+            appState.bindBle(context.read<BleInterface>());
+            return appState;
+          },
         ),
       ],
       child: const MyApp(),
