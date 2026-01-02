@@ -20,8 +20,6 @@ class RobotControlsPage extends StatelessWidget {
               ],
           ), 
         ),
-    
-      
       body: TabBarView(
           children: [
             const Center(

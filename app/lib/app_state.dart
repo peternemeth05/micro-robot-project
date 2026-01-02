@@ -12,10 +12,20 @@ class MyAppState extends ChangeNotifier {
   bool pathOngoing = false;
   var path = paths.manual;
 
+  double x = 0;
+  double y = 0;
+
+  void updateJoystick(double newX, double newY) {
+    x = newX;
+    y = newY;
+    notifyListeners(); 
+    debugPrint("X:  $newX Y:  $newY");
+  }
+
   void togglePath(int time){
     pathOngoing = true;
     notifyListeners();
-    Timer(Duration(milliseconds: time), ()=>{pathOngoing=false});
+    Timer(Duration(milliseconds: time), (){pathOngoing=false;});
     notifyListeners();
   }
 
