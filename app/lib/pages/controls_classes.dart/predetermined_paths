@@ -1,0 +1,71 @@
+import 'package:flutter/material.dart';
+import 'controls.dart';
+
+
+
+class PrederterminedPaths extends StatelessWidget {
+  const PrederterminedPaths({super.key});
+
+  @override
+  Widget build(BuildContext context){
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        SizedBox(
+          width: 600,  
+          height: 400, 
+          child: Card.outlined(
+            color: Colors.white,
+            surfaceTintColor: Colors.transparent,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(24),
+              side: const BorderSide(color: Color.fromARGB(255, 69, 68, 68), width: 1),
+            ),
+
+            child: Row(
+              children:[
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          print('Spiral Inwards');
+                        },
+                        child: const Text('Spiral Inwards')
+                      ),
+                      TextButton(
+                        onPressed: (){
+                          print('Random Walk');
+                        }, 
+                        child: const Text('Random Walk')
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [ TextButton(
+                        onPressed: (){
+                          print('Grid Path');
+                        }, 
+                        child: const Text('Grid Path')
+                      ),
+                      TextButton(
+                        onPressed: (){
+                          print('Straight Line');
+                        }, 
+                        child: const Text('Straight Line')
+                      )
+                    ]
+                  ) 
+                )
+               ]
+             )
+          ),
+        ),
+      ],
+    );  
+  }
+}

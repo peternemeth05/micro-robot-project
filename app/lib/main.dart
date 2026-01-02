@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 import 'app_layout.dart';
+import 'package:provider/provider.dart';
+import 'package:robot_app/pages/controls_classes.dart/controls.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) =>MyAppState1(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

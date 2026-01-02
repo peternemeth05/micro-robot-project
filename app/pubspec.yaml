@@ -14,6 +14,8 @@ dependencies:
   fl_chart: ^1.1.1
   theme_mode_handler: ^3.0.0
 
+  flutter_joystick: ^0.2.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
