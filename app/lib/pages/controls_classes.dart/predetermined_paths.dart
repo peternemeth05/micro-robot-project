@@ -21,7 +21,7 @@ class _PrederterminedPathsState extends State<PrederterminedPaths> {
 
   @override
   Widget build(BuildContext context){
-    final appState = Provider.of<MyAppState>(context, listen: true);
+    final appState = Provider.of<MyAppState1>(context, listen: true);
 
     switch(appState.path){
       case paths.spiral:

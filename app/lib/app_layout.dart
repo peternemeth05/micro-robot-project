@@ -27,7 +27,7 @@ class _AppLayoutState extends State<AppLayout> {
 
   @override
   Widget build(BuildContext context) {
-    final appState = Provider.of<MyAppState>(context, listen: true);
+    final appState = Provider.of<MyAppState1>(context, listen: true);
     int selectedIndex = appState.pageIndex;
     return LayoutBuilder(
       builder: (context, constraints) {

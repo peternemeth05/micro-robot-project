@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 enum paths {spiral, random, grid, line, manual}
 
-class MyAppState extends ChangeNotifier {
+class MyAppState1 extends ChangeNotifier {
   bool isConnected = false;
 
   int pageIndex = 0;

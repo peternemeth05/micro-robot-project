@@ -6,9 +6,9 @@ import 'app_layout.dart';
 void main() {
   runApp(
     ChangeNotifierProvider(
-      create: (context) => MyAppState(),
+      create: (context) => MyAppState1(),
       child: const MyApp(),
-    ),
+    ), 
   );
 }
 
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => MyAppState(),
+      create: (_) => MyAppState1(),
       child: MaterialApp(
         title: 'Robot App',
 

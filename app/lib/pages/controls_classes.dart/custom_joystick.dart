@@ -10,7 +10,7 @@ class CustomJoystick extends StatelessWidget {
 
   @override
   Widget build(BuildContext context){
-    final appState = Provider.of<MyAppState>(context, listen: true);
+    final appState = Provider.of<MyAppState1>(context, listen: true);
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,

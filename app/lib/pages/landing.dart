@@ -9,7 +9,7 @@ class LandingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final appState = Provider.of<MyAppState>(context, listen: true);
+    final appState = Provider.of<MyAppState1>(context, listen: true);
     return Scaffold(
       appBar: AppBar(title: Text("Animal Inspired Movement and Robotics")),
       body: Column(
