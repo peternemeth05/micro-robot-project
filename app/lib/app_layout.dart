@@ -10,6 +10,7 @@ import 'pages/setup.dart';
 import 'pages/controls.dart';
 import 'pages/sensor.dart';
 import 'pages/video.dart';
+import 'app_state.dart';
 
 class AppLayout extends StatefulWidget {
   const AppLayout({super.key});
@@ -19,7 +20,6 @@ class AppLayout extends StatefulWidget {
 }
 
 class _AppLayoutState extends State<AppLayout> {
-  int selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +32,8 @@ class _AppLayoutState extends State<AppLayout> {
       const VideoLogPage(),
     ];
 
+    final appState = Provider.of<MyAppState>(context, listen: true);
+    int selectedIndex = appState.pageIndex;
     return LayoutBuilder(
       builder: (context, constraints) {
         final isWide = constraints.maxWidth >= 600;
@@ -51,7 +53,7 @@ class _AppLayoutState extends State<AppLayout> {
                   extended: isWide,
                   selectedIndex: selectedIndex,
                   onDestinationSelected: (i) =>
-                      setState(() => selectedIndex = i),
+                      appState.changeIndex(i),
                   destinations: const [
                     NavigationRailDestination(
                       icon: Icon(Icons.home),
