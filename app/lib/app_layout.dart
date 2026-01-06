@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:robot_app/app-state2.dart';
 
 import 'package:robot_app/services/ble_connection/ble_interface.dart';
 import 'widgets/ble_status_button.dart';
@@ -32,7 +33,7 @@ class _AppLayoutState extends State<AppLayout> {
       const VideoLogPage(),
     ];
 
-    final appState = Provider.of<MyAppState>(context, listen: true);
+    final appState = Provider.of<MyAppState1>(context, listen: true);
     int selectedIndex = appState.pageIndex;
     return LayoutBuilder(
       builder: (context, constraints) {
