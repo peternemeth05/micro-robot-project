@@ -11,25 +11,11 @@ import 'services/ble_connection/ble_switcher.dart';
 import 'services/ble_connection/ble_driver.dart';
 
 void main() {
-  final BleInterface bleDriver = getBleDriver();
-
   runApp(
-    MultiProvider(
-      providers: [
-        // Provide BLE so AppState can read it during creation)
-        Provider<BleInterface>.value(value: bleDriver),
-
-        // Create AppState and bind to BLE exactly once
-        ChangeNotifierProvider<AppState>(
-          create: (context) {
-            final appState = AppState();
-            appState.bindBle(context.read<BleInterface>());
-            return appState;
-          },
-        ),
-      ],
+    ChangeNotifierProvider(
+      create: (context) => MyAppState1(),
       child: const MyApp(),
-    ),
+    ), 
   );
 }
 
@@ -38,7 +24,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
- return ChangeNotifierProvider(
+    return ChangeNotifierProvider(
       create: (_) => MyAppState1(),
       child: MaterialApp(
         title: 'Robot App',
@@ -54,6 +40,10 @@ class MyApp extends StatelessWidget {
             backgroundColor: WidgetStateProperty.all(const Color.fromRGBO(158, 158, 158, 0.3)),
             visualDensity: VisualDensity(horizontal: 3.0,vertical: 3.0))
             ),
+          tabBarTheme: TabBarThemeData(
+            indicatorColor: Colors.red,
+            labelStyle: TextStyle(color: Colors.black)
+          )
         ),
 
         darkTheme: ThemeData(
@@ -67,7 +57,10 @@ class MyApp extends StatelessWidget {
             backgroundColor: WidgetStateProperty.all(Colors.red),
             visualDensity: VisualDensity(horizontal: 3.0,vertical: 3.0))
             ),
-
+          tabBarTheme: TabBarThemeData(
+            indicatorColor: Colors.red,
+            labelStyle: TextStyle(color: Colors.white)
+          ),
           brightness: Brightness.dark,
           colorScheme: const ColorScheme.dark(
             primary: Colors.black,

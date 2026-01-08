@@ -1,6 +1,10 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'services/ble_connection/ble_interface.dart';
+import 'package:flutter/material.dart';
+
+enum paths {spiral, random, grid, line, manual}
+
 
 class AppState extends ChangeNotifier {
   bool _bleConnected = false;
@@ -9,6 +13,30 @@ class AppState extends ChangeNotifier {
 
   StreamSubscription<bool>? _bleSubscription;
 
+  bool pathOngoing = false;
+  var path = paths.manual;
+
+  double x = 0;
+  double y = 0;
+
+  void updateJoystick(double newX, double newY) {
+    x = newX;
+    y = newY;
+    path = paths.manual;
+    notifyListeners(); 
+    debugPrint("X:  $newX Y:  $newY");
+  }
+
+  void togglePath(int time){
+    pathOngoing = true;
+    notifyListeners();
+    Timer(Duration(milliseconds: time), (){pathOngoing=false;});
+    notifyListeners();
+  }
+
+  void changeIndex(int ind){
+    pageIndex = ind;
+    notifyListeners();
   /// Bind BLE connection stream → AppState
   void bindBle(BleInterface ble) {
     // Set initial value
