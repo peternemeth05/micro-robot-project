@@ -1,10 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:robot_app/app-state2.dart';
+
 import 'package:robot_app/app_state.dart';
 import 'app_layout.dart';
+import 'app_state.dart';
+
+import 'services/ble_connection/ble_interface.dart';
+import 'services/ble_connection/ble_switcher.dart';
+import 'services/ble_connection/ble_driver.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => MyAppState1(),
+      child: const MyApp(),
+    ), 
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -12,8 +24,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
- return ChangeNotifierProvider(
-      create: (_) => MyAppState(),
+    return ChangeNotifierProvider(
+      create: (_) => MyAppState1(),
       child: MaterialApp(
         title: 'Robot App',
 
@@ -28,6 +40,10 @@ class MyApp extends StatelessWidget {
             backgroundColor: WidgetStateProperty.all(const Color.fromRGBO(158, 158, 158, 0.3)),
             visualDensity: VisualDensity(horizontal: 3.0,vertical: 3.0))
             ),
+          tabBarTheme: TabBarThemeData(
+            indicatorColor: Colors.red,
+            labelStyle: TextStyle(color: Colors.black)
+          )
         ),
 
         darkTheme: ThemeData(
@@ -41,7 +57,10 @@ class MyApp extends StatelessWidget {
             backgroundColor: WidgetStateProperty.all(Colors.red),
             visualDensity: VisualDensity(horizontal: 3.0,vertical: 3.0))
             ),
-
+          tabBarTheme: TabBarThemeData(
+            indicatorColor: Colors.red,
+            labelStyle: TextStyle(color: Colors.white)
+          ),
           brightness: Brightness.dark,
           colorScheme: const ColorScheme.dark(
             primary: Colors.black,

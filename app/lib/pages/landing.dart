@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:robot_app/app-state2.dart';
 
 import 'package:robot_app/app_state.dart';
 
@@ -9,7 +10,7 @@ class LandingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final appState = Provider.of<MyAppState>(context, listen: true);
+    final appState = Provider.of<MyAppState1>(context, listen: true);
     return Scaffold(
       appBar: AppBar(title: Text("Animal Inspired Movement and Robotics")),
       body: Column(

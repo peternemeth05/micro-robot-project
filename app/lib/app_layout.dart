@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:robot_app/app-state2.dart';
+
+import 'package:robot_app/services/ble_connection/ble_interface.dart';
+import 'widgets/ble_status_button.dart';
+import 'widgets/wifi_status_button.dart';
 
 import 'pages/landing.dart';
 import 'pages/setup.dart';
-import 'pages/controls.dart';
+import 'pages/controls_classes.dart/controls.dart';
 import 'pages/sensor.dart';
 import 'pages/video.dart';
 import 'app_state.dart';
@@ -17,24 +22,31 @@ class AppLayout extends StatefulWidget {
 
 class _AppLayoutState extends State<AppLayout> {
 
-  final pages = const [
-    LandingPage(),
-    SetupWizardPage(),
-    RobotControlsPage(),
-    SensorLogPage(),
-    VideoLogPage(),
-  ];
-
   @override
   Widget build(BuildContext context) {
-    final appState = Provider.of<MyAppState>(context, listen: true);
+
+    final pages = [
+      const LandingPage(),
+      SetupWizardPage(),
+      RobotControlsPage(),
+      SensorLogPage(),
+      const VideoLogPage(),
+    ];
+
+    final appState = Provider.of<MyAppState1>(context, listen: true);
     int selectedIndex = appState.pageIndex;
     return LayoutBuilder(
       builder: (context, constraints) {
         final isWide = constraints.maxWidth >= 600;
 
         return Scaffold(
-          appBar: AppBar(title: const Text('Robot Controller')),
+          appBar: AppBar(
+            title: const Text('Robot Controller'),
+            actions: [
+              BleStatusButton(),
+              WifiStatusButton(),
+            ],
+          ),
           body: Row(
             children: [
               SafeArea(
@@ -53,11 +65,11 @@ class _AppLayoutState extends State<AppLayout> {
                       label: Text('Set-up Wizard'),
                     ),
                     NavigationRailDestination(
-                      icon: Icon(Icons.route),
+                      icon: Icon(Icons.gamepad),
                       label: Text('Robot Controls'),
                     ),
                     NavigationRailDestination(
-                      icon: Icon(Icons.polyline),
+                      icon: Icon(Icons.list_alt),
                       label: Text('Sensor Log'),
                     ),
                     NavigationRailDestination(
