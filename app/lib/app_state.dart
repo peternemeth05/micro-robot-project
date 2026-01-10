@@ -42,5 +42,6 @@ class AppState extends ChangeNotifier {
   
   void toggleWifi() {
     _wifiConnected = !_wifiConnected;
+    notifyListeners();
   }
 }

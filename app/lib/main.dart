@@ -11,11 +11,25 @@ import 'services/ble_connection/ble_switcher.dart';
 import 'services/ble_connection/ble_driver.dart';
 
 void main() {
+  final BleInterface bleDriver = getBleDriver();
+
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => MyAppState1(),
+    MultiProvider(
+      providers: [
+        // Provide BLE so AppState can read it during creation)
+        Provider<BleInterface>.value(value: bleDriver),
+
+        // Create AppState and bind to BLE exactly once
+        ChangeNotifierProvider<AppState>(
+          create: (context) {
+            final appState = AppState();
+            appState.bindBle(context.read<BleInterface>());
+            return appState;
+          },
+        ),
+      ],
       child: const MyApp(),
-    ), 
+    ),
   );
 }
 
