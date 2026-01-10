@@ -8,10 +8,10 @@ class SensorLogPage extends StatefulWidget {
   State<SensorLogPage> createState() => _SensorLogPageState();
 }
 
-enum datas {data1, data2, data3, data4}
+enum Datas {data1, data2, data3, data4}
 
 class _SensorLogPageState extends State<SensorLogPage> {
-  datas data = datas.data1;
+  Datas data = Datas.data1;
   List<int> inputList = List.empty();
   String plotText = "";
 
@@ -19,16 +19,16 @@ class _SensorLogPageState extends State<SensorLogPage> {
   Widget build(BuildContext context) {
 
     switch (data){
-      case datas.data1:
+      case Datas.data1:
         inputList = List.generate(3, (int index) => index * index, growable: true);
         plotText = "Plot of data set 1";
-      case datas.data2:
+      case Datas.data2:
         inputList = List.generate(3, (int index) => index + index, growable: true);
         plotText = "Plot of data set 2";
-      case datas.data3:
+      case Datas.data3:
         inputList = List.generate(5, (int index) => index * 4, growable: true);
         plotText = "Plot of data set 3";
-      case datas.data4:
+      case Datas.data4:
         inputList = List.generate(4, (int index) => index * index * index, growable: true);
         plotText = "Plot of data set 4";
     }
@@ -46,23 +46,23 @@ class _SensorLogPageState extends State<SensorLogPage> {
               ),
             bottomNavigationBar: BottomAppBar(
               height: 56,
-              child: SegmentedButton<datas>(
-                segments: const <ButtonSegment<datas>>[
+              child: SegmentedButton<Datas>(
+                segments: const <ButtonSegment<Datas>>[
                   ButtonSegment(
-                    value: datas.data1,
+                    value: Datas.data1,
                     label: Text("Data Set 1")),
                   ButtonSegment(
-                    value: datas.data2,
+                    value: Datas.data2,
                     label: Text("Data Set 2")),
                   ButtonSegment(
-                    value: datas.data3,
+                    value: Datas.data3,
                     label: Text("Data Set 3")),
                   ButtonSegment(
-                    value: datas.data4,
+                    value: Datas.data4,
                     label: Text("Data Set 4")),
                 ], 
-                selected: <datas>{data},
-                onSelectionChanged: (Set<datas> newSelection){
+                selected: <Datas>{data},
+                onSelectionChanged: (Set<Datas> newSelection){
                   setState(() {
                     data = newSelection.first;
                   });

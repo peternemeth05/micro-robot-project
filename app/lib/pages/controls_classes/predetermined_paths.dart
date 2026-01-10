@@ -26,29 +26,33 @@ class _PredeterminedPathsState extends State<PredeterminedPaths>{
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SegmentedButton<paths>(
-            segments: const <ButtonSegment<paths>>[
+        SegmentedButton<Paths>(
+            segments: const <ButtonSegment<Paths>>[
               ButtonSegment(
-                value: paths.spiral,
+                value: Paths.spiral,
                 icon: Icon(CupertinoIcons.arrow_2_squarepath),
                 label: Text("Spiral Path")),
               ButtonSegment(
-                value: paths.grid,
+                value: Paths.grid,
                 icon: Icon(CupertinoIcons.arrow_swap),
                 label: Text("Grid Path")),
               ButtonSegment(
-                value: paths.line,
+                value: Paths.line,
                 icon: Icon(CupertinoIcons.arrow_up),
                 label: Text("Straight Line")),
               ButtonSegment(
-                value: paths.random,
+                value: Paths.random,
                 icon: Icon(CupertinoIcons.shuffle),
                 label: Text("Random Path")),
             ], 
 
-            selected: <paths>{appState.path},
+            selected: <Paths>{appState.path},
 
+<<<<<<< HEAD
             onSelectionChanged: (Set<paths> newSelection)async{
+=======
+            onSelectionChanged: (Set<Paths> newSelection){
+>>>>>>> 4ceae73f (Added 2 unit tests: timer reset after multiple button presses & snackbar appearance)
               if(appState.pathOngoing){
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(content:Text("Previous path ongoing, please wait"), duration: Duration(milliseconds:1200), behavior: SnackBarBehavior.floating,));
@@ -59,6 +63,7 @@ class _PredeterminedPathsState extends State<PredeterminedPaths>{
                   List<int> bluetoothCommand;
 
                   switch (selectedPath) {
+<<<<<<< HEAD
                     case paths.spiral: timeToUse = PredeterminedPaths.spiralTimer;
                                        bluetoothCommand = [0x50, 0x53];
                                        break;
@@ -71,6 +76,12 @@ class _PredeterminedPathsState extends State<PredeterminedPaths>{
                     case paths.random: timeToUse = PredeterminedPaths.randomTimer;
                                        bluetoothCommand = [0x50, 0x52]; 
                                        break;
+=======
+                    case Paths.spiral: timeToUse = PredeterminedPaths.spiralTimer; break;
+                    case Paths.grid:   timeToUse = PredeterminedPaths.gridTimer; break;
+                    case Paths.line:   timeToUse = PredeterminedPaths.lineTimer; break;
+                    case Paths.random: timeToUse = PredeterminedPaths.randomTimer; break;
+>>>>>>> 4ceae73f (Added 2 unit tests: timer reset after multiple button presses & snackbar appearance)
                     default:           timeToUse = 0;
                   }
                   setState(() {
