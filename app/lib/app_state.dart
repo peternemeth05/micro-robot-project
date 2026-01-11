@@ -6,7 +6,11 @@ import 'package:flutter/material.dart';
 <<<<<<< HEAD
 =======
 enum Paths {spiral, random, grid, line, manual}
+<<<<<<< HEAD
 >>>>>>> 4ceae73f (Added 2 unit tests: timer reset after multiple button presses & snackbar appearance)
+=======
+enum Video {start, stop}
+>>>>>>> 4200ab99 (added buttons for video and added bluetooth message on predetermined paths)
 
 class AppState extends ChangeNotifier {
   bool _bleConnected = false;
