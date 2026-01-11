@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-enum paths {spiral, random, grid, line, manual}
+enum Paths {spiral, random, grid, line, manual}
 
 class MyAppState1 extends ChangeNotifier {
   bool isConnected = false;
@@ -10,7 +10,7 @@ class MyAppState1 extends ChangeNotifier {
   int pageIndex = 0;
 
   bool pathOngoing = false;
-  var path = paths.manual;
+  var path = Paths.manual;
 
   double x = 0;
   double y = 0;
@@ -18,7 +18,7 @@ class MyAppState1 extends ChangeNotifier {
   void updateJoystick(double newX, double newY) {
     x = newX;
     y = newY;
-    path = paths.manual;
+    path = Paths.manual;
     notifyListeners(); 
     debugPrint("X:  $newX Y:  $newY");
   }

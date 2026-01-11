@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:robot_app/app-state2.dart';
-import 'package:robot_app/app_state.dart';
 
 
 class PredeterminedPaths extends StatefulWidget {
@@ -48,15 +47,7 @@ class _PredeterminedPathsState extends State<PredeterminedPaths>{
 
             selected: <Paths>{appState.path},
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-            onSelectionChanged: (Set<paths> newSelection)async{
-=======
-            onSelectionChanged: (Set<Paths> newSelection){
->>>>>>> 4ceae73f (Added 2 unit tests: timer reset after multiple button presses & snackbar appearance)
-=======
             onSelectionChanged: (Set<Paths> newSelection)async{
->>>>>>> 4200ab99 (added buttons for video and added bluetooth message on predetermined paths)
               if(appState.pathOngoing){
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(content:Text("Previous path ongoing, please wait"), duration: Duration(milliseconds:1200), behavior: SnackBarBehavior.floating,));
@@ -67,27 +58,6 @@ class _PredeterminedPathsState extends State<PredeterminedPaths>{
                   List<int> bluetoothCommand;
 
                   switch (selectedPath) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-                    case paths.spiral: timeToUse = PredeterminedPaths.spiralTimer;
-                                       bluetoothCommand = [0x50, 0x53];
-                                       break;
-                    case paths.grid:   timeToUse = PredeterminedPaths.gridTimer; 
-                                       bluetoothCommand = [0x50, 0x47];
-                                       break;
-                    case paths.line:   timeToUse = PredeterminedPaths.lineTimer;
-                                       bluetoothCommand = [0x50, 0x4C]; 
-                                       break;
-                    case paths.random: timeToUse = PredeterminedPaths.randomTimer;
-                                       bluetoothCommand = [0x50, 0x52]; 
-                                       break;
-=======
-                    case Paths.spiral: timeToUse = PredeterminedPaths.spiralTimer; break;
-                    case Paths.grid:   timeToUse = PredeterminedPaths.gridTimer; break;
-                    case Paths.line:   timeToUse = PredeterminedPaths.lineTimer; break;
-                    case Paths.random: timeToUse = PredeterminedPaths.randomTimer; break;
->>>>>>> 4ceae73f (Added 2 unit tests: timer reset after multiple button presses & snackbar appearance)
-=======
                     case Paths.spiral: timeToUse = PredeterminedPaths.spiralTimer;
                                        bluetoothCommand = [0x50, 0x53];
                                        break;
@@ -100,7 +70,6 @@ class _PredeterminedPathsState extends State<PredeterminedPaths>{
                     case Paths.random: timeToUse = PredeterminedPaths.randomTimer;
                                        bluetoothCommand = [0x50, 0x52]; 
                                        break;
->>>>>>> 4200ab99 (added buttons for video and added bluetooth message on predetermined paths)
                     default:           timeToUse = 0;
                   }
                   setState(() {

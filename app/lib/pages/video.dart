@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screen_recording/flutter_screen_recording.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:mjpeg_stream/mjpeg_stream.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:robot_app/app_state.dart';
 
 
-<<<<<<< HEAD
 enum Video { start, stop, download }
 
 
@@ -15,67 +13,6 @@ class VideoLogPage extends StatefulWidget {
 
   @override
   State<VideoLogPage> createState() => _VideoLogPageState();
-=======
-class VideoLogPage extends StatefulWidget {
-const VideoLogPage({super.key});
-
-  @override
-  State<VideoLogPage> createState() => _VideoLogPageState();
-}
-
-class _VideoLogPageState extends State<VideoLogPage> {
-Video _currentStatus = Video.stop;
-void _startRecordingLogic() => debugPrint("Recording Started");
-void _stopRecordingLogic() => debugPrint("Recording Stopped");
-@override
-Widget build(BuildContext context) {
-  return MaterialApp(
-    home: Scaffold(
-      body: Column(
-        children: [MJPEGStreamScreen(
-          streamUrl: "http://yasmines-iphone.local:8081/video",
-          showLiveIcon: true,
-          width: 900.0,
-          height: 600.0,
-          fit: BoxFit.cover,
-         ),
-
-         SegmentedButton<Video>(
-            segments: const <ButtonSegment<Video>>[
-              ButtonSegment(
-                value: Video.start,
-                icon: Icon(CupertinoIcons.play),
-                label: Text("Start Recording")
-              ),
-              ButtonSegment(
-                value: Video.stop,
-                icon: Icon(CupertinoIcons.pause),
-                label: Text("Stop Recording")
-              ),
-            ],
-
-            selected: <Video>{_currentStatus},
-
-            onSelectionChanged: (Set<Video> newSelection){
-              setState((){
-                _currentStatus = newSelection.first;
-              switch (_currentStatus) {
-              case Video.start: 
-                              _startRecordingLogic();
-                              break;
-              case Video.stop: 
-                              _stopRecordingLogic();
-                              break;
-              }
-            });
-          },
-        ), 
-       ],
-      ),
-     ),
-   );
-  }
->>>>>>> 4200ab99 (added buttons for video and added bluetooth message on predetermined paths)
 }
 
 class _VideoLogPageState extends State<VideoLogPage> {
