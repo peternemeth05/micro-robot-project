@@ -9,8 +9,8 @@ import 'widgets/wifi_status_button.dart';
 
 import 'pages/landing.dart';
 import 'pages/setup.dart';
-import 'pages/controls.dart';
 import 'pages/sensor_pages/sensor.dart';
+import 'pages/controls_classes.dart/controls.dart';
 import 'pages/video.dart';
 import 'app_state.dart';
 

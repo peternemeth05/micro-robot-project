@@ -24,7 +24,7 @@ class _SetupWizardPageState extends State<SetupWizardPage> {
               children: [
                 _buildTab('Bluetooth', 0),
                 _buildTab('WiFi', 1),
-                _buildTab('Input', 2),
+                //_buildTab('Input', 2),
               ],
             ),
 
