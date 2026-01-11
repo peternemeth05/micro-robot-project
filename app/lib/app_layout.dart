@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:robot_app/app-state2.dart';
+import 'package:robot_app/pages/robotinfo.dart';
 
 import 'package:robot_app/services/ble_connection/ble_interface.dart';
 import 'widgets/ble_status_button.dart';
@@ -9,7 +10,7 @@ import 'widgets/wifi_status_button.dart';
 import 'pages/landing.dart';
 import 'pages/setup.dart';
 import 'pages/controls.dart';
-import 'pages/sensor.dart';
+import 'pages/sensor_pages/sensor.dart';
 import 'pages/video.dart';
 import 'app_state.dart';
 
@@ -29,7 +30,7 @@ class _AppLayoutState extends State<AppLayout> {
       const LandingPage(),
       SetupWizardPage(),
       RobotControlsPage(),
-      SensorLogPage(),
+      RobotInfoPage(),
       const VideoLogPage(),
     ];
 
