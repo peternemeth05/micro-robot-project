@@ -3,18 +3,10 @@ import 'package:flutter/foundation.dart';
 import 'services/ble_connection/ble_interface.dart';
 import 'package:flutter/material.dart';
 
-<<<<<<< HEAD
-=======
-enum Paths {spiral, random, grid, line, manual}
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 4ceae73f (Added 2 unit tests: timer reset after multiple button presses & snackbar appearance)
-=======
-enum Video {start, stop}
->>>>>>> 4200ab99 (added buttons for video and added bluetooth message on predetermined paths)
-=======
 
->>>>>>> 49b03b30 (addded screen recording)
+enum Paths {spiral, random, grid, line, manual}
+
+enum Video {start, stop}
 
 class AppState extends ChangeNotifier {
   bool _bleConnected = false;
@@ -23,7 +15,6 @@ class AppState extends ChangeNotifier {
 
   StreamSubscription<bool>? _bleSubscription;
 
-<<<<<<< HEAD
   /// Bind BLE connection stream → AppState
   void bindBle(BleInterface ble) {
     // Set initial value
@@ -33,28 +24,6 @@ class AppState extends ChangeNotifier {
     _bleSubscription?.cancel();
     _bleSubscription = ble.connectionStateStream.listen((connected) {
       _setBleConnected(connected);
-=======
-  bool pathOngoing = false;
-  var path = Paths.manual;
-
-  double x = 0;
-  double y = 0;
-
-  void updateJoystick(double newX, double newY) {
-    x = newX;
-    y = newY;
-    path = Paths.manual;
-    notifyListeners(); 
-    debugPrint("X:  $newX Y:  $newY");
-  }
-
-  void togglePath(int time){
-    pathOngoing = true;
-    notifyListeners();
-    Timer(Duration(milliseconds: time), (){
-      pathOngoing=false;
-      notifyListeners();
->>>>>>> 4ceae73f (Added 2 unit tests: timer reset after multiple button presses & snackbar appearance)
     });
   }
 
