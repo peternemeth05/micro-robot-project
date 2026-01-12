@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:robot_app/app_layout.dart';
-import 'package:robot_app/app_state.dart';
+import 'package:robot_app/app-state2.dart';
 import 'package:robot_app/pages/controls_classes/controls.dart';
 import 'package:robot_app/pages/landing.dart';
 import 'package:robot_app/pages/sensor.dart';
@@ -10,9 +10,12 @@ import 'package:robot_app/pages/setup_pages/input_page.dart';
 import 'package:robot_app/pages/video.dart';
 
 void main() {
-  final state = AppState();
+  final state = MyAppState1();
 
   testWidgets('Does the widget tab bar work properly',(WidgetTester tester)async{
+   tester.view.physicalSize = const Size(1200, 800);
+   tester.view.devicePixelRatio = 1.0;
+
    final Map<String, Type> navigationItems = {
       'Home': LandingPage,
       'Set-up Wizard': InputPage,
@@ -22,7 +25,7 @@ void main() {
     };
     await tester.pumpWidget(
       MaterialApp(
-        home: ChangeNotifierProvider<AppState>.value(
+        home: ChangeNotifierProvider<MyAppState1>.value(
           value: state,
           child: const Scaffold(
             body: AppLayout(), 

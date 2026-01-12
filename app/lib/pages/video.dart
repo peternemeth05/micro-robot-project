@@ -20,7 +20,6 @@ class _VideoLogPageState extends State<VideoLogPage> {
 
   void _startRecordingLogic() async {
     try {
-      // Filename: 'robot_log'. Note: Chrome will prompt you to select the tab.
       bool started = await FlutterScreenRecording.startRecordScreen('robot_log');
       
       if (started) {

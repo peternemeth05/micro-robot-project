@@ -2,6 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:robot_app/app-state2.dart';
+import 'package:robot_app/services/ble_connection/ble_interface.dart';
+
+
+
 
 
 class PredeterminedPaths extends StatefulWidget {
@@ -17,10 +21,11 @@ class PredeterminedPaths extends StatefulWidget {
 
 class _PredeterminedPathsState extends State<PredeterminedPaths>{
 
+
   @override
   Widget build(BuildContext context){
     final appState = Provider.of<MyAppState1>(context, listen: true);
-    //final driver = context.read<AppState>().driver;
+    final bleDriver = context.read<BleInterface>();
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -55,22 +60,49 @@ class _PredeterminedPathsState extends State<PredeterminedPaths>{
               else{
                   final selectedPath = newSelection.first;
                   int timeToUse;
-                  List<int> bluetoothCommand;
 
                   switch (selectedPath) {
-                    case Paths.spiral: timeToUse = PredeterminedPaths.spiralTimer;
-                                       bluetoothCommand = [0x50, 0x53];
-                                       break;
+                    case Paths.spiral: timeToUse = PredeterminedPaths.spiralTimer; 
+                        ()async {
+                          try {
+                            await bleDriver.writeToCharacteristic('PS'.codeUnits);
+                            debugPrint("✅ 'PS' Sent!");
+                          } catch (e) {
+                            debugPrint("❌ PS");
+                          }
+                        }();  
+                        break;
                     case Paths.grid:   timeToUse = PredeterminedPaths.gridTimer; 
-                                       bluetoothCommand = [0x50, 0x47];
-                                       break;
+                       ()async {
+                          try {
+                            await bleDriver.writeToCharacteristic('PG'.codeUnits);
+                            debugPrint("✅ 'PG' Sent!");
+                          } catch (e) {
+                            debugPrint("❌ PG");
+                          }
+                        }();
+                        break;
                     case Paths.line:   timeToUse = PredeterminedPaths.lineTimer;
-                                       bluetoothCommand = [0x50, 0x4C]; 
-                                       break;
+                       ()async {
+                          try {
+                            await bleDriver.writeToCharacteristic('PL'.codeUnits);
+                            debugPrint("✅ 'PL' Sent!");
+                          } catch (e) {
+                            debugPrint("❌ PL");
+                          }
+                        }();
+                        break;
                     case Paths.random: timeToUse = PredeterminedPaths.randomTimer;
-                                       bluetoothCommand = [0x50, 0x52]; 
-                                       break;
-                    default:           timeToUse = 0;
+                        ()async {
+                          try {
+                            await bleDriver.writeToCharacteristic('PR'.codeUnits);
+                            debugPrint("✅ 'PR' Sent!");
+                          } catch (e) {
+                            debugPrint("❌ PR");
+                          }
+                        }(); 
+                        break;         
+                    default:  timeToUse = 0;
                   }
                   setState(() {
                     appState.path = selectedPath;
