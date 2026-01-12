@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screen_recording/flutter_screen_recording.dart';
-import 'package:share_plus/share_plus.dart';
 import 'package:mjpeg_stream/mjpeg_stream.dart';
 
 

@@ -15,15 +15,11 @@ dependencies:
   theme_mode_handler: ^3.0.0
   cupertino_icons: ^1.0.0
   flutter_widget_recorder: ^0.1.0
-
   flutter_joystick: ^0.2.2
   mjpeg_stream: ^1.0.1
-<<<<<<< HEAD
   flutter_blue_plus: ^1.30.0 
   flutter_web_bluetooth: ^1.1.0
   permission_handler: ^11.0.0 
-=======
->>>>>>> 49b03b30 (addded screen recording)
   share_plus: ^12.0.1
   flutter_screen_recording: ^2.0.24
 

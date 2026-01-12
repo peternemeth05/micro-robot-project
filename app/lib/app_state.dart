@@ -4,9 +4,6 @@ import 'services/ble_connection/ble_interface.dart';
 import 'package:flutter/material.dart';
 
 
-enum Paths {spiral, random, grid, line, manual}
-
-enum Video {start, stop}
 
 class AppState extends ChangeNotifier {
   bool _bleConnected = false;

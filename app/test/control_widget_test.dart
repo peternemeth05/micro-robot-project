@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:robot_app/pages/controls_classes/predetermined_paths.dart';
 
 void main() {
-
   test('Is MyAppState updating correctly',(){
     final state = MyAppState1(); 
 
@@ -44,7 +43,7 @@ void main() {
      
 
   }
-});
+ });
 
   testWidgets('Is the snackbar appearing in predetermined paths correctly', (WidgetTester test) async {
     final state = MyAppState1();
