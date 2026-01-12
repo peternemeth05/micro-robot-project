@@ -83,6 +83,22 @@ class BleNative implements BleInterface {
       _connectionStateController.add(true);
       print("✅ (Native) Connection & Setup Complete!");
 
+      await _sharedChar!.setNotifyValue(true);
+
+      _sharedChar!.lastValueStream.listen((List<int> rawData) {
+        if (rawData.isEmpty) return;
+        try {
+          // Decode bytes to text (e.g. "B:85")
+          String decoded = utf8.decode(rawData);
+          _sensorDataController.add(decoded); 
+          print("(Native) RX: $decoded");
+        } catch (e) {
+          print("Error decoding: $e");
+        }
+      });
+
+
+
     } catch (e) {
       print("❌ (Native) Connection Failed: $e");
       disconnect(); // Clean up
