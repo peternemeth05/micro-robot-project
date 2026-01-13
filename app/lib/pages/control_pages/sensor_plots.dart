@@ -122,7 +122,7 @@ class _SensorLogPageState extends State<SensorLogPage> {
                 ),
                 const SizedBox(height: 10),
                 SizedBox( // contains ultrasound data button
-                  width: 280,
+                  width: 330,
                   child: ElevatedButton.icon(
                     icon: const Icon(Icons.list),
                     label: const Text("View Logged Ultrasound Data"),
