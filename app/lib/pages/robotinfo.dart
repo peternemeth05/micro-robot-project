@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:robot_app/pages/controls_classes.dart/predetermined_paths.dart';
 import 'package:robot_app/pages/sensor_pages/geninfopage.dart';
 import 'sensor_pages/sensor.dart';
 
@@ -15,7 +16,7 @@ class _RobotInfoPageState extends State<RobotInfoPage> {
 @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2,
+      length: 3,
       child: Scaffold(
         body: SafeArea(
           child: Column(
@@ -23,6 +24,7 @@ class _RobotInfoPageState extends State<RobotInfoPage> {
               const TabBar(
                 tabs: [
                   Tab(text: 'Main Controls'),
+                  Tab(text: "Automatic Paths"),
                   Tab(text: 'Plotted Data'),
                 ],
               ),
@@ -30,7 +32,7 @@ class _RobotInfoPageState extends State<RobotInfoPage> {
               const Divider(height: 1),
 
               const Expanded(
-                child: TabBarView(children: [GeneralInfoPage(), SensorLogPage()]),
+                child: TabBarView(children: [GeneralInfoPage(), PrederterminedPaths(), SensorLogPage()]),
               ),
             ],
           ),

@@ -21,6 +21,7 @@ class _SensorLogPageState extends State<SensorLogPage> {
   String plotText = "";
   String xLabel = "";
   String yLabel = "";
+  int interval = 200;
 
   @override
   Widget build(BuildContext context) {
@@ -32,21 +33,25 @@ class _SensorLogPageState extends State<SensorLogPage> {
         plotText = "Plot of voltage against time";
         xLabel = "Time (ms)";
         yLabel = "Voltage (mV)";
+        interval = 200;
       case datas.data2:
         inputList = List.generate(3, (int index) => index + index, growable: true);
         plotText = "Plot of frequency against time";
         xLabel = "Time (ms)";
         yLabel = "Frequency (Hz)";
+        interval = 200;
       case datas.data3:
         inputList = List.generate(5, (int index) => index * 4, growable: true);
         plotText = "Plot of distance from surface against time";
         xLabel = "Time (ms)";
         yLabel = "Distance from nearest surface (cm)";
+        interval = 200;
       case datas.data4:
         inputList = appState.speedhist.sublist(appState.speedhist.length-11,appState.speedhist.length-1);
         plotText = "Plot of speed against time";
-        xLabel = "Time (ms)";
-        yLabel = "Velocity (m/s)";
+        xLabel = "Time (AU)";
+        yLabel = "Speed (AU)";
+        interval = 1;
     }
 
     final bool compact = MediaQuery.of(context).size.width < 850;
@@ -68,6 +73,7 @@ class _SensorLogPageState extends State<SensorLogPage> {
                     vals: inputList,
                     xlabel: xLabel,
                     ylabel: yLabel,
+                    timeint: interval,
                   );
                 },
               ),

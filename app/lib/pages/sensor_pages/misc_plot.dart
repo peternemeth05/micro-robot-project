@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 class GeneralPlot extends StatelessWidget{
   final double height;
   final double width;
+  final int timeint;
   final String ylabel;
   final String xlabel;
   final List vals;
-  const GeneralPlot({Key? key, required this.width, required this.height, required this.vals, required this.ylabel, required this.xlabel}):super(key: key);
+  const GeneralPlot({Key? key, required this.width, required this.height, required this.vals, required this.ylabel, required this.xlabel, required this.timeint}):super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +29,7 @@ class GeneralPlot extends StatelessWidget{
           LineChartBarData(
             spots: [
               for(var (index, val) in vals.indexed)
-                FlSpot(index.toDouble()*200, val.toDouble()),
+                FlSpot(index.toDouble()*timeint, val.toDouble()),
             ],
             isCurved: true,
             barWidth: 4,

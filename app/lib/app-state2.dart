@@ -17,6 +17,7 @@ class MyAppState1 extends ChangeNotifier {
   double y = 0;
   int speed = 0;
   List<int> speedhist = [];
+  String heading = "N/A";
 
   String distanceValue = "N/A";
 
@@ -26,6 +27,9 @@ class MyAppState1 extends ChangeNotifier {
     speed = (sqrt(x*x+y*y)*10).toInt();
     speedhist.add(speed);
     path = paths.manual;
+    if(speed==0){heading="N/A";}else{
+      heading = (-atan2(y,x)* 180 / pi ).toStringAsFixed(1);
+    }
     notifyListeners(); 
     debugPrint("X:  $newX Y:  $newY");
   }
