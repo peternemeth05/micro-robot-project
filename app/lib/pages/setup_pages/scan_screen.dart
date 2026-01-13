@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
-import 'package:robot_app/services/ble_connection/ble_interface.dart';
-import '../constants.dart';
-import '../services/robot_profiles.dart';
+import 'package:robot_app/ble_files/services/ble_connection/ble_interface.dart';
+import '../../ble_files/services/robot_profiles.dart';
 
 class ScanScreen extends StatefulWidget {
   final BleInterface bleDriver;

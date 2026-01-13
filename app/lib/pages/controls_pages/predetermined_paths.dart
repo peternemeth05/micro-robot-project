@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:robot_app/app-state2.dart';
-import 'package:robot_app/services/ble_connection/ble_interface.dart';
+import 'package:robot_app/app_states/main_app_state.dart';
+import 'package:robot_app/ble_files/services/ble_connection/ble_interface.dart';
 
 class PredeterminedPaths extends StatefulWidget {
   const PredeterminedPaths({super.key});

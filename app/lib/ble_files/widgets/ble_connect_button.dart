@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart'; // Needed for kIsWeb
-import 'package:robot_app/services/ble_connection/ble_interface.dart';
-import '../pages/scan_screen.dart'; 
+import 'package:robot_app/ble_files/services/ble_connection/ble_interface.dart';
+import '../../pages/setup_pages/scan_screen.dart'; 
 import '../services/robot_profiles.dart';
 
 class BleConnectButton extends StatelessWidget {

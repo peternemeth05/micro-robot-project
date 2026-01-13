@@ -2,10 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:robot_app/app-state2.dart';
-import 'package:robot_app/app_state.dart' hide paths;
-import 'package:robot_app/pages/controls_classes/custom_joystick.dart';
-import 'package:robot_app/services/ble_connection/ble_interface.dart';
+import 'package:robot_app/app_states/main_app_state.dart';
+import 'package:robot_app/pages/controls_pages/custom_joystick.dart';
+import 'package:robot_app/ble_files/services/ble_connection/ble_interface.dart';
 
 class GeneralInfoPage extends StatefulWidget {
   const GeneralInfoPage({super.key});

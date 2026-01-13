@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:robot_app/app-state2.dart';
+import 'package:robot_app/app_states/main_app_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:robot_app/pages/controls_classes/predetermined_paths.dart';
-import 'package:robot_app/services/ble_connection/ble_interface.dart';
+import 'package:robot_app/pages/controls_pages/predetermined_paths.dart';
+import 'package:robot_app/ble_files/services/ble_connection/ble_interface.dart';
 import 'fake_ble_interface.dart';
 
 

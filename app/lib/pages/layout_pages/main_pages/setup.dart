@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'setup_pages/bluetooth_page.dart';
-import 'setup_pages/wifi_page.dart';
+import '../../setup_pages/bluetooth_page.dart';
+import '../../setup_pages/wifi_page.dart';
 
 class SetupWizardPage extends StatefulWidget {
   const SetupWizardPage({super.key});
