@@ -88,7 +88,17 @@ class _GeneralInfoPageState extends State<GeneralInfoPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    ElevatedButton(onPressed: null, child: Text("End Distance Recording"))
+                    ElevatedButton(
+                      onPressed: () async {
+                        try {
+                          await bleDriver.writeToCharacteristic('Z'.codeUnits);
+                          debugPrint("✅ 'Z' Sent!");
+                        } catch (e) {
+                          debugPrint("❌ $e");
+                        }
+                      },
+                       
+                       child: Text("End Distance Recording"))
                   ],
                 )
               ),
@@ -96,7 +106,16 @@ class _GeneralInfoPageState extends State<GeneralInfoPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    ElevatedButton(onPressed: null, child: Text("Get Current Distance"))
+                    ElevatedButton(
+                      onPressed: () async {
+                        try {
+                          await bleDriver.writeToCharacteristic('D'.codeUnits);
+                          debugPrint("✅ 'D' Sent!");
+                        } catch (e) {
+                          debugPrint("❌ $e");
+                        }
+                      },
+                      child: Text("Get Current Distance"))
                   ],
                 )
               )
