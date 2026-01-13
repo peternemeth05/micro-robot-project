@@ -48,7 +48,7 @@ class _GeneralInfoPageState extends State<GeneralInfoPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Current Speed:")
+                    Text("Current Speed: "+(appState.speed*10).toInt().toString())
                   ],
                 )
                 ),
