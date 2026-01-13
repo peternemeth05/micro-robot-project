@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart'; // Needed for kIsWeb
 import 'package:robot_app/services/ble_connection/ble_interface.dart';
-import '../services/ble_connection/ble_driver.dart';
 import '../pages/scan_screen.dart'; 
 import '../services/robot_profiles.dart';
 
@@ -21,9 +20,9 @@ class BleConnectButton extends StatelessWidget {
 
         return ElevatedButton.icon(
           style: ElevatedButton.styleFrom(
-            backgroundColor: isConnected ? Colors.red : Colors.blue,
-            foregroundColor: Colors.white,
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+            backgroundColor: isConnected ? Colors.blue : Colors.red,
+            foregroundColor: isConnected ? Colors.white : Colors.black,
+            textStyle: const TextStyle(fontSize: 18),
           ),
           icon: Icon(isConnected ? Icons.bluetooth_connected : Icons.bluetooth),
           // showing the label how many robots are slected

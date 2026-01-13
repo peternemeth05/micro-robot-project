@@ -1,0 +1,32 @@
+/ {
+    aliases {
+        led-strip = &led_strip;
+    };
+};
+
+/ {
+    chosen {
+        zephyr,sram = &sram0;
+    };
+};
+
+&spi3 {
+    status = "okay";
+    
+    led_strip: ws2812@0 {
+        compatible = "worldsemi,ws2812-spi";
+        reg = <0>;
+        spi-max-frequency = <6400000>;
+        
+        chain-length = <4>;
+        spi-one-frame = <0x70>;
+        spi-zero-frame = <0x40>;
+        color-mapping = <3 2 1>;
+        reset-delay = <280>;
+    };
+};
+
+&uart0 {
+    status = "okay";
+    current-speed = <115200>;
+};
