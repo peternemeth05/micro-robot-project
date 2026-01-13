@@ -25,7 +25,6 @@ class _AppLayoutState extends State<AppLayout> {
     final pages = [
       const LandingPage(),
       SetupWizardPage(),
-      RobotControlsPage(),
       RobotInfoPage(),
       const VideoLogPage(),
     ];
@@ -58,10 +57,6 @@ class _AppLayoutState extends State<AppLayout> {
                     NavigationRailDestination(
                       icon: Icon(Icons.gamepad),
                       label: Text('Robot Controls'),
-                    ),
-                    NavigationRailDestination(
-                      icon: Icon(Icons.list_alt),
-                      label: Text('Sensor Log'),
                     ),
                     NavigationRailDestination(
                       icon: Icon(Icons.camera),
