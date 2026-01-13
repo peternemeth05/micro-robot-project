@@ -84,7 +84,7 @@ class _GeneralInfoPageState extends State<GeneralInfoPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Distance to nearest surface: "+(appState.distanceValue)+" cm")
+                    Text("Distance to nearest surface: "+(appState1.distanceValue)+" cm")
                   ],
                 )
                 ),
