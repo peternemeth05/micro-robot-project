@@ -6,6 +6,11 @@ import 'package:robot_app/pages/sensor_pages/misc_plot.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
+import 'dart:convert';
+import 'dart:js_interop';
+import 'package:web/web.dart' as web;
+
+
 class SensorLogPage extends StatefulWidget {
   const SensorLogPage({super.key});
 
@@ -119,7 +124,7 @@ class _SensorLogPageState extends State<SensorLogPage> {
                   width: 280,
                   child: ElevatedButton.icon(
                     icon: const Icon(Icons.list),
-                    label: const Text("View Logged Sensor Data"),
+                    label: const Text("View Logged Ultrasound Data"),
                     onPressed: () {
                       Navigator.push(
                         context,
@@ -142,6 +147,54 @@ class _SensorLogPageState extends State<SensorLogPage> {
 class LoggedDataPage extends StatelessWidget {
   const LoggedDataPage({super.key});
 
+  // Escape a value for CSV (handles commas, quotes, newlines)
+  String _csvEscape(String value) {
+    final needsQuotes =
+        value.contains(',') || value.contains('"') || value.contains('\n') || value.contains('\r');
+    if (!needsQuotes) return value;
+    final escaped = value.replaceAll('"', '""');
+    return '"$escaped"';
+  }
+
+  String _buildSensorLogCsv() {
+    final box = Hive.box<Map>('sensor_log');
+
+    final rows = <List<String>>[
+      ['timestamp', 'value'],
+    ];
+
+    for (int i = 0; i < box.length; i++) {
+      final entry = box.getAt(i);
+      if (entry == null) continue;
+
+      final ts = entry['timestamp']?.toString() ?? '';
+      final value = entry['value']?.toString() ?? '';
+      rows.add([ts, value]);
+    }
+
+    return rows.map((r) => r.map(_csvEscape).join(',')).join('\n');
+  }
+
+  void _downloadCsvWeb() {
+    final csv = _buildSensorLogCsv();
+    final bytes = utf8.encode(csv);
+
+    final blob = web.Blob(
+      [bytes.toJS].toJS,
+      web.BlobPropertyBag(type: 'text/csv'),
+    );
+
+    final url = web.URL.createObjectURL(blob);
+
+    final filename = 'sensor_log_${DateTime.now().millisecondsSinceEpoch}.csv';
+    final a = web.HTMLAnchorElement()
+      ..href = url
+      ..download = filename;
+
+    a.click();
+    web.URL.revokeObjectURL(url);
+  }
+
   @override
   Widget build(BuildContext context) {
     final box = Hive.box<Map>('sensor_log');
@@ -150,6 +203,11 @@ class LoggedDataPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Logged Sensor Data"),
         actions: [
+          IconButton(
+            tooltip: "Export CSV",
+            icon: const Icon(Icons.download),
+            onPressed: _downloadCsvWeb,
+          ),
           IconButton(
             tooltip: "Clear log",
             icon: const Icon(Icons.delete),

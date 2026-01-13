@@ -54,7 +54,7 @@ class _BluetoothState extends State<BluetoothPage> {
                   final isChecked = _selectedRobotIds.contains(robot.id);
 
                   return Card(
-                    color: isChecked ? Colors.red : Colors.grey.shade200,
+                    color: isChecked ? Colors.red : Colors.black,
                     child: CheckboxListTile(
                       title: Text(robot.name),
                       subtitle: Text("ID: ${robot.id}"),
