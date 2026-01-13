@@ -1,12 +1,12 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:robot_app/app_state.dart';
 import 'package:robot_app/services/ble_connection/ble_interface.dart';
-import 'dart:math' as math;
 
 
 enum Paths {spiral, random, grid, line, manual}
-
 
 class MyAppState1 extends ChangeNotifier {
   
@@ -22,12 +22,23 @@ class MyAppState1 extends ChangeNotifier {
 
   double x = 0;
   double y = 0;
+  int speed = 0;
+  List<int> speedhist = [];
+  String heading = "N/A";
+
+  String distanceValue = "N/A";
   double distance =0;
 
   void updateJoystick(double newX, double newY) {
     x = newX;
     y = newY;
-    distance = math.sqrt(math.pow(newX, 2) + math.pow(newY, 2));
+    speed = (sqrt(x*x+y*y)*10).toInt();
+    speedhist.add(speed);
+    path = Paths.manual;
+    if(speed==0){heading="N/A";}else{
+      heading = (-atan2(y,x)* 180 / pi ).toStringAsFixed(1);
+    }
+    distance = sqrt(pow(newX, 2) + pow(newY, 2));
     path = Paths.manual;
     
     String vert = y >= 0 ? 'F' : 'B';
@@ -49,6 +60,11 @@ class MyAppState1 extends ChangeNotifier {
       }();
 
     notifyListeners(); 
+  }
+
+  void updateDistance(String newDistance) {
+    distanceValue = newDistance;
+    notifyListeners();
   }
 
   void togglePath(int time){

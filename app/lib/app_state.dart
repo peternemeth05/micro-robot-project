@@ -12,6 +12,9 @@ class AppState extends ChangeNotifier {
   bool _bleConnected = false;
   bool get bleConnected => _bleConnected;
 
+  bool _sensorLogging = false;
+  bool get sensorLogging => _sensorLogging;
+
   StreamSubscription<bool>? _bleSubscription;
 
   // subscription for sensor data logging
@@ -48,6 +51,12 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  void _setSensorLogging(bool value) {
+    if (_sensorLogging == value) return;
+    _sensorLogging = value;
+    notifyListeners();
+  }
+
   void _startSensorLogging(BleInterface ble) {
     // Prevent double subscription
     if (_sensorSubscription != null) return;
@@ -63,11 +72,13 @@ class AppState extends ChangeNotifier {
       const maxEntries = 2000;
       if (box.length > maxEntries) box.deleteAt(0);
     });
+    _setSensorLogging(true);
   }
 
   Future<void> _stopSensorLogging() async {
     await _sensorSubscription?.cancel();
     _sensorSubscription = null;
+    _setSensorLogging(false);
   }
 
   @override

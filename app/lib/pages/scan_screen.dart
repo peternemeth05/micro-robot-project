@@ -93,6 +93,8 @@ class _ScanScreenState extends State<ScanScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
       appBar: AppBar(title: const Text("Find Your Robot")),
       body: Column(
@@ -173,7 +175,14 @@ class _ScanScreenState extends State<ScanScreen> {
           ),
         ],
       ),
+      // 2. Updated FloatingActionButton with Dynamic Colors
       floatingActionButton: FloatingActionButton(
+        // Dark Mode: White button (High Contrast). Light Mode: BlueGrey (Standard)
+        backgroundColor: isDarkMode ? Colors.white : Colors.blueGrey,
+        
+        // Dark Mode: Black Icon. Light Mode: White Icon
+        foregroundColor: isDarkMode ? Colors.black : Colors.white,
+        
         onPressed: _isScanning ? null : _startScan,
         child: const Icon(Icons.refresh),
       ),

@@ -47,24 +47,45 @@ class _BluetoothState extends State<BluetoothPage> {
             const SizedBox(height: 20),
 
             Expanded(
-              child: ListView.builder(
-                itemCount: knownRobots.length,
-                itemBuilder: (context, index) {
-                  final robot = knownRobots[index];
-                  final isChecked = _selectedRobotIds.contains(robot.id);
+          child: ListView.builder(
+            itemCount: knownRobots.length,
+            itemBuilder: (context, index) {
+              final robot = knownRobots[index];
+              final isChecked = _selectedRobotIds.contains(robot.id);
 
-                  return Card(
-                    color: isChecked ? Colors.grey.shade600 : Colors.black,
-                    child: CheckboxListTile(
-                      title: Text(robot.name),
-                      subtitle: Text("ID: ${robot.id}"),
-                      value: isChecked,
-                      onChanged: (_) => _toggleRobot(robot.id),
+              //Detect light / dark mode
+              final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
+              //Background color logic
+              final backgroundColor = isChecked
+                  ? Colors.red
+                  : isDarkMode
+                      ? Colors.black
+                      : const Color.fromARGB(255, 232, 232, 232);
+
+              return Card(
+                color: backgroundColor,
+                child: CheckboxListTile(
+                  title: Text(
+                    robot.name,
+                    style: TextStyle(
+                      color: isDarkMode ? Colors.white : Colors.black,
                     ),
-                  );
-                },
-              ),
-            ),
+                  ),
+                  subtitle: Text(
+                    "ID: ${robot.id}",
+                    style: TextStyle(
+                      color: isDarkMode ? Colors.white70 : Colors.black54,
+                    ),
+                  ),
+                  value: isChecked,
+                  onChanged: (_) => _toggleRobot(robot.id),
+                ),
+              );
+            },
+          ),
+        ),
+
 
             const SizedBox(height: 20),
 
@@ -75,7 +96,7 @@ class _BluetoothState extends State<BluetoothPage> {
 
             const SizedBox(height: 20),
 
-            OutlinedButton(
+            ElevatedButton(
               onPressed: () async {
                 try {
                   await bleDriver.writeToCharacteristic('T'.codeUnits);
@@ -85,7 +106,7 @@ class _BluetoothState extends State<BluetoothPage> {
                 }
               },
               child: const Text("Test: Send 'T'"),
-            ),
+            )
           ],
         ),
       ),

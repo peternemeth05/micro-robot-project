@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import 'package:robot_app/app-state2.dart';
+import 'package:robot_app/pages/robotinfo.dart';
+
 import 'widgets/ble_status_button.dart';
 import 'widgets/wifi_status_button.dart';
+
 import 'pages/landing.dart';
 import 'pages/setup.dart';
-import 'pages/controls_classes/controls.dart';
-import 'pages/sensor.dart';
 import 'pages/video.dart';
 
 
@@ -22,8 +24,7 @@ class _AppLayoutState extends State<AppLayout> {
     final pages = [
       const LandingPage(),
       SetupWizardPage(),
-      RobotControlsPage(),
-      SensorLogPage(),
+      RobotInfoPage(),
       const VideoLogPage(),
     ];
     final appState = Provider.of<MyAppState1>(context, listen: true);
@@ -55,10 +56,6 @@ class _AppLayoutState extends State<AppLayout> {
                     NavigationRailDestination(
                       icon: Icon(Icons.gamepad),
                       label: Text('Robot Controls'),
-                    ),
-                    NavigationRailDestination(
-                      icon: Icon(Icons.list_alt),
-                      label: Text('Sensor Log'),
                     ),
                     NavigationRailDestination(
                       icon: Icon(Icons.camera),

@@ -95,8 +95,12 @@ class BleWeb implements BleInterface {
         final list = data.buffer.asUint8List();
         try {
           String decoded = utf8.decode(list);
-          _sensorDataController.add(decoded);
-          print("(Web) RX: $decoded");
+          // Adding to the stream if it has the expected prefix 'DIST'
+          if (decoded.startsWith('DIST') || decoded.contains('Distance:')) {
+            _sensorDataController.add(decoded);
+            print("(Web) RX: $decoded");
+          }
+
         } catch (e) {
           print("Web Decode Error: $e");
         }

@@ -54,15 +54,37 @@ class MyApp extends StatelessWidget {
 
         theme: ThemeData(
           brightness: Brightness.light,
-          colorScheme: const ColorScheme.light(
-            primary: Colors.grey,
-            secondary: Colors.red,
-          ),
-          elevatedButtonTheme: ElevatedButtonThemeData(style: ButtonStyle(
-            foregroundColor: WidgetStateProperty.all(Colors.black),
-            backgroundColor: WidgetStateProperty.all(const Color.fromRGBO(158, 158, 158, 0.3)),
-            visualDensity: VisualDensity(horizontal: 3.0,vertical: 3.0))
+          textButtonTheme: TextButtonThemeData(
+            style: TextButton.styleFrom(
+              foregroundColor: Colors.black,
+              textStyle: const TextStyle(fontSize: 18),
             ),
+          ),
+          colorScheme: const ColorScheme.light(
+            primary: Colors.red,
+            secondary: Colors.blueGrey,
+          ),
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ButtonStyle(
+              foregroundColor: WidgetStateProperty.all(Colors.black),
+              backgroundColor: WidgetStateProperty.all(Colors.red),
+              textStyle: WidgetStateProperty.all(const TextStyle(fontSize: 18),),
+              visualDensity: const VisualDensity(
+                horizontal: 3.0,
+                vertical: 3.0,
+              ),
+            ),
+          ),
+          outlinedButtonTheme: OutlinedButtonThemeData(
+            style: ButtonStyle(
+              foregroundColor: WidgetStateProperty.all(Colors.blueGrey),
+              backgroundColor: WidgetStateProperty.all(Colors.white),
+              visualDensity: VisualDensity(horizontal: 3.0,vertical: 3.0),
+              textStyle: WidgetStateProperty.all(
+                const TextStyle(color: Colors.white, fontSize: 18),
+              ),
+            ),
+          ),
           tabBarTheme: TabBarThemeData(
             indicatorColor: Colors.red,
             labelStyle: TextStyle(color: Colors.black)
@@ -76,10 +98,18 @@ class MyApp extends StatelessWidget {
               textStyle: const TextStyle(fontSize: 18),
             ),
           ),
-          elevatedButtonTheme: ElevatedButtonThemeData(style: ButtonStyle(
-            backgroundColor: WidgetStateProperty.all(Colors.red),
-            visualDensity: VisualDensity(horizontal: 3.0,vertical: 3.0))
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ButtonStyle(
+              foregroundColor: WidgetStateProperty.all(Colors.white),
+              backgroundColor: WidgetStateProperty.all(Colors.red),
+              textStyle: WidgetStateProperty.all(const TextStyle(fontSize: 18),),
+              visualDensity: const VisualDensity(
+                horizontal: 3.0,
+                vertical: 3.0,
+              ),
             ),
+          ),
+
           tabBarTheme: TabBarThemeData(
             indicatorColor: Colors.red,
             labelStyle: TextStyle(color: Colors.white)
