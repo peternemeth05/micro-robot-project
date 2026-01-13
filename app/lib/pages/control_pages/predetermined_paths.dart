@@ -6,13 +6,13 @@ import 'package:robot_app/ble_files/services/ble_connection/ble_interface.dart';
 
 class PredeterminedPathsPage extends StatefulWidget {
   const PredeterminedPathsPage({super.key});
-  static const int spiralTimer = 10*1000;
+  static const int spiralTimer = 10*1000; // these numbers are arbitrary
   static const int randomTimer = 4*1000;
   static const int gridTimer = 3*1000;
   static const int lineTimer = 1*1000;
 
   @override
-  State<PredeterminedPathsPage> createState() => _PredeterminedPathsPageState();
+  State<PredeterminedPathsPage> createState() => _PredeterminedPathsPageState(); // enables the use of segmented button
 }
 
 class _PredeterminedPathsPageState extends State<PredeterminedPathsPage>{
@@ -27,7 +27,7 @@ class _PredeterminedPathsPageState extends State<PredeterminedPathsPage>{
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SegmentedButton<Paths>(
-            segments: const <ButtonSegment<Paths>>[
+            segments: const <ButtonSegment<Paths>>[ // main button
               ButtonSegment(
                 value: Paths.spiral,
                 icon: Icon(CupertinoIcons.arrow_2_squarepath),
@@ -50,14 +50,14 @@ class _PredeterminedPathsPageState extends State<PredeterminedPathsPage>{
 
             onSelectionChanged: (Set<Paths> newSelection)async{
               if(appState.pathOngoing){
-                ScaffoldMessenger.of(context).showSnackBar(
+                ScaffoldMessenger.of(context).showSnackBar( // informs users if current path still ongoing and does not change selection
                   SnackBar(content:Text("Previous path ongoing, please wait"), duration: Duration(milliseconds:1200), behavior: SnackBarBehavior.floating,));
               }
-              else{
+              else{ // changes selection only if previous path not still ongoing
                   final selectedPath = newSelection.first;
                   int timeToUse;
 
-                  switch (selectedPath) {
+                  switch (selectedPath) { // updates robot
                     case Paths.spiral: timeToUse = PredeterminedPathsPage.spiralTimer; 
                         ()async {
                           try {
@@ -101,9 +101,9 @@ class _PredeterminedPathsPageState extends State<PredeterminedPathsPage>{
                     default:  timeToUse = 0;
                   }
                   setState(() {
-                    appState.path = selectedPath;
+                    appState.path = selectedPath; // changes app state path
                   });
-                appState.togglePath(timeToUse);
+                appState.togglePath(timeToUse); // toggles delay for path
               }
             },),
         ],

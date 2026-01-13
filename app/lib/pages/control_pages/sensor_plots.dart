@@ -11,15 +11,15 @@ import 'dart:js_interop';
 import 'package:web/web.dart' as web;
 
 
-class SensorLogPage extends StatefulWidget {
+class SensorLogPage extends StatefulWidget { // contains the plots of variables
   const SensorLogPage({super.key});
 
   @override
-  State<SensorLogPage> createState() => _SensorLogPageState();
+  State<SensorLogPage> createState() => _SensorLogPageState(); // state enables data switching
 }
 
 
-enum datas { data1, data2, data3, data4 }
+enum datas { data1, data2, data3, data4 } // placeholder data names
 
 class _SensorLogPageState extends State<SensorLogPage> {
   datas data = datas.data1;
@@ -33,7 +33,7 @@ class _SensorLogPageState extends State<SensorLogPage> {
   Widget build(BuildContext context) {
     final appState = Provider.of<MainAppState>(context, listen: true);
     
-    switch (data) {
+    switch (data) { // swaps data for plot (plus their labels, recording interval, title)
       case datas.data1:
         inputList = List.generate(3, (int index) => index * index, growable: true);
         plotText = "Plot of voltage against time";
@@ -47,7 +47,7 @@ class _SensorLogPageState extends State<SensorLogPage> {
         yLabel = "Frequency (Hz)";
         interval = 200;
       case datas.data3:
-        inputList = List.generate(5, (int index) => index * 4, growable: true);
+        inputList = appState.distancehist.sublist(appState.distancehist.length-11,appState.distancehist.length-1);
         plotText = "Plot of distance from surface against time";
         xLabel = "Time (ms)";
         yLabel = "Distance from nearest surface (cm)";
@@ -60,7 +60,7 @@ class _SensorLogPageState extends State<SensorLogPage> {
         interval = 1;
     }
 
-    final bool compact = MediaQuery.of(context).size.width < 850;
+    final bool compact = MediaQuery.of(context).size.width < 850; // makes buttons responsive
 
     return Scaffold(
       body: SafeArea(
@@ -73,7 +73,7 @@ class _SensorLogPageState extends State<SensorLogPage> {
             Expanded(
               child: LayoutBuilder(
                 builder: (context, constraints) {
-                  return GeneralPlot(
+                  return GeneralPlot( // plots currently selected data
                     width: constraints.maxWidth,
                     height: constraints.maxHeight,
                     vals: inputList,
@@ -99,7 +99,7 @@ class _SensorLogPageState extends State<SensorLogPage> {
               children: [
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
-                  child: SegmentedButton<datas>(
+                  child: SegmentedButton<datas>( // buttons collapse to unit instead of name if compact
                     segments: <ButtonSegment<datas>>[
                       ButtonSegment(
                         value: datas.data1,
@@ -116,12 +116,12 @@ class _SensorLogPageState extends State<SensorLogPage> {
                     ],
                     selected: <datas>{data},
                     onSelectionChanged: (newSelection) {
-                      setState(() => data = newSelection.first);
+                      setState(() => data = newSelection.first); // updates data set when selection changed
                     },
                   ),
                 ),
                 const SizedBox(height: 10),
-                SizedBox(
+                SizedBox( // contains ultrasound data button
                   width: 280,
                   child: ElevatedButton.icon(
                     icon: const Icon(Icons.list),
@@ -145,7 +145,7 @@ class _SensorLogPageState extends State<SensorLogPage> {
   }
 }
 
-class LoggedDataPage extends StatelessWidget {
+class LoggedDataPage extends StatelessWidget { // communicates with hive for saving the data outside the app state
   const LoggedDataPage({super.key});
 
   // Escape a value for CSV (handles commas, quotes, newlines)

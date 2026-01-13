@@ -2,7 +2,7 @@ import 'dart:math';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
-class GeneralPlot extends StatelessWidget {
+class GeneralPlot extends StatelessWidget { // uses fl_chart package to plot data
   final double height;
   final double width;
   final int timeint;
@@ -10,7 +10,7 @@ class GeneralPlot extends StatelessWidget {
   final String xlabel;
   final List<num> vals;
 
-  const GeneralPlot({
+  const GeneralPlot({ // required inputs to call the class
     Key? key,
     required this.width,
     required this.height,
@@ -22,26 +22,28 @@ class GeneralPlot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (vals.isEmpty) {
+    if (vals.isEmpty) { // ensures chart won't try to form with no data
       return SizedBox(
         width: width,
         height: height,
         child: const Center(child: Text('No data')),
       );
-    }
+    }else{
 
-    final spots = <FlSpot>[
+    final spots = <FlSpot>[ // configures data points
       for (int i = 0; i < vals.length; i++)
         FlSpot(i * timeint.toDouble(), vals[i].toDouble()),
     ];
 
+    // creates limits for x axis
     double minX = spots.first.x;
     double maxX = spots.last.x;
-    if (minX == maxX) {
+    if (minX == maxX) { 
       minX -= timeint;
       maxX += timeint;
     }
 
+    // creates limits for y axis
     double minY = spots.first.y;
     double maxY = spots.first.y;
     for (final s in spots) {
@@ -54,7 +56,7 @@ class GeneralPlot extends StatelessWidget {
     minY -= yPadding;
     maxY += yPadding;
 
-    return SizedBox(
+    return SizedBox( // sized box required for chart to compile
       width: width,
       height: height,
       child: LineChart(
@@ -70,7 +72,7 @@ class GeneralPlot extends StatelessWidget {
           gridData: FlGridData(show: true),
           borderData: FlBorderData(show: true),
 
-          titlesData: FlTitlesData(
+          titlesData: FlTitlesData( // configures axes ticks visibility and title
             topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
             rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
             bottomTitles: AxisTitles(
@@ -93,7 +95,7 @@ class GeneralPlot extends StatelessWidget {
             ),
           ),
 
-          lineBarsData: [
+          lineBarsData: [ // plots the data
             LineChartBarData(
               spots: spots,
               isCurved: true,
@@ -105,5 +107,5 @@ class GeneralPlot extends StatelessWidget {
         ),
       ),
     );
-  }
+  }}
 }
