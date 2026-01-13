@@ -3,10 +3,13 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mjpeg_stream/mjpeg_stream.dart';
 import 'package:robot_app/pages/layout_pages/main_pages/video.dart';
 
-void main() {
+void main() { 
   group('VideoLogPage UI Tests', () {
     
+    
     testWidgets('Verify all UI components appear', (WidgetTester tester) async {
+
+      // Checks the components related to the UI
       await tester.pumpWidget(const MaterialApp(home: VideoLogPage()));
       expect(find.text("Robot MJPEG Recorder"), findsOneWidget, reason:'title');
       expect(find.byType(MJPEGStreamScreen), findsOneWidget);
@@ -16,6 +19,8 @@ void main() {
     });
 
     testWidgets('MJPEGStreamScreen is configured with correctly', (WidgetTester tester) async {
+
+      //Checks requirements related to the Video stream
       await tester.pumpWidget(const MaterialApp(home: VideoLogPage()));
       final streamWidget = tester.widget<MJPEGStreamScreen>(find.byType(MJPEGStreamScreen));
       expect(streamWidget.streamUrl, "http://yasmines-iphone.local:8081/video");
@@ -25,6 +30,7 @@ void main() {
     });
 
     testWidgets('SegmentedButton initial selection is Video.stop', (WidgetTester tester) async {
+      //Checks intial button conditions are correct
       await tester.pumpWidget(const MaterialApp(home: VideoLogPage()));
 
       final segmentedButton = tester.widget<SegmentedButton<Video>>(
