@@ -6,7 +6,6 @@ import 'package:robot_app/pages/robotinfo.dart';
 import 'package:robot_app/services/ble_connection/ble_interface.dart';
 import 'widgets/ble_status_button.dart';
 import 'widgets/wifi_status_button.dart';
-
 import 'pages/landing.dart';
 import 'pages/setup.dart';
 import 'pages/sensor_pages/sensor.dart';
@@ -16,16 +15,13 @@ import 'app_state.dart';
 
 class AppLayout extends StatefulWidget {
   const AppLayout({super.key});
-
   @override
   State<AppLayout> createState() => _AppLayoutState();
 }
 
 class _AppLayoutState extends State<AppLayout> {
-
   @override
   Widget build(BuildContext context) {
-
     final pages = [
       const LandingPage(),
       SetupWizardPage(),
@@ -33,20 +29,15 @@ class _AppLayoutState extends State<AppLayout> {
       RobotInfoPage(),
       const VideoLogPage(),
     ];
-
     final appState = Provider.of<MyAppState1>(context, listen: true);
     int selectedIndex = appState.pageIndex;
     return LayoutBuilder(
       builder: (context, constraints) {
-        final isWide = constraints.maxWidth >= 600;
-
+        final isWide = constraints.maxWidth >= 800;
         return Scaffold(
           appBar: AppBar(
             title: const Text('Robot Controller'),
-            actions: [
-              BleStatusButton(),
-              WifiStatusButton(),
-            ],
+            actions: [BleStatusButton(), WifiStatusButton()],
           ),
           body: Row(
             children: [
@@ -54,8 +45,7 @@ class _AppLayoutState extends State<AppLayout> {
                 child: NavigationRail(
                   extended: isWide,
                   selectedIndex: selectedIndex,
-                  onDestinationSelected: (i) =>
-                      appState.changeIndex(i),
+                  onDestinationSelected: (i) => appState.changeIndex(i),
                   destinations: const [
                     NavigationRailDestination(
                       icon: Icon(Icons.home),

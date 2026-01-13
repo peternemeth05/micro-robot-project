@@ -19,8 +19,8 @@ class GeneralPlot extends StatelessWidget{
           show: true,
           topTitles: AxisTitles(axisNameWidget: Text("")),
           rightTitles: AxisTitles(axisNameWidget: Text("")),
-          bottomTitles: AxisTitles(axisNameWidget: Text(xlabel), sideTitles: SideTitles(showTitles: true), axisNameSize: 20.0),
-          leftTitles: AxisTitles(axisNameWidget: Text(ylabel), sideTitles: SideTitles(showTitles: true), axisNameSize: 20.0)
+          bottomTitles: AxisTitles(axisNameWidget: Text(xlabel), sideTitles: SideTitles(showTitles: true, reservedSize: 30.0), axisNameSize: 30.0),
+          leftTitles: AxisTitles(axisNameWidget: Text(ylabel), sideTitles: SideTitles(showTitles: true, reservedSize: 30.0), axisNameSize: 30.0)
         ),
         gridData: FlGridData(show: true),
         borderData: FlBorderData(show: true),
@@ -28,7 +28,7 @@ class GeneralPlot extends StatelessWidget{
           LineChartBarData(
             spots: [
               for(var (index, val) in vals.indexed)
-                FlSpot(index.toDouble(), val.toDouble()),
+                FlSpot(index.toDouble()*200, val.toDouble()),
             ],
             isCurved: true,
             barWidth: 4,

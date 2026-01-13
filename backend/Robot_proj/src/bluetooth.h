@@ -21,4 +21,7 @@ typedef void (*bt_rx_callback_t)(const uint8_t *data, uint16_t len);
 /* Register callback for incoming data */
 void bluetooth_register_callback(bt_rx_callback_t callback);
 
+/* Send data to connected device */
+int bluetooth_send_data(const uint8_t *data, uint16_t len);
+
 #endif /* BLUETOOTH_H */

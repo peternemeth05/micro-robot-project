@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'ble_interface.dart';
 import '../../constants.dart';
@@ -6,10 +7,10 @@ import '../../constants.dart';
 class BleNative implements BleInterface {
   // CONFIGURATION
   static const String _serviceUuid = BleConstants.serviceUuid;
-  static const String _commandUuid = BleConstants.commandUuid;
+  static const String _charUuid = BleConstants.charUuid;
 
   BluetoothDevice? _connectedDevice;
-  BluetoothCharacteristic? _commandChar;
+  BluetoothCharacteristic? _sharedChar;
   
   // Native uses 'BluetoothConnectionState' instead of a boolean for the listener
   StreamSubscription<BluetoothConnectionState>? _connectionSubscription;
@@ -18,6 +19,14 @@ class BleNative implements BleInterface {
 
   @override
   Stream<bool> get connectionStateStream => _connectionStateController.stream;
+
+
+  final _sensorDataController = StreamController<String>.broadcast();
+
+  @override
+  Stream<String> get sensorDataStream => _sensorDataController.stream;
+
+  
 
   @override
   bool get isConnected => _connectedDevice != null;
@@ -60,19 +69,35 @@ class BleNative implements BleInterface {
       print("");
 
       // 3. Find and Print Characteristic UUID
-      _commandChar = targetService.characteristics.firstWhere(
-        (c) => c.uuid == Guid(_commandUuid),
+      _sharedChar = targetService.characteristics.firstWhere(
+        (c) => c.uuid == Guid(_charUuid),
         orElse: () => throw Exception("Characteristic not found"),
       );
 
       print("✅ FOUND Write CHARACTERISTIC");
-      print("   Expected: $_commandUuid");
-      print("   Actual:   ${_commandChar!.uuid}");
+      print("   Expected: $_charUuid");
+      print("   Actual:   ${_sharedChar!.uuid}");
       print("------------------------------------------------");
 
       _connectedDevice = device;
       _connectionStateController.add(true);
       print("✅ (Native) Connection & Setup Complete!");
+
+      await _sharedChar!.setNotifyValue(true);
+
+      _sharedChar!.lastValueStream.listen((List<int> rawData) {
+        if (rawData.isEmpty) return;
+        try {
+          // Decode bytes to text (e.g. "B:85")
+          String decoded = utf8.decode(rawData);
+          _sensorDataController.add(decoded); 
+          print("(Native) RX: $decoded");
+        } catch (e) {
+          print("Error decoding: $e");
+        }
+      });
+
+
 
     } catch (e) {
       print("❌ (Native) Connection Failed: $e");
@@ -95,7 +120,7 @@ class BleNative implements BleInterface {
 
     final device = _connectedDevice;
     _connectedDevice = null;
-    _commandChar = null;
+    _sharedChar = null;
 
     // Actually disconnect from the OS
     try {
@@ -108,13 +133,13 @@ class BleNative implements BleInterface {
 
   @override
   Future<void> writeToCharacteristic(List<int> data) async {
-    if (_commandChar == null) {
+    if (_sharedChar == null) {
       print("⚠️ Cannot write: Not connected.");
       return;
     }
     try {
       // Native write
-      await _commandChar!.write(data, withoutResponse: true);
+      await _sharedChar!.write(data, withoutResponse: true);
     } catch (e) {
       print("Write Error: $e");
     }

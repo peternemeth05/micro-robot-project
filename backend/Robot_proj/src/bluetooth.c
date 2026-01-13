@@ -82,9 +82,10 @@ static ssize_t read_custom_char(struct bt_conn *conn,
 BT_GATT_SERVICE_DEFINE(custom_svc,
     BT_GATT_PRIMARY_SERVICE(BT_UUID_CUSTOM_SERVICE),
     BT_GATT_CHARACTERISTIC(BT_UUID_CUSTOM_CHAR,
-                          BT_GATT_CHRC_READ | BT_GATT_CHRC_WRITE | BT_GATT_CHRC_WRITE_WITHOUT_RESP,
+                          BT_GATT_CHRC_READ | BT_GATT_CHRC_WRITE | BT_GATT_CHRC_WRITE_WITHOUT_RESP | BT_GATT_CHRC_NOTIFY,
                           BT_GATT_PERM_READ | BT_GATT_PERM_WRITE,
                           read_custom_char, write_custom_char, NULL),
+    BT_GATT_CCC(NULL, BT_GATT_PERM_READ | BT_GATT_PERM_WRITE),
 );
 
 BT_CONN_CB_DEFINE(conn_callbacks) = {
@@ -161,4 +162,29 @@ void bluetooth_register_callback(bt_rx_callback_t callback)
 {
     rx_callback = callback;
     LOG_INF("RX callback registered");
+}
+
+/* Send data to connected device */
+int bluetooth_send_data(const uint8_t *data, uint16_t len)
+{
+    if (!is_connected || !current_conn) {
+        LOG_WRN("Cannot send: not connected");
+        return -ENOTCONN;
+    }
+    
+    if (len == 0 || len > 512) {
+        LOG_ERR("Invalid data length: %d", len);
+        return -EINVAL;
+    }
+    
+    /* Send notification through the custom characteristic */
+    int ret = bt_gatt_notify(current_conn, &custom_svc.attrs[2], data, len);
+    
+    if (ret == 0) {
+        LOG_INF("Sent %d bytes to device", len);
+    } else {
+        LOG_ERR("Failed to send data: %d", ret);
+    }
+    
+    return ret;
 }

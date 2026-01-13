@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:typed_data'; // Needed for Uint8List
+import 'dart:convert';
 import 'package:flutter_web_bluetooth/flutter_web_bluetooth.dart';
 import 'ble_interface.dart';
 import '../../constants.dart';
@@ -7,10 +8,10 @@ import '../../constants.dart';
 class BleWeb implements BleInterface {
   // CONFIGURATION (Must match your C Code)
   static const String _serviceUuid = BleConstants.serviceUuid;
-  static const String _commandUuid = BleConstants.commandUuid;
+  static const String _charUuid = BleConstants.charUuid;
 
   BluetoothDevice? _connectedDevice;
-  BluetoothCharacteristic? _commandChar;
+  BluetoothCharacteristic? _sharedChar;
   
   // We need to keep track of the stream subscription so we can cancel it cleanly
   StreamSubscription<bool>? _connectionSubscription;
@@ -18,12 +19,16 @@ class BleWeb implements BleInterface {
   bool _isInternalConnected = false;
 
   final _connectionStateController = StreamController<bool>.broadcast();
+  final _sensorDataController = StreamController<String>.broadcast();
 
   @override
   Stream<bool> get connectionStateStream => _connectionStateController.stream;
 
   @override
   bool get isConnected => _isInternalConnected;
+
+  @override
+  Stream<String> get sensorDataStream => _sensorDataController.stream;
 
   @override
   Future<void> connect(String deviceId) async {
@@ -63,14 +68,14 @@ class BleWeb implements BleInterface {
       print("");
 
       final characteristics = await targetService.getCharacteristics();
-      _commandChar = characteristics.firstWhere(
-        (c) => c.uuid == _commandUuid,
+      _sharedChar = characteristics.firstWhere(
+        (c) => c.uuid == _charUuid,
         orElse: () => throw Exception("Characteristic not found"),
       ); 
 
-      print("✅ FOUND Write CHARACTERISTIC");
-      print("   Expected: $_commandUuid");
-      print("   Actual:   ${_commandChar!.uuid}");
+      print("✅ FOUND write/read CHARACTERISTIC");
+      print("   Expected: $_charUuid");
+      print("   Actual:   ${_sharedChar!.uuid}");
       print("------------------------------------------------");
 
       _connectedDevice = device;
@@ -78,6 +83,26 @@ class BleWeb implements BleInterface {
       _isInternalConnected = true;
       _connectionStateController.add(true);
       print("✅ (Web) Connected!");
+
+
+
+      // 1. Enable Notifications
+      await _sharedChar!.startNotifications();
+
+      // 2. Listen for Data
+      _sharedChar!.value.listen((ByteData? data) {
+        if (data == null || data.lengthInBytes == 0) return;
+        final list = data.buffer.asUint8List();
+        try {
+          String decoded = utf8.decode(list);
+          _sensorDataController.add(decoded);
+          print("(Web) RX: $decoded");
+        } catch (e) {
+          print("Web Decode Error: $e");
+        }
+      });
+
+
 
     } catch (e) {
       print("❌ (Web) Connection Failed: $e");
@@ -104,15 +129,15 @@ class BleWeb implements BleInterface {
         // Ignore errors during disconnect
       }
       _connectedDevice = null;
-      _commandChar = null;
+      _sharedChar = null;
     }
   }
 
   @override
   Future<void> writeToCharacteristic(List<int> data) async {
-    if (_commandChar == null) return;
+    if (_sharedChar == null) return;
     try {
-      await _commandChar!.writeValueWithoutResponse(Uint8List.fromList(data)); 
+      await _sharedChar!.writeValueWithoutResponse(Uint8List.fromList(data)); 
     } catch (e) {
       print("Web Write Error: $e");
     }

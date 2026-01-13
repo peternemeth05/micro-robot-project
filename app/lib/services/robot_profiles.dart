@@ -8,9 +8,11 @@ class RobotProfile {
 
 // database of robots
 final List<RobotProfile> knownRobots = [
-  RobotProfile(id: '1', name: 'Peter’s iPad', serviceUuid: '12345678-1234-5678-1234-56789abcdef0'),
+  RobotProfile(id: '1', name: 'DogRobot', serviceUuid: '12345678-1234-5678-1234-56789abcdef0'),
   RobotProfile(id: '2', name: 'Peter’s iPhone (2)',  serviceUuid: '12345678-1234-5678-1234-56789abcdef0'),
-  RobotProfile(id: '3', name: 'Robot3', serviceUuid: '12345678-1234-5678-1234-56789abcdef0'),
-  RobotProfile(id: '4', name: 'Robot4', serviceUuid: '12345678-1234-5678-1234-56789abcdef0'),
-  RobotProfile(id: '5', name: 'Robot5', serviceUuid: '12345678-1234-5678-1234-56789abcdef0'),
+  RobotProfile(id: '3', name: 'Peter’s iPad', serviceUuid: '12345678-1234-5678-1234-56789abcdef0'),
+  RobotProfile(id: '4', name: 'Robot3', serviceUuid: '12345678-1234-5678-1234-56789abcdef0'),
+  RobotProfile(id: '5', name: 'Robot4', serviceUuid: '12345678-1234-5678-1234-56789abcdef0'),
+  RobotProfile(id: '6', name: 'Robot5', serviceUuid: '12345678-1234-5678-1234-56789abcdef0'),
+
 ];
