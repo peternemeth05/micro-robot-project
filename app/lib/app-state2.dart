@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 
@@ -14,10 +15,12 @@ class MyAppState1 extends ChangeNotifier {
 
   double x = 0;
   double y = 0;
+  double speed = 0;
 
   void updateJoystick(double newX, double newY) {
     x = newX;
     y = newY;
+    speed = sqrt(x*x+y*y);
     path = paths.manual;
     notifyListeners(); 
     debugPrint("X:  $newX Y:  $newY");
