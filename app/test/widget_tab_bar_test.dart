@@ -3,16 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:robot_app/app_layout.dart';
 import 'package:robot_app/app-state2.dart';
+import 'package:robot_app/app_state.dart';
 import 'package:robot_app/pages/controls_classes/controls.dart';
 import 'package:robot_app/pages/landing.dart';
 import 'package:robot_app/pages/sensor.dart';
 import 'package:robot_app/pages/setup_pages/input_page.dart';
 import 'package:robot_app/pages/video.dart';
+import 'dart:async';
+import 'package:robot_app/services/ble_connection/ble_interface.dart';
 
 void main() {
-  final state = MyAppState1();
+  final state = MyAppState1(FakeBleInterface()); 
+  final mockBle = FakeBleInterface(); 
+  final bluetoothState = AppState();
 
-  testWidgets('Does the widget tab bar work properly',(WidgetTester tester)async{
+  testWidgets('Does the widget tab bar allow to switch from widget to widget properly',(WidgetTester tester)async{
    tester.view.physicalSize = const Size(1200, 800);
    tester.view.devicePixelRatio = 1.0;
 
@@ -25,8 +30,12 @@ void main() {
     };
     await tester.pumpWidget(
       MaterialApp(
-        home: ChangeNotifierProvider<MyAppState1>.value(
-          value: state,
+        home: MultiProvider( // Use MultiProvider to provide BOTH the state and the interface
+        providers: [
+          Provider<BleInterface>.value(value: mockBle), 
+          ChangeNotifierProvider<MyAppState1>.value(value: state),
+          ChangeNotifierProvider<AppState>.value(value: bluetoothState),
+          ],
           child: const Scaffold(
             body: AppLayout(), 
           ),   
@@ -47,6 +56,29 @@ void main() {
     }
   });
  }
-   
+ 
+
+ class FakeBleInterface implements BleInterface { //AI
+  @override
+  Future<void> writeToCharacteristic(List<int> data) async {
+    return;
+  }
+  @override
+  Future<void> connect(String deviceId) async {
+    return;
+  }
+  @override
+  Future<void> disconnect() async {
+    return;
+  }
+  @override
+  bool get isConnected => true;
+
+  @override
+  Stream<bool> get connectionStateStream => Stream<bool>.empty();
+
+  @override
+  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
+}
 
 

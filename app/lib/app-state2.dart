@@ -42,9 +42,9 @@ class MyAppState1 extends ChangeNotifier {
     ()async {
         try {
           await bleDriver.writeToCharacteristic(command.codeUnits);
-          debugPrint("✅ 'PG' Sent!");
+          debugPrint("✅ Joystick Info Sent!");
         } catch (e) {
-          debugPrint("❌ PG");
+          debugPrint("❌ Joystick Info");
         }
       }();
 

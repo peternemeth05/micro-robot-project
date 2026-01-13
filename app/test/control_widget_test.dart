@@ -1,12 +1,14 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'dart:async';
 import 'package:robot_app/app-state2.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:robot_app/pages/controls_classes/predetermined_paths.dart';
+import 'package:robot_app/services/ble_connection/ble_interface.dart';
 
 void main() {
   test('Is MyAppState updating correctly',(){
-    final state = MyAppState1(); 
+    final state = MyAppState1(FakeBleInterface()); 
 
     for (double i=-10; i<10; i++){
     state.updateJoystick(i, i);
@@ -16,13 +18,18 @@ void main() {
   });
 
   testWidgets('Is the AppState preventing a timer reset in predetermined paths when a button is repeatedly pressed', (WidgetTester tester) async{
-  final state = MyAppState1();
+  final state = MyAppState1(FakeBleInterface());
+  final mockBle = FakeBleInterface(); 
+
   List<String> pathLabels = ['Spiral Path', 'Grid Path', 'Straight Line', 'Random Path'];
   List<int> timerValues = [PredeterminedPaths.spiralTimer, PredeterminedPaths.gridTimer, PredeterminedPaths.lineTimer, PredeterminedPaths.randomTimer];
  
   await tester.pumpWidget(MaterialApp(
-        home: ChangeNotifierProvider<MyAppState1>.value(
-          value: state,
+        home: MultiProvider( 
+        providers: [
+          Provider<BleInterface>.value(value: mockBle), 
+          ChangeNotifierProvider<MyAppState1>.value(value: state),
+        ],
           child: const Scaffold(
             body: PredeterminedPaths(), 
           ),
@@ -46,13 +53,17 @@ void main() {
  });
 
   testWidgets('Is the snackbar appearing in predetermined paths correctly', (WidgetTester test) async {
-    final state = MyAppState1();
+    final state = MyAppState1(FakeBleInterface());
+    final mockBle = FakeBleInterface(); 
     List<String> pathLabels = ['Spiral Path', 'Grid Path', 'Straight Line', 'Random Path'];
     
   
     await test.pumpWidget(MaterialApp(
-        home: ChangeNotifierProvider<MyAppState1>.value(
-          value: state,
+            home: MultiProvider( // Use MultiProvider to provide BOTH the state and the interface
+            providers: [
+              Provider<BleInterface>.value(value: mockBle), 
+              ChangeNotifierProvider<MyAppState1>.value(value: state),
+            ],
           child: const Scaffold(
             body: PredeterminedPaths(), 
           ),
@@ -76,14 +87,18 @@ void main() {
    
 
    testWidgets('Is MyAppState updating correctly after the Buttons pressed', (WidgetTester tester) async {
-    final state = MyAppState1();
+    final state = MyAppState1(FakeBleInterface());
+    final mockBle = FakeBleInterface(); 
     List<String> pathLabels = ['Spiral Path', 'Grid Path', 'Straight Line', 'Random Path'];
     List<int> timerValues = [PredeterminedPaths.spiralTimer, PredeterminedPaths.gridTimer, PredeterminedPaths.lineTimer, PredeterminedPaths.randomTimer];
    
     await tester.pumpWidget(
       MaterialApp(
-        home: ChangeNotifierProvider<MyAppState1>.value(
-          value: state,
+        home: MultiProvider( // Use MultiProvider to provide BOTH the state and the interface
+        providers: [
+          Provider<BleInterface>.value(value: mockBle), 
+          ChangeNotifierProvider<MyAppState1>.value(value: state),
+        ],
           child: const Scaffold(
             body: PredeterminedPaths(), 
           ),
@@ -107,4 +122,27 @@ void main() {
       expect(state.pathOngoing, false, reason: '$pathName failed after finish');
     }
   });
+}
+
+class FakeBleInterface implements BleInterface { //AI
+  @override
+  Future<void> writeToCharacteristic(List<int> data) async {
+    return;
+  }
+  @override
+  Future<void> connect(String deviceId) async {
+    return;
+  }
+  @override
+  Future<void> disconnect() async {
+    return;
+  }
+  @override
+  bool get isConnected => true;
+
+  @override
+  Stream<bool> get connectionStateStream => Stream<bool>.empty();
+
+  @override
+  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }

@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => MyAppState1(),
+      create: (_) => MyAppState1(context.read<BleInterface>()),
       child: MaterialApp(
         title: 'Robot App',
 
