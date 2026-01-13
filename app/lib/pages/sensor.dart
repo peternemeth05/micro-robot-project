@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:robot_app/pages/misc_plot.dart';
 
+import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class SensorLogPage extends StatefulWidget {
@@ -21,34 +22,27 @@ class _SensorLogPageState extends State<SensorLogPage> {
   Widget build(BuildContext context) {
     switch (data) {
       case datas.data1:
-        inputList = List.generate(
-          3,
-          (int index) => index * index,
-          growable: true,
-        );
+        inputList = List.generate(3, (i) => i * i, growable: true);
         plotText = "Plot of data set 1";
+        break;
 
       case datas.data2:
-        inputList = List.generate(
-          3,
-          (int index) => index + index,
-          growable: true,
-        );
+        inputList = List.generate(3, (i) => i + i, growable: true);
         plotText = "Plot of data set 2";
+        break;
 
       case datas.data3:
-        inputList = List.generate(5, (int index) => index * 4, growable: true);
+        inputList = List.generate(5, (i) => i * 4, growable: true);
         plotText = "Plot of data set 3";
+        break;
 
       case datas.data4:
-        inputList = List.generate(
-          4,
-          (int index) => index * index * index,
-          growable: true,
-        );
+        inputList = List.generate(4, (i) => i * i * i, growable: true);
         plotText = "Plot of data set 4";
+        break;
     }
 
+    final bool compact = MediaQuery.of(context).size.width < 600;
 
     return Scaffold(
       body: SafeArea(
@@ -85,22 +79,22 @@ class _SensorLogPageState extends State<SensorLogPage> {
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: SegmentedButton<datas>(
-                    segments: const <ButtonSegment<datas>>[
+                    segments: <ButtonSegment<datas>>[
                       ButtonSegment(
                         value: datas.data1,
-                        label: Text("Data Set 1"),
+                        label: Text(compact ? "1" : "Data Set 1"),
                       ),
                       ButtonSegment(
                         value: datas.data2,
-                        label: Text("Data Set 2"),
+                        label: Text(compact ? "2" : "Data Set 2"),
                       ),
                       ButtonSegment(
                         value: datas.data3,
-                        label: Text("Data Set 3"),
+                        label: Text(compact ? "3" : "Data Set 3"),
                       ),
                       ButtonSegment(
                         value: datas.data4,
-                        label: Text("Data Set 4"),
+                        label: Text(compact ? "4" : "Data Set 4"),
                       ),
                     ],
                     selected: <datas>{data},
