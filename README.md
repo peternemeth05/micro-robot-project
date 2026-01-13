@@ -23,4 +23,30 @@ The app is written in Dart and uses Flutter, it is broken down into two key sect
 **test**: contains unit test files
 
 ### Backend Section
-The backend is written in zephyr and connects directly to the robot board (ESP-32).
+The backend is written in Zephyr Real Time Operating System(RTOS) and connects directly to the robot board (ESP-32). See below for the folder structure
+
+**src:** contains the source code files for the firmware, which is split into:
+
+--**main.c:** main application entry point and initialises all the different systems (modules) and handles bluetooth command processing
+
+--**bluetooth:** contains GATT services, connection manaement and pairing logic for the bluetooth connection and recieving commands from the app
+
+--**wifi_server:** establishes two different ways to connect to wifi. STA or AP mode
+
+--**ultrasonic.c:** HC-SR04 ultrasonic sensor driver for distance measurement to be fed into the app
+
+--**servo_control:** PCA9685I2C servo controller driver for 12 shoulder to control the movement of each servo. 
+
+--**motion_control.c:** motion control implementing walking gaits (forward, backward, left right)
+
+------*wifi_server.c, servo_control.c and motion control.c could not be implemented due to errors when working in Zephyr. Software issure not hardware since it works in Arduino which is not our intended IDE.*------
+
+**esp32_devkitc_procpu.overlay:** device tree overlay defining pin assignments and board-specific configurations
+
+**prj.conf:**: project configuration file to enable bluetooth, Wi-Fi, GPIO and many more.
+
+**CMakeLists.txt:**: build system configurations which lists source files to compile.
+
+
+
+
