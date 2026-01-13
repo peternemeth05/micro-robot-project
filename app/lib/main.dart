@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:robot_app/app-state2.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 import 'package:robot_app/app_state.dart';
 import 'app_layout.dart';
@@ -8,18 +9,32 @@ import 'app_layout.dart';
 
 import 'services/ble_connection/ble_interface.dart';
 import 'services/ble_connection/ble_switcher.dart';
+<<<<<<< HEAD
+
+=======
+>>>>>>> origin/main
 
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize Hive
+  await Hive.initFlutter();
+
+  // Open Hive box for timestamped sensor data
+  // Each entry: { 'timestamp': String, 'value': String }
+  await Hive.openBox<Map>('sensor_log');
+
+  // Select correct BLE implementation
   final BleInterface bleDriver = getBleDriver();
 
   runApp(
     MultiProvider(
       providers: [
-        // Provide BLE so AppState can read it during creation)
+        // Provide BLE implementation
         Provider<BleInterface>.value(value: bleDriver),
 
-        // Create AppState and bind to BLE exactly once
+        // Centralized app state
         ChangeNotifierProvider<AppState>(
           create: (context) {
             final appState = AppState();

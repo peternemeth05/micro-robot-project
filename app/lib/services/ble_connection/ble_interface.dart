@@ -7,6 +7,9 @@ abstract class BleInterface {
   
   // A stream so the UI knows when connection status changes
   Stream<bool> get connectionStateStream;
+
+  // for recieving data
+  Stream<String> get sensorDataStream;
   
   // Actions
   Future<void> connect(String deviceId);

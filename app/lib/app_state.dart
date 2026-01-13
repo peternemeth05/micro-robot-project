@@ -1,26 +1,47 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
+import 'package:hive/hive.dart';
+
 import 'services/ble_connection/ble_interface.dart';
+<<<<<<< HEAD
 import 'package:flutter/material.dart';
 
+=======
+>>>>>>> origin/main
 
+enum paths { spiral, random, grid, line, manual }
 
 class AppState extends ChangeNotifier {
   bool _bleConnected = false;
-  // getter for BLE connection status
   bool get bleConnected => _bleConnected;
 
   StreamSubscription<bool>? _bleSubscription;
 
-  /// Bind BLE connection stream → AppState
+  // subscription for sensor data logging
+  StreamSubscription<String>? _sensorSubscription;
+
+  // Bind BLE connection stream 
   void bindBle(BleInterface ble) {
     // Set initial value
     _setBleConnected(ble.isConnected);
 
-    // Listen for changes
+    // If already connected at bind time, start logging immediately
+    if (ble.isConnected) {
+      _startSensorLogging(ble);
+    } else {
+      _stopSensorLogging();
+    }
+
+    // Listen for connection changes
     _bleSubscription?.cancel();
     _bleSubscription = ble.connectionStateStream.listen((connected) {
       _setBleConnected(connected);
+
+      if (connected) {
+        _startSensorLogging(ble);
+      } else {
+        _stopSensorLogging();
+      }
     });
   }
 
@@ -30,15 +51,39 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  void _startSensorLogging(BleInterface ble) {
+    // Prevent double subscription
+    if (_sensorSubscription != null) return;
+
+    final box = Hive.box<Map>(
+      'sensor_log',
+    );
+
+    _sensorSubscription = ble.sensorDataStream.listen((msg) {
+      box.add({'timestamp': DateTime.now().toIso8601String(), 'value': msg});
+
+      // Prevent unlimited growth
+      const maxEntries = 2000;
+      if (box.length > maxEntries) box.deleteAt(0);
+    });
+  }
+
+  Future<void> _stopSensorLogging() async {
+    await _sensorSubscription?.cancel();
+    _sensorSubscription = null;
+  }
+
   @override
   void dispose() {
     _bleSubscription?.cancel();
+    _sensorSubscription?.cancel();
     super.dispose();
   }
 
+
   bool _wifiConnected = false;
   bool get wifiConnected => _wifiConnected;
-  
+
   void toggleWifi() {
     _wifiConnected = !_wifiConnected;
     notifyListeners();
