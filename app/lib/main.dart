@@ -56,15 +56,31 @@ class MyApp extends StatelessWidget {
 
         theme: ThemeData(
           brightness: Brightness.light,
+          textButtonTheme: TextButtonThemeData(
+            style: TextButton.styleFrom(
+              foregroundColor: Colors.black,
+              textStyle: const TextStyle(fontSize: 18),
+            ),
+          ),
           colorScheme: const ColorScheme.light(
-            primary: Colors.grey,
-            secondary: Colors.red,
+            primary: Colors.red,
+            secondary: Colors.blueGrey,
           ),
           elevatedButtonTheme: ElevatedButtonThemeData(style: ButtonStyle(
             foregroundColor: WidgetStateProperty.all(Colors.black),
-            backgroundColor: WidgetStateProperty.all(const Color.fromRGBO(158, 158, 158, 0.3)),
+            backgroundColor: WidgetStateProperty.all(Colors.red),
             visualDensity: VisualDensity(horizontal: 3.0,vertical: 3.0))
             ),
+          outlinedButtonTheme: OutlinedButtonThemeData(
+            style: ButtonStyle(
+              foregroundColor: WidgetStateProperty.all(Colors.blueGrey),
+              backgroundColor: WidgetStateProperty.all(Colors.white),
+              visualDensity: VisualDensity(horizontal: 3.0,vertical: 3.0),
+              textStyle: WidgetStateProperty.all(
+                const TextStyle(color: Colors.white, fontSize: 18),
+              ),
+            ),
+          ),
           tabBarTheme: TabBarThemeData(
             indicatorColor: Colors.red,
             labelStyle: TextStyle(color: Colors.black)
