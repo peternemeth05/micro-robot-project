@@ -1,13 +1,10 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
-
 import 'services/ble_connection/ble_interface.dart';
-<<<<<<< HEAD
 import 'package:flutter/material.dart';
 
-=======
->>>>>>> origin/main
+
 
 enum paths { spiral, random, grid, line, manual }
 

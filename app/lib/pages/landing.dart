@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:robot_app/app-state2.dart';
 
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/main
 class LandingPage extends StatelessWidget {
   const LandingPage({super.key});
 

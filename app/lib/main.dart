@@ -9,12 +9,6 @@ import 'app_layout.dart';
 
 import 'services/ble_connection/ble_interface.dart';
 import 'services/ble_connection/ble_switcher.dart';
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/main
-
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 

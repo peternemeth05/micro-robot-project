@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:robot_app/services/ble_connection/ble_interface.dart';
 import 'fake_ble_interface.dart';
 import 'package:robot_app/pages/landing.dart';
-import 'package:robot_app/pages/setup_pages/input_page.dart';
+import 'package:robot_app/pages/setup.dart';
 
 
 
@@ -31,7 +31,7 @@ void main() {
     expect(find.byType(LandingPage), findsOneWidget, reason: 'Landing Page did not load');
     expect(find.byType(ElevatedButton), findsOneWidget, reason: 'Could not find set up wizard button');
     await tester.tap(button);
-    expect(find.byType(InputPage), findsOneWidget, reason: 'Input Page did not load after set wizard button was pressed');
+    expect(find.byType(SetupWizardPage), findsOneWidget, reason: 'Input Page did not load after set wizard button was pressed');
 
    });
 }
