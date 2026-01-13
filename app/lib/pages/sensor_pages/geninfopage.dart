@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:robot_app/app-state2.dart';
-import 'package:robot_app/app_state.dart';
+import 'package:robot_app/app_state.dart' hide paths;
 import 'package:robot_app/pages/controls_classes.dart/custom_joystick.dart';
 import 'package:robot_app/services/ble_connection/ble_interface.dart';
 
@@ -16,6 +16,7 @@ class GeneralInfoPage extends StatefulWidget {
 
 class _GeneralInfoPageState extends State<GeneralInfoPage> {
   StreamSubscription? distanceSubscription;
+  String speed = "N/A";
 
   @override
   void initState() {
@@ -62,6 +63,15 @@ class _GeneralInfoPageState extends State<GeneralInfoPage> {
     final appState1 = Provider.of<MyAppState1>(context, listen: true);
     final bleDriver = context.read<BleInterface>();
 
+    if (appState1.path!=paths.manual){
+      if(appState1.pathOngoing==false){speed="N/A";} else{speed = "medium";}
+    } else if(appState1.speed ==0){
+      speed = "N/A";
+    } else if (appState1.speed<4){
+      speed = "low";
+    } else if (appState1.speed<7){
+      speed = "medium";
+    } else{speed = "high";}
     
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -76,7 +86,7 @@ class _GeneralInfoPageState extends State<GeneralInfoPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text("Current Movement Type: "+appState1.path.name.toString()),
-                    Text("Current Joystick Position:  X:"+(appState1.x*10).toInt().toString()+"  Y:"+(appState1.y*10).toInt().toString())
+                    Text("Automatic Path Active: "+appState1.pathOngoing.toString() )
                   ],
                 )
                 ),
@@ -92,7 +102,7 @@ class _GeneralInfoPageState extends State<GeneralInfoPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Current Speed: "+appState1.speed.toString())
+                    Text("Current Speed: "+speed)
                   ],
                 )
                 ),
