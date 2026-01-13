@@ -21,7 +21,7 @@ class BleConnectButton extends StatelessWidget {
         return ElevatedButton.icon(
           style: ElevatedButton.styleFrom(
             backgroundColor: isConnected ? Colors.blue : Colors.red,
-            foregroundColor: isConnected ? Colors.white : Colors.black,
+            foregroundColor: Colors.white,
             textStyle: const TextStyle(fontSize: 18),
           ),
           icon: Icon(isConnected ? Icons.bluetooth_connected : Icons.bluetooth),

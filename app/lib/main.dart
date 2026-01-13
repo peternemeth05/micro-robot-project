@@ -66,11 +66,17 @@ class MyApp extends StatelessWidget {
             primary: Colors.red,
             secondary: Colors.blueGrey,
           ),
-          elevatedButtonTheme: ElevatedButtonThemeData(style: ButtonStyle(
-            foregroundColor: WidgetStateProperty.all(Colors.black),
-            backgroundColor: WidgetStateProperty.all(Colors.red),
-            visualDensity: VisualDensity(horizontal: 3.0,vertical: 3.0))
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ButtonStyle(
+              foregroundColor: WidgetStateProperty.all(Colors.black),
+              backgroundColor: WidgetStateProperty.all(Colors.red),
+              textStyle: WidgetStateProperty.all(const TextStyle(fontSize: 18),),
+              visualDensity: const VisualDensity(
+                horizontal: 3.0,
+                vertical: 3.0,
+              ),
             ),
+          ),
           outlinedButtonTheme: OutlinedButtonThemeData(
             style: ButtonStyle(
               foregroundColor: WidgetStateProperty.all(Colors.blueGrey),
@@ -94,11 +100,18 @@ class MyApp extends StatelessWidget {
               textStyle: const TextStyle(fontSize: 18),
             ),
           ),
-          elevatedButtonTheme: ElevatedButtonThemeData(style: ButtonStyle(
-            foregroundColor: WidgetStateProperty.all(Colors.white),
-            backgroundColor: WidgetStateProperty.all(Colors.red),
-            visualDensity: VisualDensity(horizontal: 3.0,vertical: 3.0))
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ButtonStyle(
+              foregroundColor: WidgetStateProperty.all(Colors.white),
+              backgroundColor: WidgetStateProperty.all(Colors.red),
+              textStyle: WidgetStateProperty.all(const TextStyle(fontSize: 18),),
+              visualDensity: const VisualDensity(
+                horizontal: 3.0,
+                vertical: 3.0,
+              ),
             ),
+          ),
+
           tabBarTheme: TabBarThemeData(
             indicatorColor: Colors.red,
             labelStyle: TextStyle(color: Colors.white)
