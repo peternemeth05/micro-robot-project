@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:robot_app/pages/setup_pages/bluetooth_page.dart'; 
-import 'package:robot_app/app-state2.dart';
+import 'package:robot_app/app_states/main_app_state.dart';
 import 'package:robot_app/pages/setup_pages/wifi_page.dart';
 import 'fake_ble_interface.dart';
-import 'package:robot_app/app_state.dart';
-import 'package:robot_app/pages/setup.dart';
-import 'package:robot_app/services/ble_connection/ble_interface.dart';
+import 'package:robot_app/app_states/ble_app_state.dart';
+import 'package:robot_app/pages/layout_pages/main_pages/setup.dart';
+import 'package:robot_app/ble_files/services/ble_connection/ble_interface.dart';
 
 void main() {
     final state = MyAppState1(FakeBleInterface());

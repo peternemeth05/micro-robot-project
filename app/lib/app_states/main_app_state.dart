@@ -2,8 +2,7 @@ import 'dart:async';
 import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:robot_app/app_state.dart';
-import 'package:robot_app/services/ble_connection/ble_interface.dart';
+import 'package:robot_app/ble_files/services/ble_connection/ble_interface.dart';
 
 
 enum Paths {spiral, random, grid, line, manual}

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mjpeg_stream/mjpeg_stream.dart';
-import 'package:robot_app/pages/video.dart';
+import 'package:robot_app/pages/layout_pages/main_pages/video.dart';
 
 void main() {
   group('VideoLogPage UI Tests', () {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:robot_app/pages/sensor_pages/geninfopage.dart';
-import 'sensor_pages/sensor.dart';
-import 'controls_classes/predetermined_paths.dart';
+import 'package:robot_app/pages/sensor_pages/general_info_page.dart';
+import '../../sensor_pages/sensor_plots.dart';
+import '../../controls_pages/predetermined_paths.dart';
 
 class RobotInfoPage extends StatefulWidget {
   const RobotInfoPage({super.key});

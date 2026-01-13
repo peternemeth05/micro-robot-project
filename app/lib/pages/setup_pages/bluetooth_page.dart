@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:robot_app/services/ble_connection/ble_interface.dart';
-import '../../widgets/ble_connect_button.dart';
-import '../../services/robot_profiles.dart';
+import 'package:robot_app/ble_files/services/ble_connection/ble_interface.dart';
+import '../../ble_files/widgets/ble_connect_button.dart';
+import '../../ble_files/services/robot_profiles.dart';
 
 
 class BluetoothPage extends StatefulWidget {

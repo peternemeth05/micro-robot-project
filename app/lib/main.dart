@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:robot_app/app-state2.dart';
+import 'package:robot_app/app_states/main_app_state.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import 'package:robot_app/app_state.dart';
-import 'app_layout.dart';
+import 'package:robot_app/app_states/ble_app_state.dart';
+import 'pages/layout_pages/app_layout.dart';
 
 
-import 'services/ble_connection/ble_interface.dart';
-import 'services/ble_connection/ble_switcher.dart';
+import 'ble_files/services/ble_connection/ble_interface.dart';
+import 'ble_files/services/ble_connection/ble_switcher.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
