@@ -5,12 +5,12 @@ import 'package:robot_app/app_states/main_app_state.dart';
 
 
 
-class CustomJoystick extends StatelessWidget {
+class CustomJoystick extends StatelessWidget { // uses the flutter_joystick package to configure a custom joystick
   const CustomJoystick({super.key});
 
   @override
   Widget build(BuildContext context){
-    final appState = Provider.of<MainAppState>(context, listen: true);
+    final appState = Provider.of<MainAppState>(context, listen: true); // communicates x y position to main_app_state
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -18,8 +18,9 @@ class CustomJoystick extends StatelessWidget {
         Joystick(
           mode: JoystickMode.all,
           listener: (details) {
-            appState.updateJoystick(details.x, details.y);
+            appState.updateJoystick(details.x, details.y); // updates x y in app state when moved
           },       
+          // all styling from here on
           base: Container(
             width: 150,
             height: 150,

@@ -6,11 +6,11 @@ import 'package:robot_app/app_states/main_app_state.dart';
 import 'package:robot_app/pages/custom_widgets/custom_joystick.dart';
 import 'package:robot_app/ble_files/services/ble_connection/ble_interface.dart';
 
-class MainControlsPage extends StatefulWidget {
+class MainControlsPage extends StatefulWidget { // main page visible when controlling robot
   const MainControlsPage({super.key});
 
   @override
-  State<MainControlsPage> createState() => _MainControlsPageState();
+  State<MainControlsPage> createState() => _MainControlsPageState(); //  enables buttons for the page
 }
 
 class _MainControlsPageState extends State<MainControlsPage> {
@@ -23,7 +23,7 @@ class _MainControlsPageState extends State<MainControlsPage> {
     setupDataListener();
   }
 
-  void setupDataListener() {
+  void setupDataListener() { // listens to the robot via bluetooth for ultrasound sensor data
     final bleDriver = context.read<BleInterface>();
     final appState = context.read<MainAppState>();
 
@@ -62,7 +62,7 @@ class _MainControlsPageState extends State<MainControlsPage> {
     final appState1 = Provider.of<MainAppState>(context, listen: true);
     final bleDriver = context.read<BleInterface>();
 
-    if (appState1.path!=Paths.manual){
+    if (appState1.path!=Paths.manual){ // determines speed displayed (medium for auto, dependent on distance from joystick center for manual)
       if(appState1.pathOngoing==false){speed="N/A";} else{speed = "medium";}
     } else if(appState1.speed ==0){
       speed = "N/A";
@@ -73,19 +73,19 @@ class _MainControlsPageState extends State<MainControlsPage> {
     } else{speed = "high";}
     
     return LayoutBuilder(
-      builder: (context, constraints) {
+      builder: (context, constraints) { // constraints allow for responsive layout with fraction of page
         return Column(
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Column(children: [
-                  SizedBox(height: constraints.maxHeight/4,width:constraints.maxWidth/3,
+                  SizedBox(height: constraints.maxHeight/4,width:constraints.maxWidth/3, // responsive from constraints
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Current Movement Type: "+appState1.path.name.toString()),
-                    Text("Automatic Path Active: "+appState1.pathOngoing.toString() )
+                    Text("Current Movement Type: "+appState1.path.name.toString()), // displays path control type
+                    Text("Automatic Path Active: "+appState1.pathOngoing.toString() ) // shows if automatic path currently ongoing
                   ],
                 )
                 ),
@@ -93,7 +93,7 @@ class _MainControlsPageState extends State<MainControlsPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Distance to nearest surface: "+(appState1.distanceValue)+" cm")
+                    Text("Distance to nearest surface: "+(appState1.distanceValue)+" cm") // reads from ultrasound sensor
                   ],
                 )
                 ),
@@ -101,8 +101,8 @@ class _MainControlsPageState extends State<MainControlsPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Current Speed: "+speed),
-                    Text("Current Heading: "+appState1.heading),
+                    Text("Current Speed: "+speed), // shows speed as low, medium, high
+                    Text("Current Heading: "+appState1.heading), // shows heading from -180 to 180 (north is 90, east is 0, south -90, west +-180)
                   ],
                 )
                 ),
@@ -112,7 +112,7 @@ class _MainControlsPageState extends State<MainControlsPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    CustomJoystick(),
+                    CustomJoystick(), // puts in custom joystick
                   ],
                 )
                 ),
@@ -125,9 +125,9 @@ class _MainControlsPageState extends State<MainControlsPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ElevatedButton(
-                      onPressed: () async {
+                      onPressed: () async { // attempts bluetooth communication
                         try {
-                          await bleDriver.writeToCharacteristic('A'.codeUnits);
+                          await bleDriver.writeToCharacteristic('A'.codeUnits); // 'A' is configured in back-end to correspond to action
                           debugPrint("✅ 'A' Sent!");
                         } catch (e) {
                           debugPrint("❌ $e");
