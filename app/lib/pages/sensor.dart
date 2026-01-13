@@ -11,6 +11,7 @@ class SensorLogPage extends StatefulWidget {
   State<SensorLogPage> createState() => _SensorLogPageState();
 }
 
+
 enum datas { data1, data2, data3, data4 }
 
 class _SensorLogPageState extends State<SensorLogPage> {
@@ -20,6 +21,7 @@ class _SensorLogPageState extends State<SensorLogPage> {
 
   @override
   Widget build(BuildContext context) {
+
     switch (data) {
       case datas.data1:
         inputList = List.generate(3, (i) => i * i, growable: true);
