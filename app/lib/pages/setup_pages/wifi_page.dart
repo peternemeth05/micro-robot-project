@@ -7,15 +7,17 @@ class WifiPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () {
-        context.read<AppState>().toggleWifi();
-      },
-      style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.blue,
-        foregroundColor: Colors.white, // text + icon color
+    return Center(
+      child: SizedBox(
+        width: 180,
+        height: 60,
+        child: ElevatedButton(
+          onPressed: () {
+            context.read<AppState>().toggleWifi();
+          },
+          child: const Text('Toggle WiFi', style: TextStyle(fontSize: 18)),
+        ),
       ),
-      child: const Text('Toggle WiFi'),
     );
   }
 }
