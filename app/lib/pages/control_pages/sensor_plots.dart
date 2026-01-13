@@ -47,13 +47,17 @@ class _SensorLogPageState extends State<SensorLogPage> {
         yLabel = "Frequency (Hz)";
         interval = 200;
       case datas.data3:
-        inputList = appState.distancehist.sublist(appState.distancehist.length-11,appState.distancehist.length-1);
+      if (appState.distancehist.length<10){
+          inputList = appState.distancehist;
+        }else {inputList = appState.distancehist.sublist(appState.distancehist.length-11,appState.distancehist.length-1);}
         plotText = "Plot of distance from surface against time";
         xLabel = "Time (ms)";
         yLabel = "Distance from nearest surface (cm)";
         interval = 200;
       case datas.data4:
-        inputList = appState.speedhist.sublist(appState.speedhist.length-11,appState.speedhist.length-1);
+        if (appState.speedhist.length<10){
+          inputList = appState.speedhist;
+        }else {inputList = appState.speedhist.sublist(appState.speedhist.length-11,appState.speedhist.length-1);}
         plotText = "Plot of speed against time";
         xLabel = "Time (AU)";
         yLabel = "Speed (AU)";
@@ -73,6 +77,9 @@ class _SensorLogPageState extends State<SensorLogPage> {
             Expanded(
               child: LayoutBuilder(
                 builder: (context, constraints) {
+                  if(inputList.length==0){return Column(mainAxisAlignment: MainAxisAlignment.center,
+                  children:[Row(mainAxisAlignment: MainAxisAlignment.center, children:[Text("No Data to Plot")])]);
+                  }else{
                   return GeneralPlot( // plots currently selected data
                     width: constraints.maxWidth,
                     height: constraints.maxHeight,
@@ -80,7 +87,7 @@ class _SensorLogPageState extends State<SensorLogPage> {
                     xlabel: xLabel,
                     ylabel: yLabel,
                     timeint: interval,
-                  );
+                  );}
                 },
               ),
             ),
