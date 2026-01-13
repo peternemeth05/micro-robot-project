@@ -49,7 +49,7 @@ class _SensorLogPageState extends State<SensorLogPage> {
         yLabel = "Velocity (m/s)";
     }
 
-    final bool compact = MediaQuery.of(context).size.width < 600;
+    final bool compact = MediaQuery.of(context).size.width < 850;
 
     return Scaffold(
       body: SafeArea(
@@ -91,16 +91,16 @@ class _SensorLogPageState extends State<SensorLogPage> {
                     segments: <ButtonSegment<datas>>[
                       ButtonSegment(
                         value: datas.data1,
-                        label: Text("Voltage")),
+                        label: compact? Text("V"): Text("Voltage")),
                       ButtonSegment(
                         value: datas.data2,
-                        label: Text("Frequency")),
+                        label: compact? Text("Hz"): Text("Frequency")),
                       ButtonSegment(
                         value: datas.data3,
-                        label: Text("Ultrasound Distance")),
+                        label: compact? Text("m"): Text("Ultrasound Distance")),
                       ButtonSegment(
                         value: datas.data4,
-                        label: Text("Velocity")),
+                        label: compact? Text("m/s"): Text("Velocity")),
                     ],
                     selected: <datas>{data},
                     onSelectionChanged: (newSelection) {
