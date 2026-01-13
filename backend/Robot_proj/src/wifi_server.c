@@ -20,7 +20,7 @@ static struct net_mgmt_event_callback ipv4_cb;
 
 /* Event handler for WiFi events */
 static void wifi_mgmt_event_handler(struct net_mgmt_event_callback *cb,
-                                    net_mgmt_event_t mgmt_event,  // ← Changed
+                                    uint64_t mgmt_event,
                                     struct net_if *iface)
 {
     switch (mgmt_event) {
@@ -42,28 +42,19 @@ static void wifi_mgmt_event_handler(struct net_mgmt_event_callback *cb,
 
 /* Event handler for IPv4 events */
 static void ipv4_event_handler(struct net_mgmt_event_callback *cb,
-                               net_mgmt_event_t mgmt_event,  // ← Changed
+                               uint64_t mgmt_event,
                                struct net_if *iface)
 {
     if (mgmt_event == NET_EVENT_IPV4_ADDR_ADD) {
         char buf[NET_IPV4_ADDR_LEN];
-        struct net_if_ipv4 *ipv4 = iface->config.ip.ipv4;
         
-        if (!ipv4) {
-            return;
-        }
+        /* Get the first IPv4 address */
+        struct in_addr *addr = net_if_ipv4_get_global_addr(iface, NET_ADDR_ANY_STATE);
         
-        for (int i = 0; i < NET_IF_MAX_IPV4_ADDR; i++) {
-            if (!ipv4->unicast[i].is_used) {
-                continue;
-            }
-            
-            /* Got IP address */
-            net_addr_ntop(AF_INET, &ipv4->unicast[i].address.in_addr, 
-                         buf, sizeof(buf));
+        if (addr) {
+            net_addr_ntop(AF_INET, addr, buf, sizeof(buf));
             strcpy(ip_address, buf);
             LOG_INF("Got IP address: %s", ip_address);
-            break;
         }
     }
 }
@@ -128,8 +119,8 @@ int wifi_init(wifi_config_t *config)
         strcpy(ip_address, "192.168.4.1");
         wifi_connected = true;
         
-        LOG_INF("✓ AP mode started");
-        LOG_INF("✓ IP: %s", ip_address);
+        LOG_INF("AP mode started");
+        LOG_INF("IP: %s", ip_address);
         
     } else {
         /* Station Mode - Connect to existing WiFi */
@@ -158,7 +149,7 @@ int wifi_init(wifi_config_t *config)
         /* Wait for connection (up to 15 seconds) */
         for (int i = 0; i < 15; i++) {
             if (wifi_connected) {
-                LOG_INF("✓ Connected to WiFi");
+                LOG_INF("Connected to WiFi");
                 break;
             }
             k_msleep(1000);
@@ -166,7 +157,7 @@ int wifi_init(wifi_config_t *config)
         }
         
         if (!wifi_connected) {
-            LOG_ERR("✗ Connection timeout");
+            LOG_ERR("Connection timeout");
             return -ETIMEDOUT;
         }
     }
