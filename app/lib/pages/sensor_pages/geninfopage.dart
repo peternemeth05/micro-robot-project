@@ -102,7 +102,8 @@ class _GeneralInfoPageState extends State<GeneralInfoPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Current Speed: "+speed)
+                    Text("Current Speed: "+speed),
+                    Text("Current Heading: "+appState1.heading),
                   ],
                 )
                 ),
