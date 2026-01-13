@@ -65,9 +65,9 @@ void on_bluetooth_data_received(const uint8_t *data, uint16_t len)
                 int distance = ultrasonic_get_distance_cm();
                 char response[32];
                 if (distance >= 0) {
-                    snprintf(response, sizeof(response), "Distance: %d cm", distance);
+                    snprintf(response, sizeof(response), "DIST:%d", distance);
                 } else {
-                    snprintf(response, sizeof(response), "No object detected");
+                    snprintf(response, sizeof(response), "DIST:--");
                 }
                 bluetooth_send_data((const uint8_t *)response, strlen(response));
             }

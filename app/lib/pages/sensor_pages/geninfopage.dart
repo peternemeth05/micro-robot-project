@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:robot_app/app-state2.dart';
@@ -13,6 +15,48 @@ class GeneralInfoPage extends StatefulWidget {
 }
 
 class _GeneralInfoPageState extends State<GeneralInfoPage> {
+  StreamSubscription? distanceSubscription;
+
+  @override
+  void initState() {
+    super.initState();
+    setupDataListener();
+  }
+
+  void setupDataListener() {
+    final bleDriver = context.read<BleInterface>();
+    final appState = context.read<MyAppState1>();
+
+    distanceSubscription = bleDriver.sensorDataStream.listen((receivedText) {
+      debugPrint("Distance Data Received: $receivedText");
+
+      try {
+          
+        if (receivedText.startsWith('DIST:')) {
+        String distanceStr = receivedText.substring(5).trim();
+        appState.updateDistance(distanceStr);
+        debugPrint("Updated Distance: $distanceStr");
+      } else if (receivedText.contains('Distance:')) {
+        final match = RegExp(r'Distance:\s*(\d+)').firstMatch(receivedText);
+        if (match != null) {
+          String distanceStr = match.group(1)!;
+          appState.updateDistance(distanceStr);
+          debugPrint("Updated Distance: $distanceStr");
+        }
+      }
+      } catch (e) {
+        debugPrint("Error processing distance data: $e");
+      }
+      
+    });
+  }
+
+  @override
+  void dispose() {
+    distanceSubscription?.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final appState = Provider.of<MyAppState1>(context, listen: true);
@@ -40,7 +84,7 @@ class _GeneralInfoPageState extends State<GeneralInfoPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Distance to nearest surface:")
+                    Text("Distance to nearest surface: "+(appState.distanceValue)+" cm")
                   ],
                 )
                 ),

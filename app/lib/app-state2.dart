@@ -17,6 +17,8 @@ class MyAppState1 extends ChangeNotifier {
   double y = 0;
   double speed = 0;
 
+  String distanceValue = "N/A";
+
   void updateJoystick(double newX, double newY) {
     x = newX;
     y = newY;
@@ -24,6 +26,11 @@ class MyAppState1 extends ChangeNotifier {
     path = paths.manual;
     notifyListeners(); 
     debugPrint("X:  $newX Y:  $newY");
+  }
+
+  void updateDistance(String newDistance) {
+    distanceValue = newDistance;
+    notifyListeners();
   }
 
   void togglePath(int time){
