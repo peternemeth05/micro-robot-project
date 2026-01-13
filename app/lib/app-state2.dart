@@ -15,12 +15,14 @@ class MyAppState1 extends ChangeNotifier {
 
   double x = 0;
   double y = 0;
-  double speed = 0;
+  int speed = 0;
+  List<int> speedhist = [];
 
   void updateJoystick(double newX, double newY) {
     x = newX;
     y = newY;
-    speed = sqrt(x*x+y*y);
+    speed = (sqrt(x*x+y*y)*10).toInt();
+    speedhist.add(speed);
     path = paths.manual;
     notifyListeners(); 
     debugPrint("X:  $newX Y:  $newY");
