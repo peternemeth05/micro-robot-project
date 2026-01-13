@@ -21,22 +21,34 @@ class _SensorLogPageState extends State<SensorLogPage> {
   Widget build(BuildContext context) {
     switch (data) {
       case datas.data1:
-        inputList = List.generate(3, (i) => i * i, growable: false);
+        inputList = List.generate(
+          3,
+          (int index) => index * index,
+          growable: true,
+        );
         plotText = "Plot of data set 1";
-        break;
+
       case datas.data2:
-        inputList = List.generate(3, (i) => i + i, growable: false);
+        inputList = List.generate(
+          3,
+          (int index) => index + index,
+          growable: true,
+        );
         plotText = "Plot of data set 2";
-        break;
+
       case datas.data3:
-        inputList = List.generate(5, (i) => i * 4, growable: false);
+        inputList = List.generate(5, (int index) => index * 4, growable: true);
         plotText = "Plot of data set 3";
-        break;
+
       case datas.data4:
-        inputList = List.generate(4, (i) => i * i * i, growable: false);
+        inputList = List.generate(
+          4,
+          (int index) => index * index * index,
+          growable: true,
+        );
         plotText = "Plot of data set 4";
-        break;
     }
+
 
     return Scaffold(
       body: SafeArea(
