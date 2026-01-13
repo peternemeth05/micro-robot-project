@@ -5,12 +5,10 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 import 'package:robot_app/app_state.dart';
 import 'app_layout.dart';
-import 'app_state.dart';
+
 
 import 'services/ble_connection/ble_interface.dart';
 import 'services/ble_connection/ble_switcher.dart';
-
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -50,7 +48,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => MyAppState1(),
+      create: (_) => MyAppState1(context.read<BleInterface>()),
       child: MaterialApp(
         title: 'Robot App',
 
