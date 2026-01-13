@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:robot_app/app-state2.dart';
 import 'package:robot_app/pages/sensor_pages/misc_plot.dart';
 
 import 'package:hive/hive.dart';
@@ -22,6 +24,8 @@ class _SensorLogPageState extends State<SensorLogPage> {
 
   @override
   Widget build(BuildContext context) {
+    final appState = Provider.of<MyAppState1>(context, listen: true);
+    
     switch (data) {
       case datas.data1:
         inputList = List.generate(3, (int index) => index * index, growable: true);
@@ -39,13 +43,13 @@ class _SensorLogPageState extends State<SensorLogPage> {
         xLabel = "Time (ms)";
         yLabel = "Distance from nearest surface (cm)";
       case datas.data4:
-        inputList = List.generate(4, (int index) => index * index * index, growable: true);
+        inputList = appState.speedhist.sublist(appState.speedhist.length-11,appState.speedhist.length-1);
         plotText = "Plot of speed against time";
         xLabel = "Time (ms)";
         yLabel = "Velocity (m/s)";
     }
 
-    final bool compact = MediaQuery.of(context).size.width < 600;
+    final bool compact = MediaQuery.of(context).size.width < 850;
 
     return Scaffold(
       body: SafeArea(
@@ -87,16 +91,16 @@ class _SensorLogPageState extends State<SensorLogPage> {
                     segments: <ButtonSegment<datas>>[
                       ButtonSegment(
                         value: datas.data1,
-                        label: Text("Voltage")),
+                        label: compact? Text("V"): Text("Voltage")),
                       ButtonSegment(
                         value: datas.data2,
-                        label: Text("Frequency")),
+                        label: compact? Text("Hz"): Text("Frequency")),
                       ButtonSegment(
                         value: datas.data3,
-                        label: Text("Ultrasound Distance")),
+                        label: compact? Text("m"): Text("Ultrasound Distance")),
                       ButtonSegment(
                         value: datas.data4,
-                        label: Text("Velocity")),
+                        label: compact? Text("m/s"): Text("Velocity")),
                     ],
                     selected: <datas>{data},
                     onSelectionChanged: (newSelection) {

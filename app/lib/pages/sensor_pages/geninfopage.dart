@@ -59,7 +59,7 @@ class _GeneralInfoPageState extends State<GeneralInfoPage> {
 
   @override
   Widget build(BuildContext context) {
-    final appState = Provider.of<MyAppState1>(context, listen: true);
+    final appState1 = Provider.of<MyAppState1>(context, listen: true);
     final bleDriver = context.read<BleInterface>();
 
     
@@ -75,8 +75,8 @@ class _GeneralInfoPageState extends State<GeneralInfoPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Current Movement Type: "+appState.path.name.toString()),
-                    Text("Current Joystick Position:  X:"+(appState.x*10).toInt().toString()+"  Y:"+(appState.y*10).toInt().toString())
+                    Text("Current Movement Type: "+appState1.path.name.toString()),
+                    Text("Current Joystick Position:  X:"+(appState1.x*10).toInt().toString()+"  Y:"+(appState1.y*10).toInt().toString())
                   ],
                 )
                 ),
@@ -92,7 +92,7 @@ class _GeneralInfoPageState extends State<GeneralInfoPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Current Speed: "+(appState.speed*10).toInt().toString())
+                    Text("Current Speed: "+appState1.speed.toString())
                   ],
                 )
                 ),
