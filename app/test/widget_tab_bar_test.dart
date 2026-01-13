@@ -30,7 +30,7 @@ void main() {
     };
     await tester.pumpWidget(
       MaterialApp(
-        home: MultiProvider( // Use MultiProvider to provide BOTH the state and the interface
+        home: MultiProvider( 
         providers: [
           Provider<BleInterface>.value(value: mockBle), 
           ChangeNotifierProvider<MyAppState1>.value(value: state),
@@ -51,7 +51,7 @@ void main() {
 
         final button = find.text(buttonName);
         await tester.tap(button);
-        await tester.pumpAndSettle();
+        await tester.pump();
         expect(find.byType(widgetType), findsOneWidget, reason: '$buttonName failed after timer elapsed');
     }
   });

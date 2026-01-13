@@ -3,10 +3,11 @@ import 'package:robot_app/services/ble_connection/ble_interface.dart';
 
 
 
-class FakeBleInterface implements BleInterface { //AI
+class FakeBleInterface implements BleInterface { 
+  List<int>?lastDataSent;//AI
   @override
   Future<void> writeToCharacteristic(List<int> data) async {
-    return;
+    lastDataSent = data;
   }
   @override
   Future<void> connect(String deviceId) async {

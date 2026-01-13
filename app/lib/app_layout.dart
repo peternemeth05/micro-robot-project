@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:robot_app/app-state2.dart';
-<<<<<<< HEAD
-
-=======
-import 'package:robot_app/services/ble_connection/ble_interface.dart';
->>>>>>> origin/main
 import 'widgets/ble_status_button.dart';
 import 'widgets/wifi_status_button.dart';
 import 'pages/landing.dart';

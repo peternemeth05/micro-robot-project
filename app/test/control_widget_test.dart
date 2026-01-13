@@ -48,8 +48,7 @@ void main() {
      await tester.tap(button);
      await tester.pump(Duration(milliseconds: timerValues[i]~/2));
      expect(state.pathOngoing, false, reason: '$pathName failed after timer elapsed');
-     
-
+    
   }
  });
 
