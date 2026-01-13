@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import 'package:robot_app/app-state2.dart';
 import 'package:robot_app/pages/robotinfo.dart';
 
-import 'package:robot_app/services/ble_connection/ble_interface.dart';
 import 'widgets/ble_status_button.dart';
 import 'widgets/wifi_status_button.dart';
+
 import 'pages/landing.dart';
 import 'pages/setup.dart';
-import 'pages/sensor_pages/sensor.dart';
-import 'pages/controls_classes.dart/controls.dart';
 import 'pages/video.dart';
-import 'app_state.dart';
+
 
 class AppLayout extends StatefulWidget {
   const AppLayout({super.key});

@@ -24,7 +24,7 @@ class RobotControlsPage extends StatelessWidget {
           children: [
             const Center(
               child: 
-              PrederterminedPaths()
+              PredeterminedPaths()
               ),
             const Center (
               child: 
