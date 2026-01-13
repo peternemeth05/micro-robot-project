@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:robot_app/pages/controls_classes.dart/predetermined_paths.dart';
 import 'package:robot_app/pages/sensor_pages/geninfopage.dart';
 import 'sensor_pages/sensor.dart';
+import 'controls_classes/predetermined_paths.dart';
 
 class RobotInfoPage extends StatefulWidget {
   const RobotInfoPage({super.key});
@@ -32,7 +32,7 @@ class _RobotInfoPageState extends State<RobotInfoPage> {
               const Divider(height: 1),
 
               const Expanded(
-                child: TabBarView(children: [GeneralInfoPage(), PrederterminedPaths(), SensorLogPage()]),
+                child: TabBarView(children: [GeneralInfoPage(), PredeterminedPaths(), SensorLogPage()]),
               ),
             ],
           ),

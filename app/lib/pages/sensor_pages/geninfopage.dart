@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:robot_app/app-state2.dart';
 import 'package:robot_app/app_state.dart' hide paths;
-import 'package:robot_app/pages/controls_classes.dart/custom_joystick.dart';
+import 'package:robot_app/pages/controls_classes/custom_joystick.dart';
 import 'package:robot_app/services/ble_connection/ble_interface.dart';
 
 class GeneralInfoPage extends StatefulWidget {
@@ -63,7 +63,7 @@ class _GeneralInfoPageState extends State<GeneralInfoPage> {
     final appState1 = Provider.of<MyAppState1>(context, listen: true);
     final bleDriver = context.read<BleInterface>();
 
-    if (appState1.path!=paths.manual){
+    if (appState1.path!=Paths.manual){
       if(appState1.pathOngoing==false){speed="N/A";} else{speed = "medium";}
     } else if(appState1.speed ==0){
       speed = "N/A";

@@ -6,7 +6,7 @@ import 'package:robot_app/app-state2.dart';
 import 'package:robot_app/app_state.dart';
 import 'package:robot_app/pages/controls_classes/controls.dart';
 import 'package:robot_app/pages/landing.dart';
-import 'package:robot_app/pages/sensor.dart';
+import 'package:robot_app/pages/sensor_pages/sensor.dart';
 import 'package:robot_app/pages/setup.dart';
 import 'package:robot_app/pages/video.dart';
 import 'package:robot_app/services/ble_connection/ble_interface.dart';

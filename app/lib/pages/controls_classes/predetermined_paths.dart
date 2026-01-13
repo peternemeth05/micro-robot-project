@@ -4,10 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:robot_app/app-state2.dart';
 import 'package:robot_app/services/ble_connection/ble_interface.dart';
 
-
-
-
-
 class PredeterminedPaths extends StatefulWidget {
   const PredeterminedPaths({super.key});
   static const int spiralTimer = 10*1000;
