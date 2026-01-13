@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:robot_app/pages/misc_plot.dart';
+import 'package:robot_app/pages/sensor_pages/misc_plot.dart';
 
 class SensorLogPage extends StatefulWidget {
   const SensorLogPage({super.key});
@@ -14,6 +14,8 @@ class _SensorLogPageState extends State<SensorLogPage> {
   datas data = datas.data1;
   List<int> inputList = List.empty();
   String plotText = "";
+  String xLabel = "";
+  String yLabel = "";
 
   @override
   Widget build(BuildContext context) {
@@ -21,16 +23,24 @@ class _SensorLogPageState extends State<SensorLogPage> {
     switch (data){
       case datas.data1:
         inputList = List.generate(3, (int index) => index * index, growable: true);
-        plotText = "Plot of data set 1";
+        plotText = "Plot of voltage against time";
+        xLabel = "Time (s)";
+        yLabel = "Voltage (mV)";
       case datas.data2:
         inputList = List.generate(3, (int index) => index + index, growable: true);
-        plotText = "Plot of data set 2";
+        plotText = "Plot of frequency against time";
+        xLabel = "Time (s)";
+        yLabel = "Frequency (Hz)";
       case datas.data3:
         inputList = List.generate(5, (int index) => index * 4, growable: true);
-        plotText = "Plot of data set 3";
+        plotText = "Plot of distance from surface against time";
+        xLabel = "Time (s)";
+        yLabel = "Distance from nearest surface (cm)";
       case datas.data4:
         inputList = List.generate(4, (int index) => index * index * index, growable: true);
-        plotText = "Plot of data set 4";
+        plotText = "Plot of speed against time";
+        xLabel = "Time (s)";
+        yLabel = "Velocity (m/s)";
     }
 
     return LayoutBuilder(
@@ -41,7 +51,7 @@ class _SensorLogPageState extends State<SensorLogPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: 
               [Text(plotText),
-              GeneralPlot(width: constraints.maxWidth, height: constraints.maxHeight/1.2, vals: inputList)
+              GeneralPlot(width: constraints.maxWidth*0.95, height: constraints.maxHeight/1.2, vals: inputList, xlabel: xLabel, ylabel: yLabel)
               ],
               ),
             bottomNavigationBar: BottomAppBar(
