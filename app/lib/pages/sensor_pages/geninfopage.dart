@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:robot_app/app-state2.dart';
+import 'package:robot_app/app_state.dart';
 import 'package:robot_app/pages/controls_classes.dart/custom_joystick.dart';
+import 'package:robot_app/services/ble_connection/ble_interface.dart';
 
 class GeneralInfoPage extends StatefulWidget {
   const GeneralInfoPage({super.key});
@@ -14,6 +16,9 @@ class _GeneralInfoPageState extends State<GeneralInfoPage> {
   @override
   Widget build(BuildContext context) {
     final appState = Provider.of<MyAppState1>(context, listen: true);
+    final bleDriver = context.read<BleInterface>();
+
+    
     return LayoutBuilder(
       builder: (context, constraints) {
         return Column(
@@ -65,7 +70,17 @@ class _GeneralInfoPageState extends State<GeneralInfoPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    ElevatedButton(onPressed: null, child: Text("Begin Distance Recording"))
+                    ElevatedButton(
+                      onPressed: () async {
+                        try {
+                          await bleDriver.writeToCharacteristic('A'.codeUnits);
+                          debugPrint("✅ 'A' Sent!");
+                        } catch (e) {
+                          debugPrint("❌ $e");
+                        }
+                        
+                      },
+                       child: Text("Begin Distance Recording"))
                   ],
                 )
               ),
