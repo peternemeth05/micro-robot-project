@@ -6,13 +6,19 @@ The repository has two main sections: the app and the backend.
 The app is written in Dart and uses Flutter, it is broken down into two key sections, lib and test. See below for the folder structure (folder names in bold).
 
 **lib**: contains files for the app, split into:  
+
 --**app_states**: contains the information accessed throughout the app  
---**ble_files**: contains files related to the bluetooth connection to the robot (including bluetooth connection buttons and data)  
---**pages**: contains the pages that make up the app split into:  
+
+--**ble_files**: contains files related to the bluetooth and wifi connection to the robot  
+----**services**: contains bluetooth connection classes and related data  
+------**ble_connection**: contains classes to manage bluetooth connection  
+----**widgets**: bluetooth and wifi widgets (connection buttons etc)  
+
+--**pages**: contains the pages that make up the app  
 ----**layout_pages**: layout page and base pages for each tab (the following folders are accessed through these base pages)  
-----**controls_pages**: components pages making up robot controls tab  
-----**sensor_pages**: components making up sensor data and plotting in robot controls tab  
-----**setup_pages**: components for the robot set up page  
+----**custom_widgets**: contains custom widgets used in the app  
+----**control_pages**: component pages making up robot controls tab  
+----**setup_pages**: component pages for the robot set up page  
 
 **test**: contains unit test files
 
