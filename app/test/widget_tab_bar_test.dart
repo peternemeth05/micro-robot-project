@@ -9,8 +9,8 @@ import 'package:robot_app/pages/landing.dart';
 import 'package:robot_app/pages/sensor.dart';
 import 'package:robot_app/pages/setup_pages/input_page.dart';
 import 'package:robot_app/pages/video.dart';
-import 'dart:async';
 import 'package:robot_app/services/ble_connection/ble_interface.dart';
+import 'fake_ble_interface.dart';
 
 void main() {
   final state = MyAppState1(FakeBleInterface()); 
@@ -58,27 +58,4 @@ void main() {
  }
  
 
- class FakeBleInterface implements BleInterface { //AI
-  @override
-  Future<void> writeToCharacteristic(List<int> data) async {
-    return;
-  }
-  @override
-  Future<void> connect(String deviceId) async {
-    return;
-  }
-  @override
-  Future<void> disconnect() async {
-    return;
-  }
-  @override
-  bool get isConnected => true;
-
-  @override
-  Stream<bool> get connectionStateStream => Stream<bool>.empty();
-
-  @override
-  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
-}
-
-
+ 

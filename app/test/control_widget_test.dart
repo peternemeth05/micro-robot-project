@@ -1,10 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'dart:async';
 import 'package:robot_app/app-state2.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:robot_app/pages/controls_classes/predetermined_paths.dart';
 import 'package:robot_app/services/ble_connection/ble_interface.dart';
+import 'fake_ble_interface.dart';
+
 
 void main() {
   test('Is MyAppState updating correctly',(){
@@ -124,25 +125,3 @@ void main() {
   });
 }
 
-class FakeBleInterface implements BleInterface { //AI
-  @override
-  Future<void> writeToCharacteristic(List<int> data) async {
-    return;
-  }
-  @override
-  Future<void> connect(String deviceId) async {
-    return;
-  }
-  @override
-  Future<void> disconnect() async {
-    return;
-  }
-  @override
-  bool get isConnected => true;
-
-  @override
-  Stream<bool> get connectionStateStream => Stream<bool>.empty();
-
-  @override
-  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
-}
