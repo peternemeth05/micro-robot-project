@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:robot_app/app_states/main_app_state.dart';
-import 'package:robot_app/pages/sensor_pages/widgets/misc_plot.dart';
+import 'package:robot_app/pages/custom_widgets/misc_plot.dart';
 
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -31,7 +31,7 @@ class _SensorLogPageState extends State<SensorLogPage> {
 
   @override
   Widget build(BuildContext context) {
-    final appState = Provider.of<MyAppState1>(context, listen: true);
+    final appState = Provider.of<MainAppState>(context, listen: true);
     
     switch (data) {
       case datas.data1:

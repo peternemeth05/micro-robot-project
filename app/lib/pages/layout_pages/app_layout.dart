@@ -24,10 +24,10 @@ class _AppLayoutState extends State<AppLayout> {
     final pages = [
       LandingPage(),
       SetupWizardPage(),
-      RobotInfoPage(),
+      RobotControlsPage(),
       VideoLogPage(),
     ];
-    final appState = Provider.of<MyAppState1>(context, listen: true);
+    final appState = Provider.of<MainAppState>(context, listen: true);
     int selectedIndex = appState.pageIndex;
     return LayoutBuilder(
       builder: (context, constraints) {

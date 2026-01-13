@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:robot_app/pages/sensor_pages/general_info_page.dart';
-import '../../sensor_pages/sensor_plots.dart';
-import '../../controls_pages/predetermined_paths.dart';
+import 'package:robot_app/pages/control_pages/general_info_page.dart';
+import '../../control_pages/sensor_plots.dart';
+import '../../control_pages/predetermined_paths.dart';
 
-class RobotInfoPage extends StatefulWidget {
-  const RobotInfoPage({super.key});
+class RobotControlsPage extends StatefulWidget {
+  const RobotControlsPage({super.key});
 
   @override
-  State<RobotInfoPage> createState() => _RobotInfoPageState();
+  State<RobotControlsPage> createState() => _RobotControlsPageState();
 }
 
-class _RobotInfoPageState extends State<RobotInfoPage> {
+class _RobotControlsPageState extends State<RobotControlsPage> {
   int selectedIndex = 0;
 
 @override
@@ -32,7 +32,7 @@ class _RobotInfoPageState extends State<RobotInfoPage> {
               const Divider(height: 1),
 
               const Expanded(
-                child: TabBarView(children: [GeneralInfoPage(), PredeterminedPaths(), SensorLogPage()]),
+                child: TabBarView(children: [MainControlsPage(), PredeterminedPathsPage(), SensorLogPage()]),
               ),
             ],
           ),

@@ -10,7 +10,7 @@ import 'package:robot_app/pages/layout_pages/main_pages/setup.dart';
 import 'package:robot_app/ble_files/services/ble_connection/ble_interface.dart';
 
 void main() {
-    final state = MyAppState1(FakeBleInterface());
+    final state = MainAppState(FakeBleInterface());
     final mockBle = FakeBleInterface();
     final bluetoothState = AppState(); 
     final bluetoothButton = find.text('Bluetooth');
@@ -24,7 +24,7 @@ void main() {
         home: MultiProvider(
           providers: [
             Provider<BleInterface>.value(value: mockBle), 
-            ChangeNotifierProvider<MyAppState1>.value(value: state),
+            ChangeNotifierProvider<MainAppState>.value(value: state),
             ChangeNotifierProvider<AppState>.value(value: bluetoothState),
             ],
           child: const Scaffold(
@@ -53,7 +53,7 @@ void main() {
           home: MultiProvider(
           providers: [
             Provider<BleInterface>.value(value: mockBle), 
-            ChangeNotifierProvider<MyAppState1>.value(value: state),
+            ChangeNotifierProvider<MainAppState>.value(value: state),
             ChangeNotifierProvider<AppState>.value(value: bluetoothState),
             ],
           child: const Scaffold(

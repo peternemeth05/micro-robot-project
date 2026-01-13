@@ -2,14 +2,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:robot_app/app_states/main_app_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:robot_app/pages/controls_pages/predetermined_paths.dart';
+import 'package:robot_app/pages/control_pages/predetermined_paths.dart';
 import 'package:robot_app/ble_files/services/ble_connection/ble_interface.dart';
 import 'fake_ble_interface.dart';
 
 
 void main() {
   test('Is MyAppState updating correctly',(){
-    final state = MyAppState1(FakeBleInterface()); 
+    final state = MainAppState(FakeBleInterface()); 
 
     for (double i=-10; i<10; i++){
     state.updateJoystick(i, i);
@@ -19,20 +19,20 @@ void main() {
   });
 
   testWidgets('Is the AppState preventing a timer reset in predetermined paths when a button is repeatedly pressed', (WidgetTester tester) async{
-  final state = MyAppState1(FakeBleInterface());
+  final state = MainAppState(FakeBleInterface());
   final mockBle = FakeBleInterface(); 
 
   List<String> pathLabels = ['Spiral Path', 'Grid Path', 'Straight Line', 'Random Path'];
-  List<int> timerValues = [PredeterminedPaths.spiralTimer, PredeterminedPaths.gridTimer, PredeterminedPaths.lineTimer, PredeterminedPaths.randomTimer];
+  List<int> timerValues = [PredeterminedPathsPage.spiralTimer, PredeterminedPathsPage.gridTimer, PredeterminedPathsPage.lineTimer, PredeterminedPathsPage.randomTimer];
  
   await tester.pumpWidget(MaterialApp(
         home: MultiProvider( 
         providers: [
           Provider<BleInterface>.value(value: mockBle), 
-          ChangeNotifierProvider<MyAppState1>.value(value: state),
+          ChangeNotifierProvider<MainAppState>.value(value: state),
         ],
           child: const Scaffold(
-            body: PredeterminedPaths(), 
+            body: PredeterminedPathsPage(), 
           ),
         ),
       ),
@@ -53,7 +53,7 @@ void main() {
  });
 
   testWidgets('Is the snackbar appearing in predetermined paths correctly', (WidgetTester test) async {
-    final state = MyAppState1(FakeBleInterface());
+    final state = MainAppState(FakeBleInterface());
     final mockBle = FakeBleInterface(); 
     List<String> pathLabels = ['Spiral Path', 'Grid Path', 'Straight Line', 'Random Path'];
     
@@ -62,10 +62,10 @@ void main() {
             home: MultiProvider( // Use MultiProvider to provide BOTH the state and the interface
             providers: [
               Provider<BleInterface>.value(value: mockBle), 
-              ChangeNotifierProvider<MyAppState1>.value(value: state),
+              ChangeNotifierProvider<MainAppState>.value(value: state),
             ],
           child: const Scaffold(
-            body: PredeterminedPaths(), 
+            body: PredeterminedPathsPage(), 
           ),
         ),
       ),
@@ -87,20 +87,20 @@ void main() {
    
 
    testWidgets('Is MyAppState updating correctly after the Buttons pressed', (WidgetTester tester) async {
-    final state = MyAppState1(FakeBleInterface());
+    final state = MainAppState(FakeBleInterface());
     final mockBle = FakeBleInterface(); 
     List<String> pathLabels = ['Spiral Path', 'Grid Path', 'Straight Line', 'Random Path'];
-    List<int> timerValues = [PredeterminedPaths.spiralTimer, PredeterminedPaths.gridTimer, PredeterminedPaths.lineTimer, PredeterminedPaths.randomTimer];
+    List<int> timerValues = [PredeterminedPathsPage.spiralTimer, PredeterminedPathsPage.gridTimer, PredeterminedPathsPage.lineTimer, PredeterminedPathsPage.randomTimer];
    
     await tester.pumpWidget(
       MaterialApp(
         home: MultiProvider( // Use MultiProvider to provide BOTH the state and the interface
         providers: [
           Provider<BleInterface>.value(value: mockBle), 
-          ChangeNotifierProvider<MyAppState1>.value(value: state),
+          ChangeNotifierProvider<MainAppState>.value(value: state),
         ],
           child: const Scaffold(
-            body: PredeterminedPaths(), 
+            body: PredeterminedPathsPage(), 
           ),
         ),
       ),

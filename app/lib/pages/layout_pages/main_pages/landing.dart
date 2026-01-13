@@ -7,7 +7,7 @@ class LandingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final appState = Provider.of<MyAppState1>(context, listen: true);
+    final appState = Provider.of<MainAppState>(context, listen: true);
 
     return Scaffold(
       appBar: AppBar(

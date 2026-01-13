@@ -7,10 +7,10 @@ import 'package:robot_app/ble_files/services/ble_connection/ble_interface.dart';
 
 enum Paths {spiral, random, grid, line, manual}
 
-class MyAppState1 extends ChangeNotifier {
+class MainAppState extends ChangeNotifier {
   
   final BleInterface bleDriver;
-  MyAppState1(this.bleDriver);
+  MainAppState(this.bleDriver);
   
   bool isConnected = false;
 

@@ -13,7 +13,7 @@ import 'package:robot_app/pages/layout_pages/app_layout.dart';
 
 void main() { 
   testWidgets('Is the landing page appearing properly', (WidgetTester tester)async {
-    final state = MyAppState1(FakeBleInterface());
+    final state = MainAppState(FakeBleInterface());
     final mockBle = FakeBleInterface();
     final button = find.text('Set-Up Wizard');
     final bluetoothState = AppState();
@@ -22,7 +22,7 @@ void main() {
           home: MultiProvider(
           providers: [
           Provider<BleInterface>.value(value: mockBle), 
-          ChangeNotifierProvider<MyAppState1>.value(value: state),
+          ChangeNotifierProvider<MainAppState>.value(value: state),
           ChangeNotifierProvider<AppState>.value(value: bluetoothState),
           ],
             child: const Scaffold(

@@ -4,23 +4,23 @@ import 'package:provider/provider.dart';
 import 'package:robot_app/app_states/main_app_state.dart';
 import 'package:robot_app/ble_files/services/ble_connection/ble_interface.dart';
 
-class PredeterminedPaths extends StatefulWidget {
-  const PredeterminedPaths({super.key});
+class PredeterminedPathsPage extends StatefulWidget {
+  const PredeterminedPathsPage({super.key});
   static const int spiralTimer = 10*1000;
   static const int randomTimer = 4*1000;
   static const int gridTimer = 3*1000;
   static const int lineTimer = 1*1000;
 
   @override
-  State<PredeterminedPaths> createState() => _PredeterminedPathsState();
+  State<PredeterminedPathsPage> createState() => _PredeterminedPathsPageState();
 }
 
-class _PredeterminedPathsState extends State<PredeterminedPaths>{
+class _PredeterminedPathsPageState extends State<PredeterminedPathsPage>{
 
 
   @override
   Widget build(BuildContext context){
-    final appState = Provider.of<MyAppState1>(context, listen: true);
+    final appState = Provider.of<MainAppState>(context, listen: true);
     final bleDriver = context.read<BleInterface>();
 
     return Column(
@@ -58,7 +58,7 @@ class _PredeterminedPathsState extends State<PredeterminedPaths>{
                   int timeToUse;
 
                   switch (selectedPath) {
-                    case Paths.spiral: timeToUse = PredeterminedPaths.spiralTimer; 
+                    case Paths.spiral: timeToUse = PredeterminedPathsPage.spiralTimer; 
                         ()async {
                           try {
                             await bleDriver.writeToCharacteristic('PS'.codeUnits);
@@ -68,7 +68,7 @@ class _PredeterminedPathsState extends State<PredeterminedPaths>{
                           }
                         }();  
                         break;
-                    case Paths.grid:   timeToUse = PredeterminedPaths.gridTimer; 
+                    case Paths.grid:   timeToUse = PredeterminedPathsPage.gridTimer; 
                        ()async {
                           try {
                             await bleDriver.writeToCharacteristic('PG'.codeUnits);
@@ -78,7 +78,7 @@ class _PredeterminedPathsState extends State<PredeterminedPaths>{
                           }
                         }();
                         break;
-                    case Paths.line:   timeToUse = PredeterminedPaths.lineTimer;
+                    case Paths.line:   timeToUse = PredeterminedPathsPage.lineTimer;
                        ()async {
                           try {
                             await bleDriver.writeToCharacteristic('PL'.codeUnits);
@@ -88,7 +88,7 @@ class _PredeterminedPathsState extends State<PredeterminedPaths>{
                           }
                         }();
                         break;
-                    case Paths.random: timeToUse = PredeterminedPaths.randomTimer;
+                    case Paths.random: timeToUse = PredeterminedPathsPage.randomTimer;
                         ()async {
                           try {
                             await bleDriver.writeToCharacteristic('PR'.codeUnits);

@@ -3,17 +3,17 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:robot_app/app_states/main_app_state.dart';
-import 'package:robot_app/pages/controls_pages/custom_joystick.dart';
+import 'package:robot_app/pages/custom_widgets/custom_joystick.dart';
 import 'package:robot_app/ble_files/services/ble_connection/ble_interface.dart';
 
-class GeneralInfoPage extends StatefulWidget {
-  const GeneralInfoPage({super.key});
+class MainControlsPage extends StatefulWidget {
+  const MainControlsPage({super.key});
 
   @override
-  State<GeneralInfoPage> createState() => _GeneralInfoPageState();
+  State<MainControlsPage> createState() => _MainControlsPageState();
 }
 
-class _GeneralInfoPageState extends State<GeneralInfoPage> {
+class _MainControlsPageState extends State<MainControlsPage> {
   StreamSubscription? distanceSubscription;
   String speed = "N/A";
 
@@ -25,7 +25,7 @@ class _GeneralInfoPageState extends State<GeneralInfoPage> {
 
   void setupDataListener() {
     final bleDriver = context.read<BleInterface>();
-    final appState = context.read<MyAppState1>();
+    final appState = context.read<MainAppState>();
 
     distanceSubscription = bleDriver.sensorDataStream.listen((receivedText) {
       debugPrint("Distance Data Received: $receivedText");
@@ -59,7 +59,7 @@ class _GeneralInfoPageState extends State<GeneralInfoPage> {
 
   @override
   Widget build(BuildContext context) {
-    final appState1 = Provider.of<MyAppState1>(context, listen: true);
+    final appState1 = Provider.of<MainAppState>(context, listen: true);
     final bleDriver = context.read<BleInterface>();
 
     if (appState1.path!=Paths.manual){
