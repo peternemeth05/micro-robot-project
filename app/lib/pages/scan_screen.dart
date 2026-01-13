@@ -175,7 +175,7 @@ class _ScanScreenState extends State<ScanScreen> {
           ),
         ],
       ),
-// 2. Updated FloatingActionButton with Dynamic Colors
+      // 2. Updated FloatingActionButton with Dynamic Colors
       floatingActionButton: FloatingActionButton(
         // Dark Mode: White button (High Contrast). Light Mode: BlueGrey (Standard)
         backgroundColor: isDarkMode ? Colors.white : Colors.blueGrey,
