@@ -24,22 +24,22 @@ class _SensorLogPageState extends State<SensorLogPage> {
       case datas.data1:
         inputList = List.generate(3, (int index) => index * index, growable: true);
         plotText = "Plot of voltage against time";
-        xLabel = "Time (s)";
+        xLabel = "Time (ms)";
         yLabel = "Voltage (mV)";
       case datas.data2:
         inputList = List.generate(3, (int index) => index + index, growable: true);
         plotText = "Plot of frequency against time";
-        xLabel = "Time (s)";
+        xLabel = "Time (ms)";
         yLabel = "Frequency (Hz)";
       case datas.data3:
         inputList = List.generate(5, (int index) => index * 4, growable: true);
         plotText = "Plot of distance from surface against time";
-        xLabel = "Time (s)";
+        xLabel = "Time (ms)";
         yLabel = "Distance from nearest surface (cm)";
       case datas.data4:
         inputList = List.generate(4, (int index) => index * index * index, growable: true);
         plotText = "Plot of speed against time";
-        xLabel = "Time (s)";
+        xLabel = "Time (ms)";
         yLabel = "Velocity (m/s)";
     }
 
@@ -60,16 +60,16 @@ class _SensorLogPageState extends State<SensorLogPage> {
                 segments: const <ButtonSegment<datas>>[
                   ButtonSegment(
                     value: datas.data1,
-                    label: Text("Data Set 1")),
+                    label: Text("Voltage")),
                   ButtonSegment(
                     value: datas.data2,
-                    label: Text("Data Set 2")),
+                    label: Text("Frequency")),
                   ButtonSegment(
                     value: datas.data3,
-                    label: Text("Data Set 3")),
+                    label: Text("Ultrasound Distance")),
                   ButtonSegment(
                     value: datas.data4,
-                    label: Text("Data Set 4")),
+                    label: Text("Velocity")),
                 ], 
                 selected: <datas>{data},
                 onSelectionChanged: (Set<datas> newSelection){
