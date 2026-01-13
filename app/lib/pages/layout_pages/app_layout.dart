@@ -22,10 +22,10 @@ class _AppLayoutState extends State<AppLayout> {
   @override
   Widget build(BuildContext context) {
     final pages = [
-      const LandingPage(),
+      LandingPage(),
       SetupWizardPage(),
       RobotInfoPage(),
-      const VideoLogPage(),
+      VideoLogPage(),
     ];
     final appState = Provider.of<MyAppState1>(context, listen: true);
     int selectedIndex = appState.pageIndex;

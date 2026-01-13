@@ -55,9 +55,8 @@ class LandingPage extends StatelessWidget {
                               "The Setup Wizard will allow you to connect to the robots "
                               "and input controllers.\n"
                               "The Robot Controls Tab includes inbuilt walking patterns "
-                              "and a virtual joystick to control the robot directly.\n"
-                              "The Sensor Log will allow you to log real-time data from "
-                              "the micro-robots.\n"
+                              "and a virtual joystick to control the robot directly, "
+                              "alongside sensor data. \n"
                               "The Video Log will allow you to visualise the real-time "
                               "recording from the robot’s camera.",
                         ),
