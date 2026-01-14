@@ -6,6 +6,7 @@ import 'package:robot_app/ble_files/services/ble_connection/ble_interface.dart';
 
 class PredeterminedPathsPage extends StatefulWidget {
   const PredeterminedPathsPage({super.key});
+  //Establishes the timers that determine how long each path will take
   static const int spiralTimer = 10*1000;
   static const int randomTimer = 4*1000;
   static const int gridTimer = 3*1000;
@@ -20,12 +21,14 @@ class _PredeterminedPathsPageState extends State<PredeterminedPathsPage>{
 
   @override
   Widget build(BuildContext context){
+    //Establishes the app states so that the app can communicate to robot and the logic rules are able to run
     final appState = Provider.of<MainAppState>(context, listen: true);
     final bleDriver = context.read<BleInterface>();
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        //Creates the segmented button for each path
         SegmentedButton<Paths>(
             segments: const <ButtonSegment<Paths>>[
               ButtonSegment(
@@ -47,7 +50,7 @@ class _PredeterminedPathsPageState extends State<PredeterminedPathsPage>{
             ], 
 
             selected: <Paths>{appState.path},
-
+            //Write How the appstate should change and what bluetooth command should be sent depednding on the button selected
             onSelectionChanged: (Set<Paths> newSelection)async{
               if(appState.pathOngoing){
                 ScaffoldMessenger.of(context).showSnackBar(
