@@ -62,9 +62,9 @@ class _PredeterminedPathsPageState extends State<PredeterminedPathsPage>{
                         ()async {
                           try {
                             await bleDriver.writeToCharacteristic('PS'.codeUnits);
-                            debugPrint("✅ 'PS' Sent!");
+                            debugPrint("'PS' Sent!");
                           } catch (e) {
-                            debugPrint("❌ PS");
+                            debugPrint("PS");
                           }
                         }();  
                         break;
@@ -72,9 +72,9 @@ class _PredeterminedPathsPageState extends State<PredeterminedPathsPage>{
                        ()async {
                           try {
                             await bleDriver.writeToCharacteristic('PG'.codeUnits);
-                            debugPrint("✅ 'PG' Sent!");
+                            debugPrint("'PG' Sent!");
                           } catch (e) {
-                            debugPrint("❌ PG");
+                            debugPrint("PG");
                           }
                         }();
                         break;
@@ -82,9 +82,9 @@ class _PredeterminedPathsPageState extends State<PredeterminedPathsPage>{
                        ()async {
                           try {
                             await bleDriver.writeToCharacteristic('PL'.codeUnits);
-                            debugPrint("✅ 'PL' Sent!");
+                            debugPrint("'PL' Sent!");
                           } catch (e) {
-                            debugPrint("❌ PL");
+                            debugPrint("PL");
                           }
                         }();
                         break;
@@ -92,9 +92,9 @@ class _PredeterminedPathsPageState extends State<PredeterminedPathsPage>{
                         ()async {
                           try {
                             await bleDriver.writeToCharacteristic('PR'.codeUnits);
-                            debugPrint("✅ 'PR' Sent!");
+                            debugPrint("'PR' Sent!");
                           } catch (e) {
-                            debugPrint("❌ PR");
+                            debugPrint("PR");
                           }
                         }(); 
                         break;         

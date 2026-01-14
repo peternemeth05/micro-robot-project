@@ -33,15 +33,14 @@ class BleNative implements BleInterface {
 
   @override
   Future<void> connect(String deviceId) async {
-    print("⏳ (Native) Connecting to $deviceId...");
+    print("(Native) Connecting to $deviceId...");
     try {
       final device = BluetoothDevice.fromId(deviceId);
 
-      // 1. Listen to the device's connection state immediately
-      // This handles if the device disconnects (e.g. goes out of range or turned off)
+      // 1. Listens to the device's connection state immediately
       _connectionSubscription = device.connectionState.listen((state) {
         if (state == BluetoothConnectionState.disconnected) {
-           print("⚠️ (Native) Device reported disconnection!");
+           print("(Native) Device reported disconnection!");
            // We only trigger cleanup if we thought we were connected
            if (_connectedDevice != null) {
              disconnect();
@@ -63,7 +62,7 @@ class BleNative implements BleInterface {
       );
 
       print("------------------------------------------------");
-      print("✅ FOUND SERVICE");
+      print("FOUND SERVICE");
       print("   Expected: $_serviceUuid"); 
       print("   Actual:   ${targetService.uuid}"); 
       print("");
@@ -74,14 +73,14 @@ class BleNative implements BleInterface {
         orElse: () => throw Exception("Characteristic not found"),
       );
 
-      print("✅ FOUND Write CHARACTERISTIC");
+      print("FOUND Write CHARACTERISTIC");
       print("   Expected: $_charUuid");
       print("   Actual:   ${_sharedChar!.uuid}");
       print("------------------------------------------------");
 
       _connectedDevice = device;
       _connectionStateController.add(true);
-      print("✅ (Native) Connection & Setup Complete!");
+      print("(Native) Connection & Setup Complete!");
 
       await _sharedChar!.setNotifyValue(true);
 
@@ -100,7 +99,7 @@ class BleNative implements BleInterface {
 
 
     } catch (e) {
-      print("❌ (Native) Connection Failed: $e");
+      print("(Native) Connection Failed: $e");
       disconnect(); // Clean up
       rethrow;
     }
@@ -134,7 +133,7 @@ class BleNative implements BleInterface {
   @override
   Future<void> writeToCharacteristic(List<int> data) async {
     if (_sharedChar == null) {
-      print("⚠️ Cannot write: Not connected.");
+      print("Cannot write: Not connected.");
       return;
     }
     try {

@@ -128,9 +128,9 @@ class _MainControlsPageState extends State<MainControlsPage> {
                       onPressed: () async { // attempts bluetooth communication
                         try {
                           await bleDriver.writeToCharacteristic('A'.codeUnits); // 'A' is configured in back-end to correspond to action
-                          debugPrint("✅ 'A' Sent!");
+                          debugPrint("'A' Sent!");
                         } catch (e) {
-                          debugPrint("❌ $e");
+                          debugPrint("$e");
                         }
                         
                       },
@@ -146,9 +146,9 @@ class _MainControlsPageState extends State<MainControlsPage> {
                       onPressed: () async {
                         try {
                           await bleDriver.writeToCharacteristic('Z'.codeUnits);
-                          debugPrint("✅ 'Z' Sent!");
+                          debugPrint("'Z' Sent!");
                         } catch (e) {
-                          debugPrint("❌ $e");
+                          debugPrint(" $e");
                         }
                       },
                        
@@ -164,9 +164,9 @@ class _MainControlsPageState extends State<MainControlsPage> {
                       onPressed: () async {
                         try {
                           await bleDriver.writeToCharacteristic('D'.codeUnits);
-                          debugPrint("✅ 'D' Sent!");
+                          debugPrint("'D' Sent!");
                         } catch (e) {
-                          debugPrint("❌ $e");
+                          debugPrint("$e");
                         }
                       },
                       child: Text("Get Current Distance"))
