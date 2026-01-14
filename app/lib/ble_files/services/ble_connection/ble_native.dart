@@ -37,8 +37,6 @@ class BleNative implements BleInterface {
     try {
 
       // 1. CONNECT TO ROBOT
-
-
       final device = BluetoothDevice.fromId(deviceId);
 
       // Listens to the device connection state 
@@ -51,8 +49,6 @@ class BleNative implements BleInterface {
            }
         }
       });
-
-
       
       // Connect 
       await device.connect(autoConnect: false);
@@ -88,7 +84,6 @@ class BleNative implements BleInterface {
       _connectionStateController.add(true);
       print("(Native) Connection & Setup Complete!");
 
-
       // listening to robot
       await _sharedChar!.setNotifyValue(true);
 
@@ -103,11 +98,6 @@ class BleNative implements BleInterface {
           print("Error decoding: $e");
         }
       });
-
-      
-
-
-
     } catch (e) {
       print("(Native) Connection Failed: $e");
       disconnect(); // Ensure disconnect if doesnt work

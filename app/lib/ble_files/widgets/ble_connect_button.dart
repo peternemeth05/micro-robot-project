@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart'; // Needed for kIsWeb
+import 'package:flutter/foundation.dart';
 import 'package:robot_app/ble_files/services/ble_connection/ble_interface.dart';
 import '../../pages/setup_pages/scan_screen.dart'; 
 import '../services/robot_profiles.dart';
@@ -58,15 +58,12 @@ class BleConnectButton extends StatelessWidget {
       return;
     }
 
-
+    // navigates to the scan screen and waits
     await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => ScanScreen(bleDriver: bleDriver, targetRobots: targetRobots), 
       ),
     );
-    
-
-
   }
 }

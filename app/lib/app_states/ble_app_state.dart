@@ -45,18 +45,21 @@ class AppState extends ChangeNotifier {
     });
   }
 
+  // Updates BLE connection state and notifies listeners if changed
   void _setBleConnected(bool value) {
     if (_bleConnected == value) return;
     _bleConnected = value;
     notifyListeners();
   }
 
+  // Setter for sensor loggin state (Have not been implented into the UI yet)
   void _setSensorLogging(bool value) {
     if (_sensorLogging == value) return;
     _sensorLogging = value;
     notifyListeners();
   }
 
+  // Saves ultrasound sensor data into Hive
   void _startSensorLogging(BleInterface ble) {
     // Prevent double subscription
     if (_sensorSubscription != null) return;
@@ -75,6 +78,7 @@ class AppState extends ChangeNotifier {
     _setSensorLogging(true);
   }
 
+  // Cancels stream subscription and updates logging state
   Future<void> _stopSensorLogging() async {
     await _sensorSubscription?.cancel();
     _sensorSubscription = null;
@@ -87,7 +91,6 @@ class AppState extends ChangeNotifier {
     _sensorSubscription?.cancel();
     super.dispose();
   }
-
 
   bool _wifiConnected = false;
   bool get wifiConnected => _wifiConnected;

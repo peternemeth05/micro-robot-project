@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../app_states/ble_app_state.dart';
 
+// Wifi has not been implemented, this page just contains a button that toggles wifi state and has no real backend
+
 class WifiPage extends StatelessWidget {
   const WifiPage({super.key});
 

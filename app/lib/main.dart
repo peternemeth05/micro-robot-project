@@ -47,11 +47,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Wraps app with ChangeNotifierProvider so App State can be updated anywhere in the app
     return ChangeNotifierProvider(
       create: (_) => MainAppState(context.read<BleInterface>()),
       child: MaterialApp(
         title: 'Robot App',
 
+        // Theme data containing stlying for light and dark mode
         theme: ThemeData(
           brightness: Brightness.light,
           textButtonTheme: TextButtonThemeData(

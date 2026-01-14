@@ -35,8 +35,6 @@ class BleWeb implements BleInterface {
     try {
 
       // 1. CONNECT TO ROBOT
-
-
       final device = await FlutterWebBluetooth.instance.requestDevice(
       RequestOptionsBuilder(
         [
@@ -45,8 +43,6 @@ class BleWeb implements BleInterface {
         optionalServices: [_serviceUuid],
       ),
     );
-
-      
 
       await device.connect();
       
@@ -57,7 +53,6 @@ class BleWeb implements BleInterface {
           disconnect(); 
         }
       });
-
 
       // 2. CONFIRM UUIDS
       
@@ -115,9 +110,7 @@ class BleWeb implements BleInterface {
           print("Web Decode Error: $e");
         }
       });
-
-
-
+      
     } catch (e) {
       print("(Web) Connection Failed: $e");
       disconnect();

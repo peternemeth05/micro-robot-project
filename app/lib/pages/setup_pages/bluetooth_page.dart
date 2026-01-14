@@ -88,7 +88,8 @@ class _BluetoothState extends State<BluetoothPage> {
 
 
             const SizedBox(height: 20),
-
+            
+            // Bluetooth connect button
             BleConnectButton(
               bleDriver: bleDriver,
               targetRobots: targetRobots,
@@ -96,6 +97,7 @@ class _BluetoothState extends State<BluetoothPage> {
 
             const SizedBox(height: 20),
 
+            // Test button
             ElevatedButton(
               onPressed: () async {
                 try {
