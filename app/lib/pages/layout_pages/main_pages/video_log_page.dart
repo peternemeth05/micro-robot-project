@@ -4,6 +4,8 @@ import 'package:flutter_screen_recording/flutter_screen_recording.dart';
 import 'package:mjpeg_stream/mjpeg_stream.dart';
 
 
+
+///track the current recording state of the video logger
 enum Video { start, stop, download }
 
 
@@ -15,9 +17,12 @@ class VideoLogPage extends StatefulWidget {
 }
 
 class _VideoLogPageState extends State<VideoLogPage> {
+  //Store path of file once ideo is done recording
   String? _recordedVideoPath;
+  //defaults UI state of segmented button to stop
   Video _currentStatus = Video.stop;
 
+  //Function that initiates the screen recording
   void _startRecordingLogic() async {
     try {
       bool started = await FlutterScreenRecording.startRecordScreen('robot_log');
@@ -31,6 +36,7 @@ class _VideoLogPageState extends State<VideoLogPage> {
     }
   }
 
+  //function that stops the screen recording
   void _stopRecordingLogic() async {
     try {
       String path = await FlutterScreenRecording.stopRecordScreen;
@@ -54,6 +60,7 @@ class _VideoLogPageState extends State<VideoLogPage> {
           Expanded(
             child: Center(
               child: MJPEGStreamScreen(
+                //Robot video feed
                 streamUrl: "http://yasmines-iphone.local:8081/video",
                 showLiveIcon: true,
                 width: 900.0,
@@ -62,6 +69,8 @@ class _VideoLogPageState extends State<VideoLogPage> {
               ),
             ),
           ),
+
+          //Buttons containing the start stop functions
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: SegmentedButton<Video>(

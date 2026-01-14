@@ -45,6 +45,7 @@ void main() {
 
     expect(find.byType(LandingPage), findsOneWidget, reason: 'Landing Widget did not appear');
 
+    // for loop interates between each button in the side tab bar to make sure the correct widget appears upon selection
     for (var entry in navigationItems.entries){
         String buttonName = entry.key;
         final Type widgetType = entry.value;

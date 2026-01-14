@@ -32,11 +32,14 @@ void main() {
     )
     );
 
+    //Checks that the elements required are visible
     expect(find.byType(LandingPage), findsOneWidget, reason: 'Landing Page did not load');
     expect(find.byType(SetupWizardPage), findsNothing, reason: 'Input Page loaded before button pressed');
     expect(find.byType(ElevatedButton), findsOneWidget, reason: 'Could not find set up wizard button');
+    //Presses the Setup Wizard button
     await tester.tap(button);
     await tester.pumpAndSettle();
+    //Checks the setup wizard button brings you to the right place
     expect(find.byType(SetupWizardPage), findsOneWidget, reason: 'Input Page did not load after set wizard button was pressed');
 
    });
