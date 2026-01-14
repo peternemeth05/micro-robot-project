@@ -30,6 +30,7 @@ class BleWeb implements BleInterface {
   @override
   Stream<String> get sensorDataStream => _sensorDataController.stream;
 
+
   @override
   Future<void> connect(String deviceId) async {
     try {
@@ -117,9 +118,10 @@ class BleWeb implements BleInterface {
     }
   }
 
+  // DISCONNECTING FROM THE ROBOT
   @override
   Future<void> disconnect() async {
-    // 2. Prevent infinite loops (if already disconnected, stop)
+    // Prevent infinite loops 
     if (!_isInternalConnected) return;
 
     _isInternalConnected = false;
@@ -140,6 +142,7 @@ class BleWeb implements BleInterface {
     }
   }
 
+  // SENDING BYTES TO THE ROBOT
   @override
   Future<void> writeToCharacteristic(List<int> data) async {
     if (_sharedChar == null) return;

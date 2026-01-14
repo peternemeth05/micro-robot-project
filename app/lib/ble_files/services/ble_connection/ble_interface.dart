@@ -1,14 +1,13 @@
-// lib/services/ble_connection/ble_interface.dart
+
 import 'dart:async';
 
 abstract class BleInterface {
-  // Is the robot connected right now?
   bool get isConnected;
   
   // A stream so the UI knows when connection status changes
   Stream<bool> get connectionStateStream;
 
-  // for recieving data
+  // for recieving data for the ultrasound sensor
   Stream<String> get sensorDataStream;
   
   // Actions

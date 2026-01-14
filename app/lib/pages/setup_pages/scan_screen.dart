@@ -1,3 +1,14 @@
+/*
+ * ----------------------------------------------------------------------------
+ * Provides the UI and logic for scanning and filtering Bluetooth devices.
+ * Ensures only relevant robots (matching the known UUIDs) are displayed.
+ * * Features:
+ * - waits for Bluetooth Adapter to initialize.
+ * - Filters scan results by Name and Service UUID to reduce noise.
+ * - Handles connection timeouts and loading states.
+ * ----------------------------------------------------------------------------
+ */
+
 import 'package:flutter/material.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:robot_app/ble_files/services/ble_connection/ble_interface.dart';
