@@ -164,6 +164,7 @@ class LoggedDataPage extends StatelessWidget { // communicates with hive for sav
     return '"$escaped"';
   }
 
+  // reads saved data from Hive
   String _buildSensorLogCsv() {
     final box = Hive.box<Map>('sensor_log');
 
@@ -183,6 +184,7 @@ class LoggedDataPage extends StatelessWidget { // communicates with hive for sav
     return rows.map((r) => r.map(_csvEscape).join(',')).join('\n');
   }
 
+  // method for downloading on web 
   void _downloadCsvWeb() {
     final csv = _buildSensorLogCsv();
     final bytes = utf8.encode(csv);
@@ -203,6 +205,7 @@ class LoggedDataPage extends StatelessWidget { // communicates with hive for sav
     web.URL.revokeObjectURL(url);
   }
 
+  // Option to save or clear the sensor data
   @override
   Widget build(BuildContext context) {
     final box = Hive.box<Map>('sensor_log');
@@ -214,12 +217,12 @@ class LoggedDataPage extends StatelessWidget { // communicates with hive for sav
           IconButton(
             tooltip: "Export CSV",
             icon: const Icon(Icons.download),
-            onPressed: _downloadCsvWeb,
+            onPressed: _downloadCsvWeb, // saves data as csv file
           ),
           IconButton(
             tooltip: "Clear log",
             icon: const Icon(Icons.delete),
-            onPressed: () => box.clear(),
+            onPressed: () => box.clear(), // clears data log
           ),
         ],
       ),
@@ -236,12 +239,12 @@ class LoggedDataPage extends StatelessWidget { // communicates with hive for sav
               final idx = b.length - 1 - i; // newest first
               final entry = (b.getAt(idx) as Map?) ?? {};
 
-              final value = entry['value']?.toString() ?? '';
+              final value = entry['value']?.toString() ?? ''; // sensor reading
               final tsStr = entry['timestamp']?.toString() ?? '';
 
               DateTime? ts;
               try {
-                ts = DateTime.parse(tsStr).toLocal();
+                ts = DateTime.parse(tsStr).toLocal(); // takes time stamp
               } catch (_) {}
 
               return ListTile(
