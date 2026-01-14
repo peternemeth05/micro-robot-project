@@ -34,6 +34,7 @@ void main() {
       )
     );
 
+    //Verifies Widgets formed properly
     expect(find.byType(SetupWizardPage), findsOneWidget, reason: 'Setup Wizard Page not formed');
     expect(find.text('Bluetooth'), findsOneWidget, reason: 'Bluettoth button not formed');
     expect(find.text('WiFi'), findsOneWidget, reason: 'Wifi button not formed');
@@ -62,18 +63,23 @@ void main() {
         ),
      )
     );
+    //Verifies All Widgets Expected appear
     expect(find.byType(BluetoothPage), findsOneWidget, reason: 'BluetoothPage did not build');
     expect(find.text("Test: Send 'T'"), findsOneWidget, reason: "can't find send t button");
     expect(find.byType(Card), findsAtLeastNWidgets(1), reason: 'No robot cards were rendered');
+    //Taps send T bluetooth button
     await tester.tap(sendTButton);
     await tester.pumpAndSettle();
+    //Checks that T is received by mock bluetooth interface
     expect(mockBle.lastDataSent, equals([84]), reason: 'The BLE driver did not receive the correct byte for T');
+
+    //Checks that Cards respond to selectiion
     Card cardWidget = tester.widget<Card>(firstCard);
-    expect(cardWidget.color, Colors.black, reason: 'Card should be black initially');
+    expect(cardWidget.color, Color(0xFFE8E8E8), reason: 'Card should be grey initially');
     await tester.tap(find.descendant(of: firstCard, matching: find.byType(CheckboxListTile)));
     await tester.pumpAndSettle();
     cardWidget = tester.widget<Card>(firstCard);
-    expect(cardWidget.color, Colors.grey.shade600, reason: 'Card color should change to grey when selected');
+    expect(cardWidget.color, Colors.red, reason: 'Card color should change to red when selected');
   });
 }
 
