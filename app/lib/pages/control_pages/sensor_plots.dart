@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:robot_app/app_states/main_app_state.dart';
-import 'package:robot_app/pages/custom_widgets/misc_plot.dart';
+import 'package:robot_app/pages/custom_widgets/general_plot.dart';
 
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';

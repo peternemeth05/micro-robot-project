@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:robot_app/pages/control_pages/general_info_page.dart';
+import 'package:robot_app/pages/control_pages/main_controls.dart';
 import '../../control_pages/sensor_plots.dart';
 import '../../control_pages/predetermined_paths.dart';
 

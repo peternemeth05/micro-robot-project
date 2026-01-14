@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:robot_app/app_states/main_app_state.dart';
-import 'package:robot_app/pages/layout_pages/main_pages/robotinfo.dart';
+import 'package:robot_app/pages/layout_pages/main_pages/robot_controls_page.dart';
 
 import '../../ble_files/widgets/ble_status_button.dart';
 import '../../ble_files/widgets/wifi_status_button.dart';
 
-import 'main_pages/landing.dart';
-import 'main_pages/setup.dart';
-import 'main_pages/video.dart';
+import 'main_pages/landing_page.dart';
+import 'main_pages/setup_wizard_page.dart';
+import 'main_pages/video_log_page.dart';
 
 
 class AppLayout extends StatefulWidget { // creates framework for entire app, visible in whole page
