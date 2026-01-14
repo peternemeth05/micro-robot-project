@@ -115,6 +115,8 @@ class BleNative implements BleInterface {
     }
   }
 
+
+  // DISCONNECTING FROM THE ROBOT
   @override
   Future<void> disconnect() async {
     
@@ -140,6 +142,8 @@ class BleNative implements BleInterface {
     }
   }
 
+
+  // SENDING BYTES TO THE ROBOT
   @override
   Future<void> writeToCharacteristic(List<int> data) async {
     if (_sharedChar == null) {

@@ -2,9 +2,9 @@
 
 
 class BleConstants {
-  // Service UUID: ...def0
+  // Service UUID
   static const String serviceUuid = "12345678-1234-5678-1234-56789abcdef0";
   
-  // Command UUID: ...def1 (The "Mailbox")
+  // Command UUID 
   static const String charUuid = "12345678-1234-5678-1234-56789abcdef1";
 }

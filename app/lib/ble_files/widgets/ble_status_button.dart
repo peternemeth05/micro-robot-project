@@ -15,7 +15,7 @@ class BleStatusButton extends StatelessWidget {
       padding: const EdgeInsets.only(right: 16.0),
       child: Chip(
         avatar: Icon(
-          isConnected
+          isConnected // will change icon if connected
               ? Icons.bluetooth_connected
               : Icons.bluetooth_disabled,
           color: Colors.white,
@@ -28,7 +28,7 @@ class BleStatusButton extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        backgroundColor: isConnected ? Colors.green : Colors.grey,
+        backgroundColor: isConnected ? Colors.green : Colors.grey, // will change color if connected
         side: BorderSide.none,
       ),
     );

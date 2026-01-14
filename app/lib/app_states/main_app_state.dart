@@ -1,3 +1,15 @@
+/*
+ * ----------------------------------------------------------------------------
+ * The primary State Management controller for the robot's operation.
+ * Handles user inputs (Joystick/Buttons) and converts them into protocol commands sent to the robot via the BLE Interface.
+ * * Key Responsibilities:
+ * - Calculates robot kinematics from joystick X/Y coordinates.
+ * - Stores real-time data for plotting.
+ * - Manages UI navigation state (page indices).
+ * ----------------------------------------------------------------------------
+ */
+
+
 import 'dart:async';
 import 'dart:math';
 import 'package:flutter/cupertino.dart';

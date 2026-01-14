@@ -1,3 +1,14 @@
+/*
+ * ----------------------------------------------------------------------------
+ * Manages the global state of the Bluetooth connection and sensor data logging.
+ * Acts as the bridge between the raw BLE driver (BleInterface) and the UI.
+ * * Key Responsibilities:
+ * - Listens to connection streams to update UI state (Connected/Disconnected).
+ * - Handles automatic background logging of sensor data to the Hive database.
+ * ----------------------------------------------------------------------------
+ */
+
+
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
