@@ -12,7 +12,7 @@ class BleNative implements BleInterface {
   BluetoothDevice? _connectedDevice;
   BluetoothCharacteristic? _sharedChar;
   
-  // Native uses 'BluetoothConnectionState' instead of a boolean for the listener
+  // Native uses BluetoothConnectionState instead of a boolean for the listener
   StreamSubscription<BluetoothConnectionState>? _connectionSubscription;
 
   final _connectionStateController = StreamController<bool>.broadcast();
@@ -35,9 +35,13 @@ class BleNative implements BleInterface {
   Future<void> connect(String deviceId) async {
     print("(Native) Connecting to $deviceId...");
     try {
+
+      // 1. CONNECT TO ROBOT
+
+
       final device = BluetoothDevice.fromId(deviceId);
 
-      // 1. Listens to the device's connection state immediately
+      // Listens to the device connection state 
       _connectionSubscription = device.connectionState.listen((state) {
         if (state == BluetoothConnectionState.disconnected) {
            print("(Native) Device reported disconnection!");
@@ -47,15 +51,17 @@ class BleNative implements BleInterface {
            }
         }
       });
+
+
       
-      // Connect (autoConnect: false is generally more reliable for explicit connections)
+      // Connect 
       await device.connect(autoConnect: false);
-      
-      print("⏳ (Native) Discovering Services...");
+
+      // 2. CONFIRM UUIDS
+      print("(Native) Discovering Services...");
       final services = await device.discoverServices();
       
-      // 2. Find and Print Service UUID
-      // Note: Native uses 'Guid' objects for UUIDs, so we convert our string to match.
+      // Find and Print Service UUID
       final targetService = services.firstWhere(
         (s) => s.uuid == Guid(_serviceUuid),
         orElse: () => throw Exception("Service not found"),
@@ -67,7 +73,7 @@ class BleNative implements BleInterface {
       print("   Actual:   ${targetService.uuid}"); 
       print("");
 
-      // 3. Find and Print Characteristic UUID
+      // Find and print Characteristic UUID
       _sharedChar = targetService.characteristics.firstWhere(
         (c) => c.uuid == Guid(_charUuid),
         orElse: () => throw Exception("Characteristic not found"),
@@ -82,12 +88,14 @@ class BleNative implements BleInterface {
       _connectionStateController.add(true);
       print("(Native) Connection & Setup Complete!");
 
+
+      // listening to robot
       await _sharedChar!.setNotifyValue(true);
 
       _sharedChar!.lastValueStream.listen((List<int> rawData) {
         if (rawData.isEmpty) return;
         try {
-          // Decode bytes to text (e.g. "B:85")
+          // Decode bytes to text 
           String decoded = utf8.decode(rawData);
           _sensorDataController.add(decoded); 
           print("(Native) RX: $decoded");
@@ -96,24 +104,26 @@ class BleNative implements BleInterface {
         }
       });
 
+      
+
 
 
     } catch (e) {
       print("(Native) Connection Failed: $e");
-      disconnect(); // Clean up
+      disconnect(); // Ensure disconnect if doesnt work
       rethrow;
     }
   }
 
   @override
   Future<void> disconnect() async {
-    // If already disconnected, stop
+    
     if (_connectedDevice == null) return;
 
     // Update local state
     _connectionStateController.add(false);
 
-    // Cancel the listener so it doesn't keep firing
+    // Cancel the listener so it doesnt keep firing
     await _connectionSubscription?.cancel();
     _connectionSubscription = null;
 
@@ -121,7 +131,7 @@ class BleNative implements BleInterface {
     _connectedDevice = null;
     _sharedChar = null;
 
-    // Actually disconnect from the OS
+    // Actually disconnect
     try {
       await device?.disconnect();
       print("○ (Native) Disconnected.");
@@ -137,7 +147,7 @@ class BleNative implements BleInterface {
       return;
     }
     try {
-      // Native write
+      // Native write to robot
       await _sharedChar!.write(data, withoutResponse: true);
     } catch (e) {
       print("Write Error: $e");

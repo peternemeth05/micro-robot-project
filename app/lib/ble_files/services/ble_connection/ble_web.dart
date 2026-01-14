@@ -6,7 +6,7 @@ import 'ble_interface.dart';
 import '../../constants.dart';
 
 class BleWeb implements BleInterface {
-  // CONFIGURATION (Must match your C Code)
+  // configuration 
   static const String _serviceUuid = BleConstants.serviceUuid;
   static const String _charUuid = BleConstants.charUuid;
 
@@ -33,6 +33,10 @@ class BleWeb implements BleInterface {
   @override
   Future<void> connect(String deviceId) async {
     try {
+
+      // 1. CONNECT TO ROBOT
+
+
       final device = await FlutterWebBluetooth.instance.requestDevice(
       RequestOptionsBuilder(
         [
@@ -42,10 +46,11 @@ class BleWeb implements BleInterface {
       ),
     );
 
+      
+
       await device.connect();
       
-      // 1. NEW: Listen to the device's connection stream immediately!
-      // If the browser reports a disconnect, we update our app state automatically.
+      // Listen to the devices connection stream immediately
       _connectionSubscription = device.connected.listen((connected) {
         if (!connected) {
           print("(Web) Browser reported Bluetooth disconnection!");
@@ -53,6 +58,8 @@ class BleWeb implements BleInterface {
         }
       });
 
+
+      // 2. CONFIRM UUIDS
       
       final services = await device.discoverServices();
       
@@ -61,6 +68,7 @@ class BleWeb implements BleInterface {
         orElse: () => throw Exception("Service not found"),
       );
 
+      // Find and print Service UUID
       print("------------------------------------------------");
       print("FOUND SERVICE");
       print("   Expected: $_serviceUuid"); 
@@ -73,6 +81,7 @@ class BleWeb implements BleInterface {
         orElse: () => throw Exception("Characteristic not found"),
       ); 
 
+      // Find and print Characteristic UUID
       print("FOUND write/read CHARACTERISTIC");
       print("   Expected: $_charUuid");
       print("   Actual:   ${_sharedChar!.uuid}");
@@ -85,11 +94,12 @@ class BleWeb implements BleInterface {
       print("(Web) Connected!");
 
 
+      // 3. LISTENING TO ROBOT
 
-      // 1. Enable Notifications
+      // Enable Notifications
       await _sharedChar!.startNotifications();
 
-      // 2. Listen for Data
+      // Listen for Data
       _sharedChar!.value.listen((ByteData? data) {
         if (data == null || data.lengthInBytes == 0) return;
         final list = data.buffer.asUint8List();
