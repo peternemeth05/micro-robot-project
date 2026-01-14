@@ -47,7 +47,7 @@ class _SensorLogPageState extends State<SensorLogPage> {
         yLabel = "Frequency (Hz)";
         interval = 200;
       case datas.data3:
-      if (appState.distancehist.length<10){
+      if (appState.distancehist.length<10){ // only plots last 10 bits of data
           inputList = appState.distancehist;
         }else {inputList = appState.distancehist.sublist(appState.distancehist.length-11,appState.distancehist.length-1);}
         plotText = "Plot of distance from surface against time";
@@ -55,7 +55,7 @@ class _SensorLogPageState extends State<SensorLogPage> {
         yLabel = "Distance from nearest surface (cm)";
         interval = 200;
       case datas.data4:
-        if (appState.speedhist.length<10){
+        if (appState.speedhist.length<10){ // same as distance data
           inputList = appState.speedhist;
         }else {inputList = appState.speedhist.sublist(appState.speedhist.length-11,appState.speedhist.length-1);}
         plotText = "Plot of speed against time";
@@ -79,7 +79,7 @@ class _SensorLogPageState extends State<SensorLogPage> {
                 builder: (context, constraints) {
                   if(inputList.length==0){return Column(mainAxisAlignment: MainAxisAlignment.center,
                   children:[Row(mainAxisAlignment: MainAxisAlignment.center, children:[Text("No Data to Plot")])]);
-                  }else{
+                  }else{ // only attempts to plot if non-empty data set is provided
                   return GeneralPlot( // plots currently selected data
                     width: constraints.maxWidth,
                     height: constraints.maxHeight,
