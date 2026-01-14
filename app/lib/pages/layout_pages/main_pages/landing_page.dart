@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:robot_app/app_states/main_app_state.dart';
 
-class LandingPage extends StatelessWidget {
+class LandingPage extends StatelessWidget { // this class is the main page that the user arrives on when opening the web app
   const LandingPage({super.key});
 
   @override
@@ -10,10 +10,10 @@ class LandingPage extends StatelessWidget {
     final appState = Provider.of<MainAppState>(context, listen: true);
 
     return Scaffold(
-      appBar: AppBar(
+      appBar: AppBar( // provides a title
         title: const Text("Animal Inspired Movement and Robotics"),
       ),
-      body: Padding(
+      body: Padding( // contains main text and button
         padding: const EdgeInsets.all(16),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -23,7 +23,7 @@ class LandingPage extends StatelessWidget {
             Row(
               children: const [
                 Expanded(
-                  child: Text(
+                  child: Text( // text is formatted for responsiveness
                     "Welcome to Dr Jayaram’s Robotic Setup tool!\n"
                     "To get started, please press the setup wizard to configure "
                     "the micro-robots and control inputs.",
@@ -33,7 +33,7 @@ class LandingPage extends StatelessWidget {
               ],
             ),
 
-            ElevatedButton(
+            ElevatedButton( // communicates with main_app_state to change index (go to set-up wizard)
               onPressed: () => appState.changeIndex(1),
               child: const Text("Set-Up Wizard"),
             ),
@@ -42,7 +42,7 @@ class LandingPage extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: RichText(
+                  child: RichText( // use of rich text to change styling in one text block
                     text: TextSpan(
                       style: DefaultTextStyle.of(context).style,
                       children: const [
@@ -50,7 +50,7 @@ class LandingPage extends StatelessWidget {
                           text: "Guide on how to use the website:\n",
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        TextSpan(
+                        TextSpan( // also formatted for responsiveness
                           text:
                               "The Setup Wizard will allow you to connect to the robots "
                               "and input controllers.\n"

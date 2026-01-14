@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:robot_app/pages/control_pages/general_info_page.dart';
+import 'package:robot_app/pages/control_pages/main_controls.dart';
 import '../../control_pages/sensor_plots.dart';
 import '../../control_pages/predetermined_paths.dart';
 
-class RobotControlsPage extends StatefulWidget {
+class RobotControlsPage extends StatefulWidget { // serves as robot controls base - creates layout and links to relevant classes for content
   const RobotControlsPage({super.key});
 
   @override
-  State<RobotControlsPage> createState() => _RobotControlsPageState();
+  State<RobotControlsPage> createState() => _RobotControlsPageState(); // creates state in widget to swap tabs
 }
 
-class _RobotControlsPageState extends State<RobotControlsPage> {
+class _RobotControlsPageState extends State<RobotControlsPage> { 
   int selectedIndex = 0;
 
 @override
@@ -22,7 +22,7 @@ class _RobotControlsPageState extends State<RobotControlsPage> {
           child: Column(
             children: [
               const TabBar(
-                tabs: [
+                tabs: [ 
                   Tab(text: 'Main Controls'),
                   Tab(text: "Automatic Paths"),
                   Tab(text: 'Plotted Data'),
@@ -31,7 +31,7 @@ class _RobotControlsPageState extends State<RobotControlsPage> {
 
               const Divider(height: 1),
 
-              const Expanded(
+              const Expanded( // these contain the content of the pages
                 child: TabBarView(children: [MainControlsPage(), PredeterminedPathsPage(), SensorLogPage()]),
               ),
             ],

@@ -4,11 +4,11 @@ import 'package:provider/provider.dart';
 import 'package:robot_app/pages/layout_pages/app_layout.dart';
 import 'package:robot_app/app_states/main_app_state.dart';
 import 'package:robot_app/app_states/ble_app_state.dart';
-import 'package:robot_app/pages/layout_pages/main_pages/landing.dart';
+import 'package:robot_app/pages/layout_pages/main_pages/landing_page.dart';
 import 'package:robot_app/pages/control_pages/sensor_plots.dart';
-import 'package:robot_app/pages/layout_pages/main_pages/robotinfo.dart';
-import 'package:robot_app/pages/layout_pages/main_pages/setup.dart';
-import 'package:robot_app/pages/layout_pages/main_pages/video.dart';
+import 'package:robot_app/pages/layout_pages/main_pages/robot_controls_page.dart';
+import 'package:robot_app/pages/layout_pages/main_pages/setup_wizard_page.dart';
+import 'package:robot_app/pages/layout_pages/main_pages/video_log_page.dart';
 import 'package:robot_app/ble_files/services/ble_connection/ble_interface.dart';
 import 'fake_ble_interface.dart';
 

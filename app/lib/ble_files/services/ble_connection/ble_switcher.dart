@@ -9,7 +9,7 @@ BleInterface getBleDriver() {
     print("Running on Web - Loading Web Driver");
     return BleWeb();
   } else {
-    print("Running on Desktop/Mobile - Loading Native Driver");
+    print("Running on Native Platform - Loading Native Driver");
     return BleNative();
   }
 }

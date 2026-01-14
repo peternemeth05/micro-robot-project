@@ -48,7 +48,7 @@ class BleWeb implements BleInterface {
       // If the browser reports a disconnect, we update our app state automatically.
       _connectionSubscription = device.connected.listen((connected) {
         if (!connected) {
-          print("⚠️ (Web) Browser reported Bluetooth disconnection!");
+          print("(Web) Browser reported Bluetooth disconnection!");
           disconnect(); 
         }
       });
@@ -62,7 +62,7 @@ class BleWeb implements BleInterface {
       );
 
       print("------------------------------------------------");
-      print("✅ FOUND SERVICE");
+      print("FOUND SERVICE");
       print("   Expected: $_serviceUuid"); 
       print("   Actual:   ${targetService.uuid}"); 
       print("");
@@ -73,7 +73,7 @@ class BleWeb implements BleInterface {
         orElse: () => throw Exception("Characteristic not found"),
       ); 
 
-      print("✅ FOUND write/read CHARACTERISTIC");
+      print("FOUND write/read CHARACTERISTIC");
       print("   Expected: $_charUuid");
       print("   Actual:   ${_sharedChar!.uuid}");
       print("------------------------------------------------");
@@ -82,7 +82,7 @@ class BleWeb implements BleInterface {
       
       _isInternalConnected = true;
       _connectionStateController.add(true);
-      print("✅ (Web) Connected!");
+      print("(Web) Connected!");
 
 
 
@@ -109,7 +109,7 @@ class BleWeb implements BleInterface {
 
 
     } catch (e) {
-      print("❌ (Web) Connection Failed: $e");
+      print("(Web) Connection Failed: $e");
       disconnect();
     }
   }

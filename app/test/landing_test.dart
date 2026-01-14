@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:robot_app/ble_files/services/ble_connection/ble_interface.dart';
 import 'fake_ble_interface.dart';
-import 'package:robot_app/pages/layout_pages/main_pages/landing.dart';
-import 'package:robot_app/pages/layout_pages/main_pages/setup.dart';
+import 'package:robot_app/pages/layout_pages/main_pages/landing_page.dart';
+import 'package:robot_app/pages/layout_pages/main_pages/setup_wizard_page.dart';
 import 'package:robot_app/app_states/ble_app_state.dart';
 
 import 'package:robot_app/pages/layout_pages/app_layout.dart';

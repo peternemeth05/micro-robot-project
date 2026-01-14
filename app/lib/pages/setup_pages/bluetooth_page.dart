@@ -100,9 +100,9 @@ class _BluetoothState extends State<BluetoothPage> {
               onPressed: () async {
                 try {
                   await bleDriver.writeToCharacteristic('T'.codeUnits);
-                  debugPrint("✅ 'T' Sent!");
+                  debugPrint("'T' Sent!");
                 } catch (e) {
-                  debugPrint("❌ $e");
+                  debugPrint("$e");
                 }
               },
               child: const Text("Test: Send 'T'"),
