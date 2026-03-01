@@ -1,20 +1,18 @@
 import 'dart:async';
-import 'dart:typed_data'; // Needed for Uint8List
+import 'dart:typed_data';
 import 'dart:convert';
 import 'package:flutter_web_bluetooth/flutter_web_bluetooth.dart';
 import 'ble_interface.dart';
 import '../../constants.dart';
 
 class BleWeb implements BleInterface {
-  // configuration 
   static const String _serviceUuid = BleConstants.serviceUuid;
-  static const String _charUuid = BleConstants.charUuidRX;
+  static const String _writeUuid = BleConstants.charUuidTX; // TX - write
+  static const String _notifyUuid = BleConstants.charUuidRX; // RX - notify
 
   BluetoothDevice? _connectedDevice;
-  BluetoothCharacteristic? _sharedChar;
-  
-  // We need to keep track of the stream subscription so we can cancel it cleanly
-  StreamSubscription<bool>? _connectionSubscription;
+  BluetoothCharacteristic? _writeChar;  // for sending commands
+  BluetoothCharacteristic? _notifyChar; // for receiving data
 
   bool _isInternalConnected = false;
 
@@ -30,88 +28,89 @@ class BleWeb implements BleInterface {
   @override
   Stream<String> get sensorDataStream => _sensorDataController.stream;
 
-
   @override
   Future<void> connect(String deviceId) async {
     try {
-
       // 1. CONNECT TO ROBOT
       final device = await FlutterWebBluetooth.instance.requestDevice(
-      RequestOptionsBuilder(
-        [
-          RequestFilterBuilder(services: [_serviceUuid]), 
-        ],
-        optionalServices: [_serviceUuid],
-      ),
-    );
+        RequestOptionsBuilder(
+          [RequestFilterBuilder(services: [_serviceUuid])],
+          optionalServices: [_serviceUuid],
+        ),
+      );
 
       await device.connect();
-      
-      // Listen to the devices connection stream immediately
-      _connectionSubscription = device.connected.listen((connected) {
-        if (!connected) {
-          print("(Web) Browser reported Bluetooth disconnection!");
-          disconnect(); 
-        }
-      });
+      print("(Web) Connection established...");
 
       // 2. CONFIRM UUIDS
-      
       final services = await device.discoverServices();
-      
+
       final targetService = services.firstWhere(
         (s) => s.uuid == _serviceUuid,
         orElse: () => throw Exception("Service not found"),
       );
 
-      // Find and print Service UUID
       print("------------------------------------------------");
       print("FOUND SERVICE");
-      print("   Expected: $_serviceUuid"); 
-      print("   Actual:   ${targetService.uuid}"); 
+      print("   Expected: $_serviceUuid");
+      print("   Actual:   ${targetService.uuid}");
       print("");
 
       final characteristics = await targetService.getCharacteristics();
-      _sharedChar = characteristics.firstWhere(
-        (c) => c.uuid == _charUuid,
-        orElse: () => throw Exception("Characteristic not found"),
-      ); 
 
-      // Find and print Characteristic UUID
-      print("FOUND write/read CHARACTERISTIC");
-      print("   Expected: $_charUuid");
-      print("   Actual:   ${_sharedChar!.uuid}");
+      // DEBUG: print all characteristics and their properties
+      print("=== ALL CHARACTERISTICS ===");
+      for (final c in characteristics) {
+        final p = c.properties;
+        print("UUID: ${c.uuid}");
+        print("  broadcast:        ${p.broadcast}");
+        print("  read:             ${p.read}");
+        print("  writeWithoutResponse: ${p.writeWithoutResponse}");
+        print("  write:            ${p.write}");
+        print("  notify:           ${p.notify}");
+        print("  indicate:         ${p.indicate}");
+        print("");
+      }
+      print("===========================");
+
+      // Find write characteristic (ffe2)
+      _writeChar = characteristics.firstWhere(
+        (c) => c.uuid == _writeUuid,
+        orElse: () => throw Exception("Write characteristic not found"),
+      );
+
+      // Find notify characteristic (ffe1)
+      _notifyChar = characteristics.firstWhere(
+        (c) => c.uuid == _notifyUuid,
+        orElse: () => throw Exception("Notify characteristic not found"),
+      );
+
+      print("FOUND WRITE CHARACTERISTIC: ${_writeChar!.uuid}");
+      print("FOUND NOTIFY CHARACTERISTIC: ${_notifyChar!.uuid}");
       print("------------------------------------------------");
 
       _connectedDevice = device;
-      
       _isInternalConnected = true;
       _connectionStateController.add(true);
       print("(Web) Connected!");
 
+      // 3. LISTEN TO ROBOT via notify characteristic (ffe1)
+      await _notifyChar!.startNotifications();
 
-      // 3. LISTENING TO ROBOT
-
-      // Enable Notifications
-      await _sharedChar!.startNotifications();
-
-      // Listen for Data
-      _sharedChar!.value.listen((ByteData? data) {
+      _notifyChar!.value.listen((ByteData? data) {
         if (data == null || data.lengthInBytes == 0) return;
         final list = data.buffer.asUint8List();
         try {
           String decoded = utf8.decode(list);
-          // Adding to the stream if it has the expected prefix 'DIST'
           if (decoded.startsWith('DIST') || decoded.contains('Distance:')) {
             _sensorDataController.add(decoded);
             print("(Web) RX: $decoded");
           }
-
         } catch (e) {
           print("Web Decode Error: $e");
         }
       });
-      
+
     } catch (e) {
       print("(Web) Connection Failed: $e");
       disconnect();
@@ -121,15 +120,10 @@ class BleWeb implements BleInterface {
   // DISCONNECTING FROM THE ROBOT
   @override
   Future<void> disconnect() async {
-    // Prevent infinite loops 
     if (!_isInternalConnected) return;
 
     _isInternalConnected = false;
     _connectionStateController.add(false);
-
-    // Cancel the listener so it doesn't fire again for this specific session
-    await _connectionSubscription?.cancel();
-    _connectionSubscription = null;
 
     if (_connectedDevice != null) {
       try {
@@ -138,16 +132,17 @@ class BleWeb implements BleInterface {
         // Ignore errors during disconnect
       }
       _connectedDevice = null;
-      _sharedChar = null;
+      _writeChar = null;
+      _notifyChar = null;
     }
   }
 
-  // SENDING BYTES TO THE ROBOT
+  // SENDING BYTES TO THE ROBOT via write characteristic (ffe2)
   @override
   Future<void> writeToCharacteristic(List<int> data) async {
-    if (_sharedChar == null) return;
+    if (_writeChar == null) return;
     try {
-      await _sharedChar!.writeValueWithoutResponse(Uint8List.fromList(data)); 
+      await _writeChar!.writeValueWithoutResponse(Uint8List.fromList(data));
     } catch (e) {
       print("Web Write Error: $e");
     }

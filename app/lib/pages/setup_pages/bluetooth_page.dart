@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'dart:convert';
 
 import 'package:robot_app/ble_files/services/ble_connection/ble_interface.dart';
 import '../../ble_files/widgets/ble_connect_button.dart';
@@ -89,7 +88,8 @@ class _BluetoothState extends State<BluetoothPage> {
 
 
             const SizedBox(height: 20),
-
+            
+            // Bluetooth connect button
             BleConnectButton(
               bleDriver: bleDriver,
               targetRobots: targetRobots,
@@ -97,16 +97,16 @@ class _BluetoothState extends State<BluetoothPage> {
 
             const SizedBox(height: 20),
 
+            // Test button
             ElevatedButton(
               onPressed: () async {
                 try {
-                  await Future.delayed(const Duration(milliseconds: 500));
-                  await bleDriver.writeToCharacteristic(utf8.encode('A#2#'));
-                  debugPrint("✅ Dance Sent!");
+                  await bleDriver.writeToCharacteristic('A#0#\n'.codeUnits);
+                  debugPrint("'T' Sent!");
                 } catch (e) {
-                  debugPrint("❌ $e");
+                  debugPrint("$e");
                 }
-              }, 
+              },
               child: const Text("Test: Send 'T'"),
             )
           ],

@@ -41,37 +41,44 @@ class MainAppState extends ChangeNotifier { // contains most of the app state in
   double distance =0;
   List<int> distancehist = [];
 
-  void updateJoystick(double newX, double newY) { // updates when joystick is moved
+  void updateJoystick(double newX, double newY) {
     x = newX;
     y = newY;
-    speed = (sqrt(x*x+y*y)*10).toInt(); // speed is distance from center (times 10 for legibility)
-    speedhist.add(speed); // adds to speed historic
+    speed = (sqrt(x*x+y*y)*10).toInt();
+    speedhist.add(speed);
     path = Paths.manual;
-    if(speed==0){heading="N/A";}else{
-      heading = (-atan2(y,x)* 180 / pi ).toStringAsFixed(1); // calculates heading from x y
+
+    if(speed==0){
+      heading="N/A";
+    } else {
+      heading = (-atan2(y,x)* 180 / pi).toStringAsFixed(1);
     }
+
     distance = sqrt(pow(newX, 2) + pow(newY, 2));
-    path = Paths.manual; // sets path type to manual if joystick is moved
-    
-    String vert = y >= 0 ? 'F' : 'B';
-    String horiz = x >= 0 ? 'R' : 'L';
-    String command = '$vert ${y.abs().toStringAsFixed(2)} ' 
-                     '$horiz ${x.abs().toStringAsFixed(2)} ' 
-                     'S ${distance.toStringAsFixed(2)}';
 
+    // convert joystick to robot command
+    int alpha = (-atan2(newX, -newY) * 180 / pi).toInt(); // direction in degrees
+    int stepLength = (distance * 20).toInt().clamp(0, 20); // scale to 0-20
+    int rotation = 0;
+    int spd = (distance * 5).toInt().clamp(1, 5); // scale to 1-5
+
+    String command;
     if (newX == 0 && newY == 0) {
-      command = "STOP";  // controls robot
+      command = 'F#0#0#0#0#'; // stop
+    } else {
+      command = 'F#$alpha#$stepLength#$rotation#$spd#';
     }
-    ()async {
-        try { // checks connection to robot
-          await bleDriver.writeToCharacteristic(command.codeUnits);
-          debugPrint("✅ Joystick Info Sent!");
-        } catch (e) {
-          debugPrint("❌ Joystick Info");
-        }
-      }();
 
-    notifyListeners(); 
+    ()async {
+      try {
+        await bleDriver.writeToCharacteristic(command.codeUnits);
+        debugPrint("✅ Sent: $command");
+      } catch (e) {
+        debugPrint("❌ Joystick send failed: $e");
+      }
+    }();
+
+    notifyListeners();
   }
 
   void updateDistance(String newDistance) { // updates distance to surface from ultrasound sensor
