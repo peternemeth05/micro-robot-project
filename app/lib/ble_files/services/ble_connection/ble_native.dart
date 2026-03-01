@@ -7,12 +7,12 @@ import '../../constants.dart';
 class BleNative implements BleInterface {
   // CONFIGURATION
   static const String _serviceUuid = BleConstants.serviceUuid;
-  static const String _charUuid = BleConstants.charUuid;
+  static const String _charUuid = BleConstants.charUuidRX;
 
   BluetoothDevice? _connectedDevice;
   BluetoothCharacteristic? _sharedChar;
   
-  // Native uses BluetoothConnectionState instead of a boolean for the listener
+  // Native uses 'BluetoothConnectionState' instead of a boolean for the listener
   StreamSubscription<BluetoothConnectionState>? _connectionSubscription;
 
   final _connectionStateController = StreamController<bool>.broadcast();
@@ -26,23 +26,20 @@ class BleNative implements BleInterface {
   @override
   Stream<String> get sensorDataStream => _sensorDataController.stream;
 
-  
-
   @override
   bool get isConnected => _connectedDevice != null;
 
   @override
   Future<void> connect(String deviceId) async {
-    print("(Native) Connecting to $deviceId...");
+    print("⏳ (Native) Connecting to $deviceId...");
     try {
-
-      // 1. CONNECT TO ROBOT
       final device = BluetoothDevice.fromId(deviceId);
 
-      // Listens to the device connection state 
+      // 1. Listen to the device's connection state immediately
+      // This handles if the device disconnects (e.g. goes out of range or turned off)
       _connectionSubscription = device.connectionState.listen((state) {
         if (state == BluetoothConnectionState.disconnected) {
-           print("(Native) Device reported disconnection!");
+           print("⚠️ (Native) Device reported disconnection!");
            // We only trigger cleanup if we thought we were connected
            if (_connectedDevice != null) {
              disconnect();
@@ -50,47 +47,46 @@ class BleNative implements BleInterface {
         }
       });
       
-      // Connect 
+      // Connect (autoConnect: false is generally more reliable for explicit connections)
       await device.connect(autoConnect: false);
-
-      // 2. CONFIRM UUIDS
-      print("(Native) Discovering Services...");
+      
+      print("⏳ (Native) Discovering Services...");
       final services = await device.discoverServices();
       
-      // Find and Print Service UUID
+      // 2. Find and Print Service UUID
+      // Note: Native uses 'Guid' objects for UUIDs, so we convert our string to match.
       final targetService = services.firstWhere(
         (s) => s.uuid == Guid(_serviceUuid),
         orElse: () => throw Exception("Service not found"),
       );
 
       print("------------------------------------------------");
-      print("FOUND SERVICE");
+      print("✅ FOUND SERVICE");
       print("   Expected: $_serviceUuid"); 
       print("   Actual:   ${targetService.uuid}"); 
       print("");
 
-      // Find and print Characteristic UUID
+      // 3. Find and Print Characteristic UUID
       _sharedChar = targetService.characteristics.firstWhere(
         (c) => c.uuid == Guid(_charUuid),
         orElse: () => throw Exception("Characteristic not found"),
       );
 
-      print("FOUND Write CHARACTERISTIC");
+      print("✅ FOUND Write CHARACTERISTIC");
       print("   Expected: $_charUuid");
       print("   Actual:   ${_sharedChar!.uuid}");
       print("------------------------------------------------");
 
       _connectedDevice = device;
       _connectionStateController.add(true);
-      print("(Native) Connection & Setup Complete!");
+      print("✅ (Native) Connection & Setup Complete!");
 
-      // listening to robot
       await _sharedChar!.setNotifyValue(true);
 
       _sharedChar!.lastValueStream.listen((List<int> rawData) {
         if (rawData.isEmpty) return;
         try {
-          // Decode bytes to text 
+          // Decode bytes to text (e.g. "B:85")
           String decoded = utf8.decode(rawData);
           _sensorDataController.add(decoded); 
           print("(Native) RX: $decoded");
@@ -98,24 +94,25 @@ class BleNative implements BleInterface {
           print("Error decoding: $e");
         }
       });
+
+
+
     } catch (e) {
-      print("(Native) Connection Failed: $e");
-      disconnect(); // Ensure disconnect if doesnt work
+      print("❌ (Native) Connection Failed: $e");
+      disconnect(); // Clean up
       rethrow;
     }
   }
 
-
-  // DISCONNECTING FROM THE ROBOT
   @override
   Future<void> disconnect() async {
-    
+    // If already disconnected, stop
     if (_connectedDevice == null) return;
 
     // Update local state
     _connectionStateController.add(false);
 
-    // Cancel the listener so it doesnt keep firing
+    // Cancel the listener so it doesn't keep firing
     await _connectionSubscription?.cancel();
     _connectionSubscription = null;
 
@@ -123,7 +120,7 @@ class BleNative implements BleInterface {
     _connectedDevice = null;
     _sharedChar = null;
 
-    // Actually disconnect
+    // Actually disconnect from the OS
     try {
       await device?.disconnect();
       print("○ (Native) Disconnected.");
@@ -132,17 +129,15 @@ class BleNative implements BleInterface {
     }
   }
 
-
-  // SENDING BYTES TO THE ROBOT
   @override
   Future<void> writeToCharacteristic(List<int> data) async {
     if (_sharedChar == null) {
-      print("Cannot write: Not connected.");
+      print("⚠️ Cannot write: Not connected.");
       return;
     }
     try {
-      // Native write to robot
-      await _sharedChar!.write(data, withoutResponse: true);
+      // Native write
+      await _sharedChar!.write(data, withoutResponse: false);
     } catch (e) {
       print("Write Error: $e");
     }

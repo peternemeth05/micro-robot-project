@@ -8,7 +8,7 @@ import '../../constants.dart';
 class BleWeb implements BleInterface {
   // configuration 
   static const String _serviceUuid = BleConstants.serviceUuid;
-  static const String _charUuid = BleConstants.charUuid;
+  static const String _charUuid = BleConstants.charUuidRX;
 
   BluetoothDevice? _connectedDevice;
   BluetoothCharacteristic? _sharedChar;
