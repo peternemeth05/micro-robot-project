@@ -61,7 +61,7 @@ class _VideoLogPageState extends State<VideoLogPage> {
             child: Center(
               child: MJPEGStreamScreen(
                 //Robot video feed
-                streamUrl: "http://yasmines-iphone.local:8081/video",
+                streamUrl: "http://192.168.1.154.x:8000", //IP address of the robot 
                 showLiveIcon: true,
                 width: 900.0,
                 height: 600.0,

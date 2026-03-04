@@ -40,6 +40,18 @@ class MainAppState extends ChangeNotifier { // contains most of the app state in
   String distanceValue = "N/A";
   double distance =0;
   List<int> distancehist = [];
+  
+  bool isWifiConnected = false;
+
+  void handleRobotStatus(String message) {
+   if (message.contains("N#101#") || message.contains("N#301#")) {
+     isWifiConnected = true;
+      notifyListeners(); // This tells VideoLogPage to rebuild and show the camera!
+    } else if (message.contains("N#102#") || message.contains("N#302#")) {
+     isWifiConnected = false;
+      notifyListeners();
+   }
+  }
 
   void updateJoystick(double newX, double newY) {
     x = newX;
