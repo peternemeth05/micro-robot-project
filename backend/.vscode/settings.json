@@ -1,7 +1,0 @@
-{
-    "zephyr-ide.tools_directory": "",
-    "cmake.sourceDirectory": "C:/zephyrproject/zephyr/samples/hello_world",
-    "terminal.integrated.defaultProfile.windows": "Zephyr IDE Terminal",
-    "cmake.configureOnOpen": false,
-    "C_Cpp.default.compileCommands": "${workspaceFolder}\\.vscode\\compile_commands.json"
-}
