@@ -23,14 +23,13 @@ class _SetupWizardPageState extends State<SetupWizardPage> {
               const TabBar(
                 tabs: [
                   Tab(text: 'Bluetooth'),
-                  Tab(text: 'WiFi'),
                 ],
               ),
 
               const Divider(height: 1),
 
               const Expanded(
-                child: TabBarView(children: [BluetoothPage(), WifiPage()]), // classes contain page content 
+                child: TabBarView(children: [BluetoothPage()]), // classes contain page content 
               ),
             ],
           ),

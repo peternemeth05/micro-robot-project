@@ -24,8 +24,7 @@ class _AppLayoutState extends State<AppLayout> {
     final pages = [ // the pages selected for each index
       LandingPage(),
       SetupWizardPage(),
-      RobotControlsPage(),
-      VideoLogPage(),
+      PotentiostatControlsPage(),
     ];
     final appState = Provider.of<MainAppState>(context, listen: true);
     int selectedIndex = appState.pageIndex; // page index can be altered from other sources (landing page button)
@@ -34,8 +33,8 @@ class _AppLayoutState extends State<AppLayout> {
         final isWide = constraints.maxWidth >= 800; // adds responsiveness
         return Scaffold(
           appBar: AppBar(
-            title: const Text('Robot Controller'),
-            actions: [BleStatusButton(), WifiStatusButton()],
+            title: const Text('Potentiostat'),
+            actions: [BleStatusButton()],
           ),
           body: Row(
             children: [
@@ -55,11 +54,7 @@ class _AppLayoutState extends State<AppLayout> {
                     ),
                     NavigationRailDestination(
                       icon: Icon(Icons.gamepad),
-                      label: Text('Robot Controls'),
-                    ),
-                    NavigationRailDestination(
-                      icon: Icon(Icons.camera),
-                      label: Text('Video Log'),
+                      label: Text('Potentiostat Controls'),
                     ),
                   ],
                 ),

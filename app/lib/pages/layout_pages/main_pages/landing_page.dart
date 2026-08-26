@@ -11,7 +11,7 @@ class LandingPage extends StatelessWidget { // this class is the main page that 
 
     return Scaffold(
       appBar: AppBar( // provides a title
-        title: const Text("Animal Inspired Movement and Robotics"),
+        title: const Text("Potentiostat Setup Page"),
       ),
       body: Padding( // contains main text and button
         padding: const EdgeInsets.all(16),
@@ -24,7 +24,7 @@ class LandingPage extends StatelessWidget { // this class is the main page that 
               children: const [
                 Expanded(
                   child: Text( // text is formatted for responsiveness
-                    "Welcome to Dr Jayaram’s Robotic Setup tool!\n"
+                    "Welcome to Zimmer Biomet's Potentiostat for Biomarker detection\n"
                     "To get started, please press the setup wizard to configure "
                     "the micro-robots and control inputs.",
                     style: TextStyle(fontWeight: FontWeight.bold),
@@ -52,13 +52,11 @@ class LandingPage extends StatelessWidget { // this class is the main page that 
                         ),
                         TextSpan( // also formatted for responsiveness
                           text:
-                              "The Setup Wizard will allow you to connect to the robots "
+                              "The Setup Wizard will allow you to connect to the Potentionstat "
                               "and input controllers.\n"
-                              "The Robot Controls Tab includes inbuilt walking patterns "
-                              "and a virtual joystick to control the robot directly, "
-                              "alongside sensor data. \n"
-                              "The Video Log will allow you to visualise the real-time "
-                              "recording from the robot’s camera.",
+                              "The Potentiostat Controls Tab includes setting potentiostat"
+                              "configuration, such as applied potential"
+                              "alongside plotting of current sensor data. \n",
                         ),
                       ],
                     ),

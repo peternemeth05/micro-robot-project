@@ -1,38 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:robot_app/pages/control_pages/main_controls.dart';
 import '../../control_pages/sensor_plots.dart';
-import '../../control_pages/predetermined_paths.dart';
+import '../../control_pages/set_parameters.dart';
 
-class RobotControlsPage extends StatefulWidget { // serves as robot controls base - creates layout and links to relevant classes for content
-  const RobotControlsPage({super.key});
+class PotentiostatControlsPage extends StatefulWidget { // serves as robot controls base - creates layout and links to relevant classes for content
+  const PotentiostatControlsPage({super.key});
 
   @override
-  State<RobotControlsPage> createState() => _RobotControlsPageState(); // creates state in widget to swap tabs
+  State<PotentiostatControlsPage> createState() => _PotentiostatControlsPageState(); // creates state in widget to swap tabs
 }
 
-class _RobotControlsPageState extends State<RobotControlsPage> { 
+class _PotentiostatControlsPageState extends State<PotentiostatControlsPage> { 
   int selectedIndex = 0;
 
 @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 2,
       child: Scaffold(
         body: SafeArea(
           child: Column(
             children: [
               const TabBar(
                 tabs: [ 
-                  Tab(text: 'Main Controls'),
-                  Tab(text: "Automatic Paths"),
+                  Tab(text: 'Set Parameters'),
                   Tab(text: 'Plotted Data'),
                 ],
               ),
 
               const Divider(height: 1),
 
-              const Expanded( // these contain the content of the pages
-                child: TabBarView(children: [MainControlsPage(), PredeterminedPathsPage(), SensorLogPage()]),
+                Expanded( // these contain the content of the pages
+                child: TabBarView(
+                  children: [SetParametersPage(), 
+                  SensorLogPage(),],
+                  ),
               ),
             ],
           ),

@@ -19,7 +19,7 @@ class SensorLogPage extends StatefulWidget { // contains the plots of variables
 }
 
 
-enum datas { data1, data2, data3, data4 } // placeholder data names
+enum datas { data1, data2 } // placeholder data names
 
 class _SensorLogPageState extends State<SensorLogPage> {
   datas data = datas.data1;
@@ -42,26 +42,10 @@ class _SensorLogPageState extends State<SensorLogPage> {
         interval = 200;
       case datas.data2:
         inputList = List.generate(3, (int index) => index + index, growable: true);
-        plotText = "Plot of frequency against time";
+        plotText = "Plot of current against time";
         xLabel = "Time (ms)";
-        yLabel = "Frequency (Hz)";
+        yLabel = "Current (mA)";
         interval = 200;
-      case datas.data3:
-      if (appState.distancehist.length<10){ // only plots last 10 bits of data
-          inputList = appState.distancehist;
-        }else {inputList = appState.distancehist.sublist(appState.distancehist.length-11,appState.distancehist.length-1);}
-        plotText = "Plot of distance from surface against time";
-        xLabel = "Time (ms)";
-        yLabel = "Distance from nearest surface (cm)";
-        interval = 200;
-      case datas.data4:
-        if (appState.speedhist.length<10){ // same as distance data
-          inputList = appState.speedhist;
-        }else {inputList = appState.speedhist.sublist(appState.speedhist.length-11,appState.speedhist.length-1);}
-        plotText = "Plot of speed against time";
-        xLabel = "Time (AU)";
-        yLabel = "Speed (AU)";
-        interval = 1;
     }
 
     final bool compact = MediaQuery.of(context).size.width < 850; // makes buttons responsive
@@ -113,13 +97,7 @@ class _SensorLogPageState extends State<SensorLogPage> {
                         label: compact? Text("V"): Text("Voltage")),
                       ButtonSegment(
                         value: datas.data2,
-                        label: compact? Text("Hz"): Text("Frequency")),
-                      ButtonSegment(
-                        value: datas.data3,
-                        label: compact? Text("m"): Text("Ultrasound Distance")),
-                      ButtonSegment(
-                        value: datas.data4,
-                        label: compact? Text("m/s"): Text("Velocity")),
+                        label: compact? Text("mA"): Text("Current")),
                     ],
                     selected: <datas>{data},
                     onSelectionChanged: (newSelection) {
@@ -128,11 +106,11 @@ class _SensorLogPageState extends State<SensorLogPage> {
                   ),
                 ),
                 const SizedBox(height: 10),
-                SizedBox( // contains ultrasound data button
+                SizedBox( // contains Current data button
                   width: 330,
                   child: ElevatedButton.icon(
                     icon: const Icon(Icons.list),
-                    label: const Text("View Logged Ultrasound Data"),
+                    label: const Text("View Logged Current Data"),
                     onPressed: () {
                       Navigator.push(
                         context,
